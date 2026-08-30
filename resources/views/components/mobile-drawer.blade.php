@@ -38,11 +38,36 @@
                     {{ $label }}
                 </a>
             @endforeach
+
+            @auth
+                <a href="{{ route('account.show') }}" class="inline-flex items-center gap-2 text-sm font-semibold uppercase tracking-widest text-body transition-colors hover:text-gold">
+                    <x-icon name="user" class="h-4 w-4" />
+                    Account
+                </a>
+            @else
+                <a href="{{ route('login') }}" class="text-sm font-semibold uppercase tracking-widest text-body transition-colors hover:text-gold">
+                    Login
+                </a>
+                <a href="{{ route('register') }}" class="text-sm font-semibold uppercase tracking-widest text-body transition-colors hover:text-gold">
+                    Register
+                </a>
+            @endauth
         </nav>
 
-        <x-button variant="primary" href="{{ route('inquiries.create') }}" class="mt-auto">
-            Confidential Inquiry
-            <x-icon name="lock" class="h-3.5 w-3.5" />
-        </x-button>
+        <div class="mt-auto flex flex-col gap-3">
+            @auth
+                <form method="POST" action="{{ route('logout') }}">
+                    @csrf
+                    <x-button variant="secondary" type="submit" class="w-full">
+                        Log Out
+                    </x-button>
+                </form>
+            @endauth
+
+            <x-button variant="primary" href="{{ route('inquiries.create') }}" class="w-full">
+                Confidential Inquiry
+                <x-icon name="lock" class="h-3.5 w-3.5" />
+            </x-button>
+        </div>
     </div>
 </div>

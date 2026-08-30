@@ -4,7 +4,9 @@ declare(strict_types=1);
 
 namespace Tests\Feature\Membership;
 
+use DateTimeImmutable;
 use Domain\Membership\Entities\MembershipApplication;
+use Domain\Membership\ValueObjects\MemberId;
 use Domain\Membership\ValueObjects\MembershipApplicationStatus;
 use Domain\Membership\ValueObjects\MembershipReference;
 use Domain\Shared\Exceptions\DomainException;
@@ -89,6 +91,96 @@ final class EloquentMembershipApplicationRepositoryTest extends TestCase
         $this->assertNull($repository->findByReference(
             MembershipReference::fromString('UGM-2026-7KQ4XB'),
         ));
+    }
+
+    public function test_save_persists_and_round_trips_an_assigned_member_id(): void
+    {
+        $application = MembershipApplication::submit(
+            tier: Slug::fromString('sovereign-partner'),
+            name: 'Kwame Asante',
+            organisation: null,
+            email: EmailAddress::fromString('kwame@asante.example'),
+            phone: null,
+            country: null,
+            statement: 'Requesting consideration for a sovereign-level advisory relationship with Underground.',
+        );
+
+        $repository = new EloquentMembershipApplicationRepository;
+        $repository->save($application);
+
+        $application->transitionTo(MembershipApplicationStatus::UnderReview);
+        $application->approve(MemberId::assign(2026, 1));
+        $repository->save($application);
+
+        $found = $repository->findByReference($application->reference);
+
+        $this->assertNotNull($found);
+        $this->assertSame(MembershipApplicationStatus::Approved, $found->status());
+        $this->assertSame('UG · 2026 · 000001', $found->memberId()?->value);
+    }
+
+    public function test_find_by_email_returns_the_most_recent_application_case_insensitively(): void
+    {
+        $older = MembershipApplication::submit(
+            tier: Slug::fromString('sovereign-partner'),
+            name: 'Older Application',
+            organisation: null,
+            email: EmailAddress::fromString('repeat@example.com'),
+            phone: null,
+            country: null,
+            statement: 'Requesting consideration for a sovereign-level advisory relationship with Underground.',
+            submittedAt: new DateTimeImmutable('2025-01-01'),
+        );
+
+        $newer = MembershipApplication::submit(
+            tier: Slug::fromString('sovereign-partner'),
+            name: 'Newer Application',
+            organisation: null,
+            email: EmailAddress::fromString('repeat@example.com'),
+            phone: null,
+            country: null,
+            statement: 'Requesting consideration for a sovereign-level advisory relationship with Underground.',
+            submittedAt: new DateTimeImmutable('2026-01-01'),
+        );
+
+        $repository = new EloquentMembershipApplicationRepository;
+        $repository->save($older);
+        $repository->save($newer);
+
+        $found = $repository->findByEmail(EmailAddress::fromString('REPEAT@EXAMPLE.COM'));
+
+        $this->assertNotNull($found);
+        $this->assertSame('Newer Application', $found->name);
+    }
+
+    public function test_find_by_email_returns_null_when_no_application_exists(): void
+    {
+        $repository = new EloquentMembershipApplicationRepository;
+
+        $this->assertNull($repository->findByEmail(EmailAddress::fromString('nobody@example.com')));
+    }
+
+    public function test_next_member_id_sequence_counts_up_from_assigned_member_ids(): void
+    {
+        $repository = new EloquentMembershipApplicationRepository;
+
+        $this->assertSame(1, $repository->nextMemberIdSequence());
+
+        $application = MembershipApplication::submit(
+            tier: Slug::fromString('sovereign-partner'),
+            name: 'Kwame Asante',
+            organisation: null,
+            email: EmailAddress::fromString('kwame@asante.example'),
+            phone: null,
+            country: null,
+            statement: 'Requesting consideration for a sovereign-level advisory relationship with Underground.',
+        );
+        $repository->save($application);
+        $application->transitionTo(MembershipApplicationStatus::UnderReview);
+        $application->approve(MemberId::assign(2026, $repository->nextMemberIdSequence()));
+        $repository->save($application);
+
+        $this->assertSame(2, $repository->nextMemberIdSequence());
     }
 
     public function test_save_rejects_an_application_for_an_unknown_tier(): void
