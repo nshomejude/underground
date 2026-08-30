@@ -1,3 +1,8 @@
+// Registers every file under resources/images with Vite's build graph so
+// Vite::asset() can resolve them from the manifest (see the Vite docs'
+// "Other assets" guidance) without importing each one individually.
+import.meta.glob(['../images/**']);
+
 // Live character counter for long-text form fields. A field opts in with
 // [data-char-counter] and [data-char-counter-min="<n>"]; the count renders
 // into the element carrying [data-char-counter-output="<field-name>"].

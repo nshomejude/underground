@@ -1,12 +1,12 @@
 @php
     $navLinks = [
         'About' => '#',
-        'Capabilities' => '#',
+        'Capabilities' => url('/').'#capabilities',
         'Expertise' => '#',
-        'Global Reach' => '#',
-        'Insights' => '#',
+        'Global Reach' => url('/').'#reach',
+        'Insights' => route('insights.index'),
         'Careers' => '#',
-        'Contact' => '#',
+        'Contact' => route('inquiries.create'),
     ];
 @endphp
 
@@ -25,7 +25,7 @@
         </nav>
 
         <div class="hidden lg:block">
-            <x-button variant="secondary" href="#">
+            <x-button variant="secondary" href="{{ route('inquiries.create') }}">
                 Confidential Inquiry
                 <x-icon name="lock" class="h-3.5 w-3.5" />
             </x-button>

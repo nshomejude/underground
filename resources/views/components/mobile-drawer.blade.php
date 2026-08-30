@@ -1,12 +1,12 @@
 @php
     $navLinks = [
         'About' => '#',
-        'Capabilities' => '#',
+        'Capabilities' => url('/').'#capabilities',
         'Expertise' => '#',
-        'Global Reach' => '#',
-        'Insights' => '#',
+        'Global Reach' => url('/').'#reach',
+        'Insights' => route('insights.index'),
         'Careers' => '#',
-        'Contact' => '#',
+        'Contact' => route('inquiries.create'),
     ];
 @endphp
 
@@ -40,7 +40,7 @@
             @endforeach
         </nav>
 
-        <x-button variant="primary" href="#" class="mt-auto">
+        <x-button variant="primary" href="{{ route('inquiries.create') }}" class="mt-auto">
             Confidential Inquiry
             <x-icon name="lock" class="h-3.5 w-3.5" />
         </x-button>

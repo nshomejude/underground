@@ -3,12 +3,11 @@
 use App\Http\Controllers\CapabilityController;
 use App\Http\Controllers\InquiryController;
 use App\Http\Controllers\InsightController;
+use App\Http\Controllers\LandingPageController;
 use App\Http\Controllers\MembershipController;
 use Illuminate\Support\Facades\Route;
 
-Route::get('/', function () {
-    return view('welcome');
-});
+Route::get('/', [LandingPageController::class, 'index'])->name('home');
 
 Route::get('/insights', [InsightController::class, 'index'])->name('insights.index');
 Route::get('/insights/{slug}', [InsightController::class, 'show'])->name('insights.show');

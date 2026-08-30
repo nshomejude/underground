@@ -1,10 +1,10 @@
 @php
     $tabs = [
         ['label' => 'Home', 'icon' => 'home', 'href' => url('/')],
-        ['label' => 'Capabilities', 'icon' => 'landmark', 'href' => '#'],
-        ['label' => 'Global Reach', 'icon' => 'globe', 'href' => '#'],
-        ['label' => 'Insights', 'icon' => 'newspaper', 'href' => '#'],
-        ['label' => 'Contact', 'icon' => 'mail', 'href' => '#'],
+        ['label' => 'Capabilities', 'icon' => 'landmark', 'href' => url('/').'#capabilities'],
+        ['label' => 'Global Reach', 'icon' => 'globe', 'href' => url('/').'#reach'],
+        ['label' => 'Insights', 'icon' => 'newspaper', 'href' => route('insights.index')],
+        ['label' => 'Contact', 'icon' => 'mail', 'href' => route('inquiries.create')],
     ];
 
     $currentUrl = url()->current();
