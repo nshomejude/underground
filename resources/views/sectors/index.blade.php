@@ -18,8 +18,8 @@
                         href="{{ route('sectors.show', $sector->slug->value) }}"
                         class="group flex aspect-square flex-col justify-between bg-gradient-to-b from-surface to-ink p-4 transition-colors hover:from-surface-raised"
                     >
-                        <span class="flex h-9 w-9 items-center justify-center border border-gold text-gold">
-                            <x-icon name="{{ $sector->motif }}" class="h-4 w-4" />
+                        <span class="flex h-14 w-14 items-center justify-center border border-gold text-gold">
+                            <x-icon name="{{ $sector->motif }}" class="h-7 w-7" />
                         </span>
                         <p class="text-xs font-semibold uppercase leading-snug tracking-wide text-cream group-hover:text-gold">
                             @foreach ($sector->nameLines() as $line)
