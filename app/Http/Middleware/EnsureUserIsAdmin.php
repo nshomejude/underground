@@ -1,8 +1,5 @@
 <?php
 
-// STUB: a sibling module owns the real admin foundation, this may be
-// superseded at merge time.
-
 declare(strict_types=1);
 
 namespace App\Http\Middleware;

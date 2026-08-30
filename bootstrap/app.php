@@ -22,8 +22,6 @@ return Application::configure(basePath: dirname(__DIR__))
         $middleware->trustProxies(at: '*');
         $middleware->redirectGuestsTo('/login');
 
-        // STUB: a sibling module owns the real admin foundation, this may be
-        // superseded at merge time.
         $middleware->alias([
             'admin' => EnsureUserIsAdmin::class,
         ]);

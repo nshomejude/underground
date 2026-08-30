@@ -1,9 +1,5 @@
 <?php
 
-// STUB: a sibling module owns the real admin foundation, this may be
-// superseded at merge time. Keep only one `is_admin` migration across all
-// branches once merged — the sibling module's is authoritative if both exist.
-
 declare(strict_types=1);
 
 use Illuminate\Database\Migrations\Migration;
