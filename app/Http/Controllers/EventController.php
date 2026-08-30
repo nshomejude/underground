@@ -27,13 +27,13 @@ final class EventController extends Controller
                 'name' => 'Strategic Capital Forum',
                 'date' => Carbon::parse('2026-05-19'),
                 'location' => 'Singapore',
-                'description' => 'Institutional allocators and sovereign funds convene to compare notes on cross-border capital strategy.',
+                'description' => 'A closed forum for institutional allocators and sovereign funds comparing notes on cross-border capital strategy.',
             ],
             [
                 'name' => 'Infrastructure & Transition Summit',
                 'date' => Carbon::parse('2026-07-08'),
                 'location' => 'London, United Kingdom',
-                'description' => 'Operators, lenders, and regulators met to align on financing the next decade of infrastructure and energy transition.',
+                'description' => 'A working summit for operators, lenders, and regulators aligning on financing the next decade of infrastructure and energy transition.',
             ],
             [
                 'name' => 'Underground Autumn Briefing',
