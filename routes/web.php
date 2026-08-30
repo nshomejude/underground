@@ -31,6 +31,7 @@ use App\Http\Controllers\MembershipController;
 use App\Http\Controllers\PartnerController;
 use App\Http\Controllers\PortfolioController;
 use App\Http\Controllers\ProjectController;
+use App\Http\Controllers\SectorController;
 use App\Http\Controllers\TeamController;
 use Illuminate\Support\Facades\Route;
 
@@ -52,6 +53,9 @@ Route::get('/insights', [InsightController::class, 'index'])->name('insights.ind
 Route::get('/insights/{slug}', [InsightController::class, 'show'])->name('insights.show');
 
 Route::get('/capabilities/{slug}', [CapabilityController::class, 'show'])->name('capabilities.show');
+
+Route::get('/sectors', [SectorController::class, 'index'])->name('sectors.index');
+Route::get('/sectors/{slug}', [SectorController::class, 'show'])->name('sectors.show');
 
 Route::get('/confidential-inquiry', [InquiryController::class, 'create'])->name('inquiries.create');
 Route::post('/confidential-inquiry', [InquiryController::class, 'store'])
