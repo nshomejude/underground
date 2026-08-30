@@ -5,8 +5,13 @@ use App\Http\Controllers\AccountController;
 use App\Http\Controllers\AccountSettingsController;
 use App\Http\Controllers\Admin\ApplicationReviewController;
 use App\Http\Controllers\Admin\CapabilityAdminController;
+use App\Http\Controllers\Admin\EngagementModelAdminController;
 use App\Http\Controllers\Admin\InquiryReviewController;
 use App\Http\Controllers\Admin\InsightAdminController;
+use App\Http\Controllers\Admin\MetricAdminController;
+use App\Http\Controllers\Admin\NarrativeAdminController;
+use App\Http\Controllers\Admin\PillarAdminController;
+use App\Http\Controllers\Admin\SectorAdminController;
 use App\Http\Controllers\Auth\EmailVerificationController;
 use App\Http\Controllers\Auth\ForgotPasswordController;
 use App\Http\Controllers\Auth\LoginController;
@@ -87,7 +92,8 @@ Route::get('/account', [AccountController::class, 'show'])
     ->name('account.show');
 
 // Staff admin review queue: membership applications and confidential
-// inquiries, plus content admin CRUD over Insights and Capabilities.
+// inquiries, plus content admin CRUD over Insights, Capabilities, Sectors,
+// Metrics, Engagement Models, Pillars, and the Narrative singleton.
 // `admin` implies a logged-in user (see EnsureUserIsAdmin's doc block);
 // `auth` is still applied explicitly so a guest is redirected to /login
 // rather than refused outright.
@@ -101,6 +107,16 @@ Route::prefix('admin')->middleware(['auth', 'admin'])->name('admin.')->group(fun
 
     Route::resource('insights', InsightAdminController::class)->except('show');
     Route::resource('capabilities', CapabilityAdminController::class)->except('show');
+
+    Route::resource('sectors', SectorAdminController::class)->except(['show']);
+    Route::resource('metrics', MetricAdminController::class)->except(['show']);
+    Route::resource('engagement-models', EngagementModelAdminController::class)
+        ->except(['show'])
+        ->parameters(['engagement-models' => 'engagement_model']);
+    Route::resource('pillars', PillarAdminController::class)->except(['show']);
+
+    Route::get('narrative', [NarrativeAdminController::class, 'edit'])->name('narrative.edit');
+    Route::put('narrative', [NarrativeAdminController::class, 'update'])->name('narrative.update');
 });
 
 Route::middleware('auth')->group(function (): void {

@@ -19,6 +19,46 @@ final class EloquentNarrativeRepository implements NarrativeRepository
             throw new DomainException('No narrative has been authored yet.');
         }
 
+        return $this->toEntity($record);
+    }
+
+    /**
+     * Overwrites the single narrative row. There is exactly one authored
+     * copy: if a row already exists, its attributes are replaced in place
+     * (keeping its id); otherwise the first row is created.
+     */
+    public function update(Narrative $narrative): void
+    {
+        $record = NarrativeRecord::query()->latest('id')->first() ?? new NarrativeRecord;
+
+        $record->fill([
+            'company' => $narrative->company,
+            'tagline' => $narrative->tagline,
+            'eyebrow' => $narrative->eyebrow,
+            'headline' => $narrative->headline,
+            'accent_line' => $narrative->accentLine,
+            'intro' => $narrative->intro,
+            'primary_cta' => $narrative->primaryCta,
+            'secondary_cta' => $narrative->secondaryCta,
+            'creed_title' => $narrative->creedTitle,
+            'creed_body' => $narrative->creedBody,
+            'capabilities_eyebrow' => $narrative->capabilitiesEyebrow,
+            'capabilities_heading' => $narrative->capabilitiesHeading,
+            'sectors_heading' => $narrative->sectorsHeading,
+            'reach_heading' => $narrative->reachHeading,
+            'reach_body' => $narrative->reachBody,
+            'reach_cta' => $narrative->reachCta,
+            'engagement_heading' => $narrative->engagementHeading,
+            'closing_heading' => $narrative->closingHeading,
+            'closing_support' => $narrative->closingSupport,
+            'closing_cta' => $narrative->closingCta,
+            'navigation' => $narrative->navigation,
+            'copyright' => $narrative->copyright,
+        ])->save();
+    }
+
+    private function toEntity(NarrativeRecord $record): Narrative
+    {
         return new Narrative(
             company: $record->company,
             tagline: $record->tagline,
