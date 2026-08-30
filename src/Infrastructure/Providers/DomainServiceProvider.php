@@ -9,10 +9,14 @@ use Domain\Content\Repositories\MetricRepository;
 use Domain\Content\Repositories\SectorRepository;
 use Domain\Engagement\Repositories\InquiryRepository;
 use Domain\Insights\Repositories\InsightRepository;
+use Domain\Membership\Repositories\MembershipApplicationRepository;
+use Domain\Membership\Repositories\MembershipTierRepository;
 use Illuminate\Support\ServiceProvider;
 use Infrastructure\Persistence\Eloquent\Repositories\EloquentCapabilityRepository;
 use Infrastructure\Persistence\Eloquent\Repositories\EloquentInquiryRepository;
 use Infrastructure\Persistence\Eloquent\Repositories\EloquentInsightRepository;
+use Infrastructure\Persistence\Eloquent\Repositories\EloquentMembershipApplicationRepository;
+use Infrastructure\Persistence\Eloquent\Repositories\EloquentMembershipTierRepository;
 use Infrastructure\Persistence\Eloquent\Repositories\EloquentMetricRepository;
 use Infrastructure\Persistence\Eloquent\Repositories\EloquentSectorRepository;
 
@@ -33,6 +37,8 @@ final class DomainServiceProvider extends ServiceProvider
         MetricRepository::class => EloquentMetricRepository::class,
         InsightRepository::class => EloquentInsightRepository::class,
         InquiryRepository::class => EloquentInquiryRepository::class,
+        MembershipTierRepository::class => EloquentMembershipTierRepository::class,
+        MembershipApplicationRepository::class => EloquentMembershipApplicationRepository::class,
     ];
 
     public function register(): void
