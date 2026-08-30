@@ -14,6 +14,9 @@
         @if ($required) required @endif
         {{ $attributes->merge(['class' => 'border border-border bg-surface px-4 py-2.5 text-sm text-cream focus:border-gold focus:outline-none']) }}
     >
+        @unless ($required)
+            <option value="">&mdash; None &mdash;</option>
+        @endunless
         @foreach ($options as $option)
             <option value="{{ $option }}" @selected(old($name, $value) === $option)>{{ $option }}</option>
         @endforeach

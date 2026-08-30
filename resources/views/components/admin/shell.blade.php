@@ -9,6 +9,11 @@
         ['label' => 'Metrics', 'route' => 'admin.metrics.index', 'pattern' => 'admin.metrics.*'],
         ['label' => 'Engagement Models', 'route' => 'admin.engagement-models.index', 'pattern' => 'admin.engagement-models.*'],
         ['label' => 'Pillars', 'route' => 'admin.pillars.index', 'pattern' => 'admin.pillars.*'],
+        ['label' => 'Team', 'route' => 'admin.team.index', 'pattern' => 'admin.team.*'],
+        ['label' => 'Partners', 'route' => 'admin.partners.index', 'pattern' => 'admin.partners.*'],
+        ['label' => 'Portfolio', 'route' => 'admin.portfolio.index', 'pattern' => 'admin.portfolio.*'],
+        ['label' => 'Projects', 'route' => 'admin.projects.index', 'pattern' => 'admin.projects.*'],
+        ['label' => 'Events', 'route' => 'admin.events.index', 'pattern' => 'admin.events.*'],
         ['label' => 'Narrative', 'route' => 'admin.narrative.edit', 'pattern' => 'admin.narrative.*'],
     ];
 @endphp

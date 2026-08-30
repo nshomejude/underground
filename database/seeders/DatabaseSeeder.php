@@ -30,6 +30,11 @@ class DatabaseSeeder extends Seeder
         $this->call(MetricSeeder::class);
         $this->call(EngagementModelSeeder::class);
         $this->call(PillarSeeder::class);
+        $this->call(TeamMemberSeeder::class);
+        $this->call(PartnerCategorySeeder::class);
+        $this->call(PortfolioEngagementSeeder::class);
+        $this->call(ProjectSeeder::class);
+        $this->call(EventSeeder::class);
 
         // Insights context: published thought-leadership pieces.
         $this->call(InsightSeeder::class);

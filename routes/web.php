@@ -7,12 +7,17 @@ use App\Http\Controllers\Admin\AdminDashboardController;
 use App\Http\Controllers\Admin\ApplicationReviewController;
 use App\Http\Controllers\Admin\CapabilityAdminController;
 use App\Http\Controllers\Admin\EngagementModelAdminController;
+use App\Http\Controllers\Admin\EventAdminController;
 use App\Http\Controllers\Admin\InquiryReviewController;
 use App\Http\Controllers\Admin\InsightAdminController;
 use App\Http\Controllers\Admin\MetricAdminController;
 use App\Http\Controllers\Admin\NarrativeAdminController;
+use App\Http\Controllers\Admin\PartnerCategoryAdminController;
 use App\Http\Controllers\Admin\PillarAdminController;
+use App\Http\Controllers\Admin\PortfolioEngagementAdminController;
+use App\Http\Controllers\Admin\ProjectAdminController;
 use App\Http\Controllers\Admin\SectorAdminController;
+use App\Http\Controllers\Admin\TeamMemberAdminController;
 use App\Http\Controllers\Auth\EmailVerificationController;
 use App\Http\Controllers\Auth\ForgotPasswordController;
 use App\Http\Controllers\Auth\LoginController;
@@ -112,7 +117,8 @@ Route::get('/account', [AccountController::class, 'show'])
 
 // Staff admin review queue: membership applications and confidential
 // inquiries, plus content admin CRUD over Insights, Capabilities, Sectors,
-// Metrics, Engagement Models, Pillars, and the Narrative singleton.
+// Metrics, Engagement Models, Pillars, Team, Partners, Portfolio,
+// Projects, Events, and the Narrative singleton.
 // `admin` implies a logged-in user (see EnsureUserIsAdmin's doc block);
 // `auth` is still applied explicitly so a guest is redirected to /login
 // rather than refused outright.
@@ -135,6 +141,18 @@ Route::prefix('admin')->middleware(['auth', 'admin'])->name('admin.')->group(fun
         ->except(['show'])
         ->parameters(['engagement-models' => 'engagement_model']);
     Route::resource('pillars', PillarAdminController::class)->except(['show']);
+
+    Route::resource('team', TeamMemberAdminController::class)
+        ->except(['show'])
+        ->parameters(['team' => 'team_member']);
+    Route::resource('partners', PartnerCategoryAdminController::class)
+        ->except(['show'])
+        ->parameters(['partners' => 'partner_category']);
+    Route::resource('portfolio', PortfolioEngagementAdminController::class)
+        ->except(['show'])
+        ->parameters(['portfolio' => 'portfolio_engagement']);
+    Route::resource('projects', ProjectAdminController::class)->except(['show']);
+    Route::resource('events', EventAdminController::class)->except(['show']);
 
     Route::get('narrative', [NarrativeAdminController::class, 'edit'])->name('narrative.edit');
     Route::put('narrative', [NarrativeAdminController::class, 'update'])->name('narrative.update');

@@ -1,0 +1,17 @@
+<x-admin.shell title="Edit Partner Category">
+    <form method="POST" action="{{ route('admin.partners.update', $category->slug->value) }}" class="flex flex-col gap-6 border border-border bg-surface px-6 py-8 sm:px-10 sm:py-10">
+        @csrf
+        @method('PUT')
+
+        <x-admin.field name="title" label="Title" :value="$category->title" />
+        <x-admin.field name="slug" label="Slug" :value="$category->slug->value" />
+        <x-admin.select-field name="icon" label="Icon" :options="\App\Support\IconLibrary::NAMES" :value="$category->icon" />
+        <x-admin.textarea-field name="body" label="Body" rows="4" :value="$category->body" />
+        <x-admin.field name="position" label="Position" type="number" :value="$category->position" />
+
+        <div class="flex items-center gap-4 pt-2">
+            <x-button variant="primary" type="submit">Save Changes</x-button>
+            <a href="{{ route('admin.partners.index') }}" class="text-xs font-semibold uppercase tracking-wider text-muted hover:text-cream">Cancel</a>
+        </div>
+    </form>
+</x-admin.shell>

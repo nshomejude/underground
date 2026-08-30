@@ -6,10 +6,15 @@ namespace Infrastructure\Providers;
 
 use Domain\Content\Repositories\CapabilityRepository;
 use Domain\Content\Repositories\EngagementModelRepository;
+use Domain\Content\Repositories\EventRepository;
 use Domain\Content\Repositories\MetricRepository;
 use Domain\Content\Repositories\NarrativeRepository;
+use Domain\Content\Repositories\PartnerCategoryRepository;
 use Domain\Content\Repositories\PillarRepository;
+use Domain\Content\Repositories\PortfolioEngagementRepository;
+use Domain\Content\Repositories\ProjectRepository;
 use Domain\Content\Repositories\SectorRepository;
+use Domain\Content\Repositories\TeamMemberRepository;
 use Domain\Engagement\Repositories\InquiryRepository;
 use Domain\Insights\Repositories\InsightRepository;
 use Domain\Membership\Repositories\MembershipApplicationRepository;
@@ -17,14 +22,19 @@ use Domain\Membership\Repositories\MembershipTierRepository;
 use Illuminate\Support\ServiceProvider;
 use Infrastructure\Persistence\Eloquent\Repositories\EloquentCapabilityRepository;
 use Infrastructure\Persistence\Eloquent\Repositories\EloquentEngagementModelRepository;
+use Infrastructure\Persistence\Eloquent\Repositories\EloquentEventRepository;
 use Infrastructure\Persistence\Eloquent\Repositories\EloquentInquiryRepository;
 use Infrastructure\Persistence\Eloquent\Repositories\EloquentInsightRepository;
 use Infrastructure\Persistence\Eloquent\Repositories\EloquentMembershipApplicationRepository;
 use Infrastructure\Persistence\Eloquent\Repositories\EloquentMembershipTierRepository;
 use Infrastructure\Persistence\Eloquent\Repositories\EloquentMetricRepository;
 use Infrastructure\Persistence\Eloquent\Repositories\EloquentNarrativeRepository;
+use Infrastructure\Persistence\Eloquent\Repositories\EloquentPartnerCategoryRepository;
 use Infrastructure\Persistence\Eloquent\Repositories\EloquentPillarRepository;
+use Infrastructure\Persistence\Eloquent\Repositories\EloquentPortfolioEngagementRepository;
+use Infrastructure\Persistence\Eloquent\Repositories\EloquentProjectRepository;
 use Infrastructure\Persistence\Eloquent\Repositories\EloquentSectorRepository;
+use Infrastructure\Persistence\Eloquent\Repositories\EloquentTeamMemberRepository;
 
 /**
  * Binds the domain's repository contracts to their Eloquent implementations.
@@ -44,6 +54,11 @@ final class DomainServiceProvider extends ServiceProvider
         NarrativeRepository::class => EloquentNarrativeRepository::class,
         MembershipTierRepository::class => EloquentMembershipTierRepository::class,
         MembershipApplicationRepository::class => EloquentMembershipApplicationRepository::class,
+        TeamMemberRepository::class => EloquentTeamMemberRepository::class,
+        PartnerCategoryRepository::class => EloquentPartnerCategoryRepository::class,
+        PortfolioEngagementRepository::class => EloquentPortfolioEngagementRepository::class,
+        ProjectRepository::class => EloquentProjectRepository::class,
+        EventRepository::class => EloquentEventRepository::class,
     ];
 
     public function register(): void

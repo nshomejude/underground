@@ -49,6 +49,36 @@
             'icon' => 'landmark',
         ],
         [
+            'label' => 'Team',
+            'description' => 'Manage the leadership bios shown on /team.',
+            'route' => 'admin.team.index',
+            'icon' => 'users',
+        ],
+        [
+            'label' => 'Partners',
+            'description' => 'Manage the partner categories shown on /partners.',
+            'route' => 'admin.partners.index',
+            'icon' => 'briefcase',
+        ],
+        [
+            'label' => 'Portfolio',
+            'description' => 'Manage the past engagements shown on /portfolio.',
+            'route' => 'admin.portfolio.index',
+            'icon' => 'check-circle',
+        ],
+        [
+            'label' => 'Projects',
+            'description' => 'Manage the ongoing initiatives shown on /projects.',
+            'route' => 'admin.projects.index',
+            'icon' => 'rotate-cw',
+        ],
+        [
+            'label' => 'Events',
+            'description' => 'Manage the forums shown on /events.',
+            'route' => 'admin.events.index',
+            'icon' => 'clock',
+        ],
+        [
             'label' => 'Narrative',
             'description' => 'Edit the singleton narrative copy block.',
             'route' => 'admin.narrative.edit',
