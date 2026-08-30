@@ -5,6 +5,7 @@ declare(strict_types=1);
 use Illuminate\Support\Facades\Route;
 use Interfaces\Http\Api\V1\Controllers\CapabilityController;
 use Interfaces\Http\Api\V1\Controllers\EngagementModelController;
+use Interfaces\Http\Api\V1\Controllers\InquiryController;
 use Interfaces\Http\Api\V1\Controllers\InsightController;
 use Interfaces\Http\Api\V1\Controllers\MembershipController;
 use Interfaces\Http\Api\V1\Controllers\MetricController;
@@ -59,6 +60,11 @@ Route::prefix('v1')->name('api.v1.')->group(function (): void {
 
     Route::get('/insights', [InsightController::class, 'index'])->name('insights.index');
     Route::get('/insights/{slug}', [InsightController::class, 'show'])->name('insights.show');
+
+    Route::post('/inquiries', [InquiryController::class, 'store'])
+        ->middleware('throttle:10,1')
+        ->name('inquiries.store');
+    Route::get('/inquiries/{reference}', [InquiryController::class, 'show'])->name('inquiries.show');
 
     Route::prefix('membership')->name('membership.')->group(function (): void {
         Route::get('/tiers', [MembershipController::class, 'tiers'])->name('tiers');
