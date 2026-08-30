@@ -76,6 +76,6 @@ final class MembershipController extends Controller
 
         return redirect()
             ->route('membership.apply', ['tier' => $tier])
-            ->with('reference', $application->reference);
+            ->with('reference', $application->reference->value);
     }
 }

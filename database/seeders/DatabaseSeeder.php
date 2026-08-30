@@ -25,16 +25,18 @@ class DatabaseSeeder extends Seeder
         // Content context: capabilities, sectors, metrics, engagement
         // models, pillars, and the single narrative row.
         // $this->call(ContentSeeder::class);
+        $this->call(EngagementModelSeeder::class);
+        $this->call(PillarSeeder::class);
+        $this->call(NarrativeSeeder::class);
 
         // Insights context: published thought-leadership pieces.
         // $this->call(InsightSeeder::class);
 
-        // Engagement context: sample confidential inquiries (non-production
-        // environments only — never seed real client approaches).
-        // $this->call(InquirySeeder::class);
+        // Engagement context: confidential inquiries are user-generated and
+        // are never seeded.
 
-        // Membership context: membership tiers (Sovereign Partner, Principal
-        // Circle, Corporate Affiliate) and any sample applications.
-        // $this->call(MembershipSeeder::class);
+        // Membership context: the vetted tiers Underground extends.
+        // Applications are user-generated and are never seeded.
+        $this->call(MembershipTierSeeder::class);
     }
 }

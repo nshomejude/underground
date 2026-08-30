@@ -4,12 +4,20 @@ declare(strict_types=1);
 
 namespace Tests\Feature\Membership;
 
+use Database\Seeders\MembershipTierSeeder;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Tests\TestCase;
 
 final class MembershipApiTest extends TestCase
 {
     use RefreshDatabase;
+
+    protected function setUp(): void
+    {
+        parent::setUp();
+
+        $this->seed(MembershipTierSeeder::class);
+    }
 
     public function test_tiers_endpoint_lists_the_vetted_membership_tiers(): void
     {

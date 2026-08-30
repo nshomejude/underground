@@ -4,13 +4,21 @@ declare(strict_types=1);
 
 namespace Tests\Feature\Membership;
 
-use Application\Membership\Support\MembershipStubDirectory;
+use Application\Membership\Queries\TrackMembershipApplication;
+use Database\Seeders\MembershipTierSeeder;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Tests\TestCase;
 
 final class MembershipControllerTest extends TestCase
 {
     use RefreshDatabase;
+
+    protected function setUp(): void
+    {
+        parent::setUp();
+
+        $this->seed(MembershipTierSeeder::class);
+    }
 
     public function test_the_index_page_lists_the_vetted_tiers(): void
     {
@@ -45,7 +53,7 @@ final class MembershipControllerTest extends TestCase
         $reference = $response->getSession()->get('reference');
         $this->assertMatchesRegularExpression('/^UGM-\d{4}-[A-Z0-9]{6}$/', $reference);
 
-        $stored = MembershipStubDirectory::find($reference);
+        $stored = (app(TrackMembershipApplication::class))($reference);
         $this->assertNotNull($stored);
         $this->assertSame('Amara Okafor', $stored->name);
         $this->assertSame('sovereign-partner', $stored->tier->value);
