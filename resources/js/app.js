@@ -1,3 +1,29 @@
+// Live character counter for long-text form fields. A field opts in with
+// [data-char-counter] and [data-char-counter-min="<n>"]; the count renders
+// into the element carrying [data-char-counter-output="<field-name>"].
+// Progressive enhancement only — server-side validation is the source of
+// truth, this is purely a typing aid.
+document.addEventListener('DOMContentLoaded', () => {
+    document.querySelectorAll('[data-char-counter]').forEach((field) => {
+        const min = Number.parseInt(field.getAttribute('data-char-counter-min') ?? '0', 10);
+        const output = document.querySelector(`[data-char-counter-output="${field.name}"]`);
+
+        if (!output) {
+            return;
+        }
+
+        const update = () => {
+            const length = field.value.length;
+            output.textContent = length >= min ? `${length} characters` : `${length} / ${min} min`;
+            output.classList.toggle('text-gold', length >= min);
+            output.classList.toggle('text-muted', length < min);
+        };
+
+        field.addEventListener('input', update);
+        update();
+    });
+});
+
 // Mobile navigation drawer: toggled by [data-drawer-toggle="<id>"] buttons,
 // closed by any [data-drawer-close] element inside the matching drawer, or Escape.
 document.addEventListener('DOMContentLoaded', () => {
