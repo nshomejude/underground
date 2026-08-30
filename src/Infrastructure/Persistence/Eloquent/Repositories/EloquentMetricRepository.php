@@ -16,13 +16,44 @@ final class EloquentMetricRepository implements MetricRepository
         return MetricRecord::query()
             ->orderBy('position')
             ->get()
-            ->map(fn (MetricRecord $record): Metric => new Metric(
-                slug: Slug::fromString($record->slug),
-                value: $record->value,
-                label: $record->label,
-                icon: $record->icon,
-                position: $record->position,
-            ))
+            ->map($this->toEntity(...))
             ->all();
+    }
+
+    public function findBySlug(Slug $slug): ?Metric
+    {
+        $record = MetricRecord::query()->where('slug', $slug->value)->first();
+
+        return $record === null ? null : $this->toEntity($record);
+    }
+
+    public function save(Metric $metric, ?Slug $originalSlug = null): void
+    {
+        MetricRecord::query()->updateOrCreate(
+            ['slug' => ($originalSlug ?? $metric->slug)->value],
+            [
+                'slug' => $metric->slug->value,
+                'value' => $metric->value,
+                'label' => $metric->label,
+                'icon' => $metric->icon,
+                'position' => $metric->position,
+            ],
+        );
+    }
+
+    public function delete(Slug $slug): void
+    {
+        MetricRecord::query()->where('slug', $slug->value)->delete();
+    }
+
+    private function toEntity(MetricRecord $record): Metric
+    {
+        return new Metric(
+            slug: Slug::fromString($record->slug),
+            value: $record->value,
+            label: $record->label,
+            icon: $record->icon,
+            position: $record->position,
+        );
     }
 }

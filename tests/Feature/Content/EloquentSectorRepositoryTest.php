@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Tests\Feature\Content;
 
+use Domain\Content\Entities\Sector;
 use Domain\Shared\ValueObjects\Slug;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Infrastructure\Persistence\Eloquent\Models\SectorRecord;
@@ -53,5 +54,76 @@ final class EloquentSectorRepositoryTest extends TestCase
         $repository = new EloquentSectorRepository;
 
         $this->assertNull($repository->findBySlug(Slug::fromString('does-not-exist')));
+    }
+
+    public function test_save_creates_a_new_sector(): void
+    {
+        $repository = new EloquentSectorRepository;
+
+        $repository->save(new Sector(
+            slug: Slug::fromString('aerospace-defence'),
+            name: 'Aerospace & Defence',
+            summary: 'Prime contractors and defence ministries.',
+            motif: 'radar',
+            position: 5,
+        ));
+
+        $sector = $repository->findBySlug(Slug::fromString('aerospace-defence'));
+
+        $this->assertNotNull($sector);
+        $this->assertSame('Aerospace & Defence', $sector->name);
+        $this->assertSame(5, $sector->position);
+    }
+
+    public function test_save_updates_an_existing_sector_in_place(): void
+    {
+        SectorRecord::factory()->create(['slug' => 'oil-gas', 'name' => 'Oil & Gas', 'position' => 1]);
+
+        $repository = new EloquentSectorRepository;
+
+        $repository->save(new Sector(
+            slug: Slug::fromString('oil-gas'),
+            name: 'Oil, Gas & Energy',
+            summary: 'Updated summary.',
+            motif: 'skyline',
+            position: 2,
+        ));
+
+        $this->assertCount(1, SectorRecord::all());
+        $sector = $repository->findBySlug(Slug::fromString('oil-gas'));
+        $this->assertSame('Oil, Gas & Energy', $sector->name);
+        $this->assertSame(2, $sector->position);
+    }
+
+    public function test_save_with_an_original_slug_renames_the_record(): void
+    {
+        SectorRecord::factory()->create(['slug' => 'old-slug', 'name' => 'Old Name', 'position' => 1]);
+
+        $repository = new EloquentSectorRepository;
+
+        $repository->save(
+            new Sector(
+                slug: Slug::fromString('new-slug'),
+                name: 'New Name',
+                summary: 'Renamed summary.',
+                motif: 'grid',
+                position: 1,
+            ),
+            originalSlug: Slug::fromString('old-slug'),
+        );
+
+        $this->assertCount(1, SectorRecord::all());
+        $this->assertNull($repository->findBySlug(Slug::fromString('old-slug')));
+        $this->assertNotNull($repository->findBySlug(Slug::fromString('new-slug')));
+    }
+
+    public function test_delete_removes_the_sector(): void
+    {
+        SectorRecord::factory()->create(['slug' => 'oil-gas']);
+
+        $repository = new EloquentSectorRepository;
+        $repository->delete(Slug::fromString('oil-gas'));
+
+        $this->assertNull($repository->findBySlug(Slug::fromString('oil-gas')));
     }
 }

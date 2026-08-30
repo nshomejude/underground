@@ -20,6 +20,32 @@ final class EloquentPillarRepository implements PillarRepository
             ->all();
     }
 
+    public function findBySlug(Slug $slug): ?Pillar
+    {
+        $record = PillarRecord::query()->where('slug', $slug->value)->first();
+
+        return $record === null ? null : $this->toEntity($record);
+    }
+
+    public function save(Pillar $pillar, ?Slug $originalSlug = null): void
+    {
+        PillarRecord::query()->updateOrCreate(
+            ['slug' => ($originalSlug ?? $pillar->slug)->value],
+            [
+                'slug' => $pillar->slug->value,
+                'title' => $pillar->title,
+                'qualifier' => $pillar->qualifier,
+                'icon' => $pillar->icon,
+                'position' => $pillar->position,
+            ],
+        );
+    }
+
+    public function delete(Slug $slug): void
+    {
+        PillarRecord::query()->where('slug', $slug->value)->delete();
+    }
+
     private function toEntity(PillarRecord $record): Pillar
     {
         return new Pillar(

@@ -27,6 +27,25 @@ final class EloquentSectorRepository implements SectorRepository
         return $record === null ? null : $this->toEntity($record);
     }
 
+    public function save(Sector $sector, ?Slug $originalSlug = null): void
+    {
+        SectorRecord::query()->updateOrCreate(
+            ['slug' => ($originalSlug ?? $sector->slug)->value],
+            [
+                'slug' => $sector->slug->value,
+                'name' => $sector->name,
+                'summary' => $sector->summary,
+                'motif' => $sector->motif,
+                'position' => $sector->position,
+            ],
+        );
+    }
+
+    public function delete(Slug $slug): void
+    {
+        SectorRecord::query()->where('slug', $slug->value)->delete();
+    }
+
     private function toEntity(SectorRecord $record): Sector
     {
         return new Sector(

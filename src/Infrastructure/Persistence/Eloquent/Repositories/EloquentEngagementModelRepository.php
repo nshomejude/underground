@@ -27,6 +27,25 @@ final class EloquentEngagementModelRepository implements EngagementModelReposito
         return $record === null ? null : $this->toEntity($record);
     }
 
+    public function save(EngagementModel $model, ?Slug $originalSlug = null): void
+    {
+        EngagementModelRecord::query()->updateOrCreate(
+            ['slug' => ($originalSlug ?? $model->slug)->value],
+            [
+                'slug' => $model->slug->value,
+                'name' => $model->name,
+                'summary' => $model->summary,
+                'icon' => $model->icon,
+                'position' => $model->position,
+            ],
+        );
+    }
+
+    public function delete(Slug $slug): void
+    {
+        EngagementModelRecord::query()->where('slug', $slug->value)->delete();
+    }
+
     private function toEntity(EngagementModelRecord $record): EngagementModel
     {
         return new EngagementModel(

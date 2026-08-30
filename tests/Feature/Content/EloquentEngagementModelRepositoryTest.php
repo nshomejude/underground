@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Tests\Feature\Content;
 
+use Domain\Content\Entities\EngagementModel;
 use Domain\Shared\ValueObjects\Slug;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Infrastructure\Persistence\Eloquent\Models\EngagementModelRecord;
@@ -54,5 +55,55 @@ final class EloquentEngagementModelRepositoryTest extends TestCase
 
         $this->assertNotNull($model);
         $this->assertSame('Strategic Advisory Retainers', $model->name);
+    }
+
+    public function test_save_creates_a_new_engagement_model(): void
+    {
+        $repository = new EloquentEngagementModelRepository;
+
+        $repository->save(new EngagementModel(
+            slug: Slug::fromString('crisis-management-special-situations'),
+            name: 'Crisis Management & Special Situations',
+            summary: 'Rapid-response engagements.',
+            icon: 'radar',
+            position: 4,
+        ));
+
+        $model = $repository->findBySlug(Slug::fromString('crisis-management-special-situations'));
+
+        $this->assertNotNull($model);
+        $this->assertSame('Crisis Management & Special Situations', $model->name);
+    }
+
+    public function test_save_with_an_original_slug_renames_the_record(): void
+    {
+        EngagementModelRecord::factory()->create(['slug' => 'old-slug', 'name' => 'Old Name']);
+
+        $repository = new EloquentEngagementModelRepository;
+
+        $repository->save(
+            new EngagementModel(
+                slug: Slug::fromString('new-slug'),
+                name: 'New Name',
+                summary: 'Renamed summary.',
+                icon: 'target',
+                position: 1,
+            ),
+            originalSlug: Slug::fromString('old-slug'),
+        );
+
+        $this->assertCount(1, EngagementModelRecord::all());
+        $this->assertNull($repository->findBySlug(Slug::fromString('old-slug')));
+        $this->assertNotNull($repository->findBySlug(Slug::fromString('new-slug')));
+    }
+
+    public function test_delete_removes_the_engagement_model(): void
+    {
+        EngagementModelRecord::factory()->create(['slug' => 'strategic-advisory-retainers']);
+
+        $repository = new EloquentEngagementModelRepository;
+        $repository->delete(Slug::fromString('strategic-advisory-retainers'));
+
+        $this->assertNull($repository->findBySlug(Slug::fromString('strategic-advisory-retainers')));
     }
 }

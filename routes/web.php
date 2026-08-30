@@ -2,6 +2,11 @@
 
 use App\Http\Controllers\AboutController;
 use App\Http\Controllers\AccountController;
+use App\Http\Controllers\Admin\EngagementModelAdminController;
+use App\Http\Controllers\Admin\MetricAdminController;
+use App\Http\Controllers\Admin\NarrativeAdminController;
+use App\Http\Controllers\Admin\PillarAdminController;
+use App\Http\Controllers\Admin\SectorAdminController;
 use App\Http\Controllers\Auth\LoginController;
 use App\Http\Controllers\Auth\LogoutController;
 use App\Http\Controllers\Auth\RegisterController;
@@ -69,3 +74,19 @@ Route::post('/logout', LogoutController::class)
 Route::get('/account', [AccountController::class, 'show'])
     ->middleware('auth')
     ->name('account.show');
+
+// Content admin: Sectors, Metrics, Engagement Models, Pillars, and the
+// Narrative singleton. The `admin` middleware alias is a stub here — see
+// app/Http/Middleware/EnsureUserIsAdmin.php — pending the sibling module
+// that owns the real admin foundation.
+Route::prefix('admin')->name('admin.')->middleware(['auth', 'admin'])->group(function (): void {
+    Route::resource('sectors', SectorAdminController::class)->except(['show']);
+    Route::resource('metrics', MetricAdminController::class)->except(['show']);
+    Route::resource('engagement-models', EngagementModelAdminController::class)
+        ->except(['show'])
+        ->parameters(['engagement-models' => 'engagement_model']);
+    Route::resource('pillars', PillarAdminController::class)->except(['show']);
+
+    Route::get('narrative', [NarrativeAdminController::class, 'edit'])->name('narrative.edit');
+    Route::put('narrative', [NarrativeAdminController::class, 'update'])->name('narrative.update');
+});
