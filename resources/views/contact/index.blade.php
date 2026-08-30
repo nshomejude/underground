@@ -19,6 +19,14 @@
             </x-button>
         </div>
 
+        <p class="text-xs leading-relaxed text-muted">
+            Already submitted an inquiry or a membership application? Track its status at
+            <a href="{{ route('inquiries.track') }}" class="text-gold underline hover:text-gold-bright">{{ route('inquiries.track') }}</a>
+            or
+            <a href="{{ route('membership.track') }}" class="text-gold underline hover:text-gold-bright">{{ route('membership.track') }}</a>
+            &mdash; no account required.
+        </p>
+
         <div class="flex flex-col gap-4 border-t border-border pt-10 sm:flex-row sm:items-center sm:justify-between">
             <div class="flex items-center gap-4">
                 <span class="flex h-11 w-11 shrink-0 items-center justify-center border border-gold text-gold">

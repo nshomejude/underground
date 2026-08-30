@@ -31,6 +31,14 @@
                     {{ session('reference') }}
                 </p>
 
+                <p class="text-xs leading-relaxed text-muted">
+                    You can check on this application anytime at
+                    <a href="{{ route('membership.track', ['reference' => session('reference')]) }}" class="text-gold underline hover:text-gold-bright">
+                        {{ route('membership.track') }}
+                    </a>
+                    &mdash; no account required.
+                </p>
+
                 <x-button variant="secondary" href="{{ route('membership.index') }}" class="w-fit">
                     Back to Membership
                 </x-button>

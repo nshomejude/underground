@@ -25,10 +25,12 @@ use App\Http\Controllers\CollaborationController;
 use App\Http\Controllers\ContactController;
 use App\Http\Controllers\EventController;
 use App\Http\Controllers\InquiryController;
+use App\Http\Controllers\InquiryTrackController;
 use App\Http\Controllers\InsightController;
 use App\Http\Controllers\LandingPageController;
 use App\Http\Controllers\LegalController;
 use App\Http\Controllers\MembershipController;
+use App\Http\Controllers\MembershipTrackController;
 use App\Http\Controllers\PartnerController;
 use App\Http\Controllers\PortfolioController;
 use App\Http\Controllers\ProjectController;
@@ -60,12 +62,18 @@ Route::post('/confidential-inquiry', [InquiryController::class, 'store'])
     ->middleware('throttle:10,1')
     ->name('inquiries.store');
 
+// Public, no-login status lookup by reference — see InquiryTrackController.
+Route::get('/confidential-inquiry/track', [InquiryTrackController::class, 'show'])->name('inquiries.track');
+
 Route::get('/membership', [MembershipController::class, 'index'])->name('membership.index');
 Route::get('/membership/cards', [MembershipController::class, 'cards'])->name('membership.cards');
 Route::get('/membership/apply/{tier}', [MembershipController::class, 'create'])->name('membership.apply');
 Route::post('/membership/apply/{tier}', [MembershipController::class, 'store'])
     ->middleware('throttle:10,1')
     ->name('membership.store');
+
+// Public, no-login status lookup by reference — see MembershipTrackController.
+Route::get('/membership/track', [MembershipTrackController::class, 'show'])->name('membership.track');
 
 // Member account area: standard Laravel session auth, hand-rolled on core
 // framework primitives (Auth/Hash facades, session) — no Breeze/Fortify/
