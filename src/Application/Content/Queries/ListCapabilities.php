@@ -10,9 +10,7 @@ use Domain\Shared\ValueObjects\Slug;
 
 final readonly class ListCapabilities
 {
-    public function __construct(private CapabilityRepository $capabilities)
-    {
-    }
+    public function __construct(private CapabilityRepository $capabilities) {}
 
     /** @return list<Capability> */
     public function __invoke(bool $featuredOnly = false, ?int $limit = null): array

@@ -20,8 +20,7 @@ final readonly class InquiryPayload
         public ?string $country,
         public InterestArea $interest,
         public string $brief,
-    ) {
-    }
+    ) {}
 
     /** @param array<string,mixed> $data */
     public static function fromArray(array $data): self

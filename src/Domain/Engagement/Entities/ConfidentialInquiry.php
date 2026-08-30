@@ -31,8 +31,7 @@ final class ConfidentialInquiry
         public readonly string $brief,
         public readonly DateTimeImmutable $submittedAt,
         private InquiryStatus $status,
-    ) {
-    }
+    ) {}
 
     public static function submit(
         string $name,
@@ -59,7 +58,7 @@ final class ConfidentialInquiry
             ));
         }
 
-        $submittedAt ??= new DateTimeImmutable();
+        $submittedAt ??= new DateTimeImmutable;
 
         return new self(
             reference: $reference ?? InquiryReference::generate((int) $submittedAt->format('Y')),

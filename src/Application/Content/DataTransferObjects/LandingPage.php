@@ -35,8 +35,7 @@ final readonly class LandingPage
         public array $engagementModels,
         public array $pillars,
         public array $insights,
-    ) {
-    }
+    ) {}
 
     /** @return list<Capability> the three promoted to the mobile summary list */
     public function featuredCapabilities(int $limit = 3): array

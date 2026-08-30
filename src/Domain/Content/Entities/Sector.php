@@ -18,8 +18,7 @@ final readonly class Sector
         public string $summary,
         public string $motif,
         public int $position,
-    ) {
-    }
+    ) {}
 
     /** The tile caption wraps onto two lines at the ampersand. */
     public function nameLines(): array

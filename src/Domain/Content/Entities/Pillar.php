@@ -18,8 +18,7 @@ final readonly class Pillar
         public string $qualifier,
         public string $icon,
         public int $position,
-    ) {
-    }
+    ) {}
 
     public function toArray(): array
     {

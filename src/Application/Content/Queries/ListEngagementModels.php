@@ -9,9 +9,7 @@ use Domain\Content\Repositories\EngagementModelRepository;
 
 final readonly class ListEngagementModels
 {
-    public function __construct(private EngagementModelRepository $models)
-    {
-    }
+    public function __construct(private EngagementModelRepository $models) {}
 
     /** @return list<EngagementModel> */
     public function __invoke(): array

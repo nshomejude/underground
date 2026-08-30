@@ -10,9 +10,7 @@ use Domain\Shared\ValueObjects\Slug;
 
 final readonly class ListSectors
 {
-    public function __construct(private SectorRepository $sectors)
-    {
-    }
+    public function __construct(private SectorRepository $sectors) {}
 
     /** @return list<Sector> */
     public function __invoke(): array

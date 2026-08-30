@@ -21,5 +21,20 @@ class DatabaseSeeder extends Seeder
             'name' => 'Test User',
             'email' => 'test@example.com',
         ]);
+
+        // Content context: capabilities, sectors, metrics, engagement
+        // models, pillars, and the single narrative row.
+        // $this->call(ContentSeeder::class);
+
+        // Insights context: published thought-leadership pieces.
+        // $this->call(InsightSeeder::class);
+
+        // Engagement context: sample confidential inquiries (non-production
+        // environments only — never seed real client approaches).
+        // $this->call(InquirySeeder::class);
+
+        // Membership context: membership tiers (Sovereign Partner, Principal
+        // Circle, Corporate Affiliate) and any sample applications.
+        // $this->call(MembershipSeeder::class);
     }
 }
