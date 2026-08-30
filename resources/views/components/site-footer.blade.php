@@ -1,12 +1,19 @@
 @php
     $navLinks = [
-        'About' => '#',
+        'About' => route('about'),
         'Capabilities' => '#',
         'Expertise' => '#',
         'Global Reach' => '#',
         'Insights' => '#',
         'Careers' => '#',
-        'Contact' => '#',
+        'Contact' => route('contact'),
+        'Team' => route('team'),
+        'Partners' => route('partners'),
+        'Portfolio' => route('portfolio'),
+        'Projects' => route('projects'),
+        'Events' => route('events'),
+        'Terms' => route('terms'),
+        'Privacy' => route('privacy'),
     ];
 @endphp
 

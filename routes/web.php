@@ -1,13 +1,34 @@
 <?php
 
+use App\Http\Controllers\AboutController;
 use App\Http\Controllers\CapabilityController;
+use App\Http\Controllers\CollaborationController;
+use App\Http\Controllers\ContactController;
+use App\Http\Controllers\EventController;
 use App\Http\Controllers\InquiryController;
 use App\Http\Controllers\InsightController;
 use App\Http\Controllers\LandingPageController;
+use App\Http\Controllers\LegalController;
 use App\Http\Controllers\MembershipController;
+use App\Http\Controllers\PartnerController;
+use App\Http\Controllers\PortfolioController;
+use App\Http\Controllers\ProjectController;
+use App\Http\Controllers\TeamController;
 use Illuminate\Support\Facades\Route;
 
 Route::get('/', [LandingPageController::class, 'index'])->name('home');
+
+Route::get('/about', [AboutController::class, 'index'])->name('about');
+Route::get('/team', [TeamController::class, 'index'])->name('team');
+Route::get('/contact', [ContactController::class, 'index'])->name('contact');
+Route::get('/partners', [PartnerController::class, 'index'])->name('partners');
+Route::get('/collaboration', [CollaborationController::class, 'index'])->name('collaboration');
+Route::get('/portfolio', [PortfolioController::class, 'index'])->name('portfolio');
+Route::get('/projects', [ProjectController::class, 'index'])->name('projects');
+Route::get('/events', [EventController::class, 'index'])->name('events');
+
+Route::get('/terms', [LegalController::class, 'terms'])->name('terms');
+Route::get('/privacy', [LegalController::class, 'privacy'])->name('privacy');
 
 Route::get('/insights', [InsightController::class, 'index'])->name('insights.index');
 Route::get('/insights/{slug}', [InsightController::class, 'show'])->name('insights.show');
