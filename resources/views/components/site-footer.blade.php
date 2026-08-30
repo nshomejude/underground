@@ -27,8 +27,13 @@
             @endforeach
         </nav>
 
-        <p class="text-xs uppercase tracking-widest text-muted">
-            &copy; {{ now()->year }} Underground Network Inc. All rights reserved.
-        </p>
+        <div class="flex flex-col items-center gap-1 lg:items-end">
+            <p class="text-xs uppercase tracking-widest text-muted">
+                &copy; {{ now()->year }} Underground Network Inc. All rights reserved.
+            </p>
+            <p class="text-xs uppercase tracking-widest text-muted">
+                Powered by <a href="https://opesware.com" class="transition-colors hover:text-gold" rel="noopener">Opesware Technologies</a>
+            </p>
+        </div>
     </div>
 </footer>
