@@ -36,6 +36,21 @@ final class MembershipCardsPageTest extends TestCase
         );
     }
 
+    public function test_each_card_renders_a_uv_inspection_toggle(): void
+    {
+        $response = $this->get(route('membership.cards'))
+            ->assertOk()
+            ->assertSee('Inspect Under UV')
+            ->assertSee('UV Light On');
+
+        // One UV toggle checkbox per sample card, distinct from the
+        // existing flip-to-back checkbox.
+        $this->assertSame(
+            3,
+            substr_count($response->getContent(), 'type="checkbox" id="membership-card-uv-'),
+        );
+    }
+
     public function test_the_cards_page_is_linked_from_the_membership_index(): void
     {
         $this->get(route('membership.index'))

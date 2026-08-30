@@ -36,6 +36,7 @@
 @php
     $isOrganisation = $variant === 'organisation';
     $flipId = 'membership-card-'.\Illuminate\Support\Str::random(10);
+    $uvId = 'membership-card-uv-'.\Illuminate\Support\Str::random(10);
 
     $issuedLabel = strtoupper($issuedOn->format('M Y'));
     $validThroughLabel = strtoupper($validThrough->format('M Y'));
@@ -91,6 +92,37 @@
 
         return $onOuterRing || $onInnerBlock;
     };
+
+    // Guilloché security backdrop: a set of interlocking sine waves at
+    // differing amplitude/frequency/phase so their crests interfere across
+    // the card, the way engine-turned engraving does on currency and stock
+    // certificates. This is a shared layer identical on every tier — the
+    // tier motif above stays the only per-tier decoration.
+    $guillocheWaves = [];
+    $gW = 400;
+    $gH = 252;
+    for ($w = 0; $w < 16; $w++) {
+        $amplitude = 7 + ($w % 4) * 4;
+        $frequency = 0.026 + ($w * 0.0032);
+        $phase = $w * 0.55;
+        $baseline = 6 + $w * 16;
+        $points = [];
+        for ($x = 0; $x <= $gW; $x += 6) {
+            $y = round($baseline + $amplitude * sin($x * $frequency + $phase), 1);
+            $points[] = round($x, 1).','.$y;
+        }
+        $guillocheWaves[] = 'M'.implode(' L', $points);
+    }
+
+    // Microprinted border strip: a genuinely tiny (4.5px) repeating phrase
+    // that reads as fine texture rather than as text, the way currency and
+    // ID microprinting does. Repeated well past any rendered card width so
+    // the strip never runs out and shows a gap.
+    $microtext = strtoupper(str_repeat('Underground Network · Authentic · ', 14));
+
+    // UV-reactive verification code: deterministic per member id (stable
+    // across renders) but invisible until the UV toggle lifts --uv to 1.
+    $uvCode = 'UV·'.strtoupper(substr(hash('crc32b', $memberId.'|uv-ink'), 0, 8));
 @endphp
 
 <div
@@ -98,14 +130,25 @@
     role="group"
     aria-label="{{ $tier->name }} membership card for {{ $name }}"
 >
-    <input type="checkbox" id="{{ $flipId }}" class="peer sr-only" aria-label="Flip the membership card to view {{ $isOrganisation ? $representative ?? $name : $name }}'s card back">
+    <input type="checkbox" id="{{ $flipId }}" class="peer/flip sr-only" aria-label="Flip the membership card to view {{ $isOrganisation ? $representative ?? $name : $name }}'s card back">
 
-    {{-- The rotating element must be a direct sibling of the checkbox above
-         for the peer-checked selector to reach it (CSS's general sibling
-         combinator only matches same-parent siblings) — so aspect-ratio
-         sizing, 3D transform-style, and the flip transform all live on this
-         one element rather than being split across nested wrappers. --}}
-    <div class="relative aspect-[1.586/1] w-full transition-transform duration-700 ease-[cubic-bezier(0.22,1,0.36,1)] [transform-style:preserve-3d] peer-checked:[transform:rotateY(180deg)] peer-focus-visible:outline peer-focus-visible:outline-2 peer-focus-visible:outline-offset-4 peer-focus-visible:outline-gold">
+    {{-- A second hidden checkbox drives the UV-reactive ink simulation, using
+         the same pure-CSS peer technique as the flip above rather than JS.
+         Its target isn't only the sibling rotating element (which can react
+         directly via peer-checked/uv) but also elements nested arbitrarily
+         deep inside the front/back faces — CSS sibling combinators can't
+         reach those, so peer-checked/uv sets a --uv custom property on the
+         rotating element instead, and every descendant (regardless of
+         nesting) reads it back via var(--uv, 0). --}}
+    <input type="checkbox" id="{{ $uvId }}" class="peer/uv sr-only" aria-label="Inspect {{ $isOrganisation ? $representative ?? $name : $name }}'s card under UV light">
+
+    {{-- The rotating element must be a direct sibling of the checkboxes
+         above for the peer-checked selector to reach it (CSS's general
+         sibling combinator only matches same-parent siblings) — so
+         aspect-ratio sizing, 3D transform-style, and the flip transform all
+         live on this one element rather than being split across nested
+         wrappers. --}}
+    <div class="relative aspect-[1.586/1] w-full transition-transform duration-700 ease-[cubic-bezier(0.22,1,0.36,1)] [transform-style:preserve-3d] peer-checked/flip:[transform:rotateY(180deg)] peer-checked/uv:[--uv:1] peer-focus-visible/flip:outline peer-focus-visible/flip:outline-2 peer-focus-visible/flip:outline-offset-4 peer-focus-visible/flip:outline-gold">
 
             {{-- FRONT --}}
             <div class="absolute inset-0 overflow-hidden [backface-visibility:hidden] {{ $accent['radius'] }} {{ $accent['ring'] }} {{ $accent['innerRing'] }} shadow-[0_30px_70px_-20px_rgba(0,0,0,0.9),0_10px_25px_-10px_rgba(0,0,0,0.7)]">
@@ -113,6 +156,15 @@
                      charcoal so the card reads as its own object against the
                      page's near-black ground, not as a continuation of it --}}
                 <div class="absolute inset-0 bg-[radial-gradient(130%_120%_at_12%_8%,color-mix(in_srgb,var(--color-gold-bright)_22%,transparent),transparent_48%),linear-gradient(155deg,color-mix(in_srgb,var(--color-surface-raised)_78%,var(--color-gold)_22%)_0%,var(--color-surface)_45%,var(--color-ink)_100%)]"></div>
+
+                {{-- guilloché security backdrop: interlocking engraved waves,
+                     identical across every tier (see the tier motif for the
+                     per-tier decoration layered on top of it) --}}
+                <svg viewBox="0 0 {{ $gW }} {{ $gH }}" preserveAspectRatio="none" class="pointer-events-none absolute inset-0 h-full w-full text-gold-bright opacity-[0.3] mix-blend-soft-light" fill="none" stroke="currentColor" stroke-width="0.85">
+                    @foreach ($guillocheWaves as $d)
+                        <path d="{{ $d }}" />
+                    @endforeach
+                </svg>
 
                 {{-- engine-turned hairline texture --}}
                 <div class="absolute inset-0 bg-[repeating-linear-gradient(135deg,rgba(201,162,90,0.09)_0px,rgba(201,162,90,0.09)_1px,transparent_1px,transparent_7px)] mix-blend-soft-light"></div>
@@ -122,7 +174,6 @@
                     <svg viewBox="0 0 200 200" class="pointer-events-none absolute -right-14 -top-14 h-56 w-56 text-gold-bright {{ $accent['intensity'] }}" fill="none" stroke="currentColor" stroke-width="1">
                         <circle cx="100" cy="100" r="92" />
                         <circle cx="100" cy="100" r="76" />
-                        <circle cx="100" cy="100" r="9" />
                         @for ($i = 0; $i < 36; $i++)
                             @php
                                 $angle = deg2rad($i * 10);
@@ -161,14 +212,30 @@
                 <div class="absolute inset-x-4 top-0 h-px bg-gradient-to-r from-transparent via-gold-bright to-transparent"></div>
 
                 {{-- content --}}
-                <div class="relative z-10 flex h-full flex-col justify-between p-4">
+                <div class="relative z-10 flex h-full flex-col justify-between p-4 pb-[22px] [filter:brightness(calc(1_-_(var(--uv,0)*0.45)))_saturate(calc(1_-_(var(--uv,0)*0.55)))] transition-[filter] duration-700">
                     <div class="flex items-start justify-between gap-3">
                         <span class="inline-flex items-center gap-2">
                             <span class="flex h-6 w-6 shrink-0 items-center justify-center border border-gold font-serif text-xs font-bold text-gold">U</span>
                             <span class="font-serif text-[13px] font-semibold tracking-wide text-cream">UNDERGROUND</span>
                         </span>
 
-                        <x-status-badge :label="$status" :tone="$statusTone" class="scale-[0.85] origin-top-right !px-2 !py-0.5 !text-[9px]" />
+                        <div class="flex shrink-0 flex-col items-end gap-1.5">
+                            <x-status-badge :label="$status" :tone="$statusTone" class="scale-[0.85] origin-top-right !px-2 !py-0.5 !text-[9px]" />
+
+                            {{-- holographic security patch: an iridescent
+                                 shield built only from color-mix() blends of
+                                 the brand tokens, animated on
+                                 background-position so its hue appears to
+                                 shift with viewing angle the way real foil
+                                 holograms do. --}}
+                            <div
+                                aria-hidden="true"
+                                class="relative h-9 w-8 shrink-0 origin-top-right [clip-path:polygon(50%_0%,100%_22%,100%_60%,50%_100%,0%_60%,0%_22%)] bg-[conic-gradient(from_0deg,color-mix(in_srgb,var(--color-info)_62%,var(--color-gold-bright)_38%),color-mix(in_srgb,var(--color-success)_58%,var(--color-cream)_42%),color-mix(in_srgb,var(--color-cream)_70%,var(--color-gold-bright)_30%),color-mix(in_srgb,var(--color-gold)_55%,var(--color-success)_45%),color-mix(in_srgb,var(--color-info)_55%,var(--color-cream)_45%),color-mix(in_srgb,var(--color-gold-bright)_60%,var(--color-success)_40%),color-mix(in_srgb,var(--color-info)_62%,var(--color-gold-bright)_38%))] [background-size:220%_220%] shadow-[inset_0_0_0_1px_rgba(255,255,255,0.55),inset_0_1px_3px_rgba(255,255,255,0.6),0_1px_4px_rgba(0,0,0,0.5)] saturate-150 contrast-125 motion-safe:animate-[hologram-shift_6s_ease-in-out_infinite]"
+                            >
+                                <x-icon name="shield-check" class="absolute inset-0 m-auto h-4 w-4 text-ink mix-blend-overlay opacity-80" />
+                                <div class="absolute inset-0 bg-[repeating-linear-gradient(115deg,rgba(255,255,255,0.4)_0px,rgba(255,255,255,0.4)_1px,transparent_1px,transparent_3px)] opacity-40 mix-blend-overlay"></div>
+                            </div>
+                        </div>
                     </div>
 
                     <div class="mt-1 flex flex-col gap-2">
@@ -217,14 +284,61 @@
                         </div>
                     </div>
                 </div>
+
+                {{-- UV-reactive ink: invisible in normal light, revealed by
+                     the UV toggle. --uv is set to 1 on the rotating ancestor
+                     when the UV checkbox is checked and inherits down to
+                     here regardless of nesting depth, so a darkened wash
+                     drops over the ordinary content (simulating house
+                     lights dimmed for a UV lamp) while a repeating
+                     watermark and a hidden verification code fluoresce on
+                     top of it. --}}
+                <div class="pointer-events-none absolute inset-0 z-20 bg-[color-mix(in_srgb,var(--color-ink)_62%,transparent)] opacity-[var(--uv,0)] transition-opacity duration-700"></div>
+
+                <div class="pointer-events-none absolute inset-0 z-30 flex items-center justify-center overflow-hidden opacity-[var(--uv,0)] transition-opacity delay-100 duration-700">
+                    <div class="grid w-[170%] -rotate-[26deg] grid-cols-3 gap-x-6 gap-y-7 motion-safe:animate-[uv-glow-pulse_2.6s_ease-in-out_infinite]">
+                        @for ($i = 0; $i < 9; $i++)
+                            <span class="whitespace-nowrap text-center font-serif text-[10px] font-bold uppercase tracking-[0.3em] text-info [text-shadow:0_0_6px_var(--color-info),0_0_14px_var(--color-info)]">Underground</span>
+                        @endfor
+                    </div>
+                </div>
+
+                <span class="pointer-events-none absolute bottom-[27px] left-4 z-30 whitespace-nowrap font-mono text-[9px] font-semibold tracking-[0.2em] text-gold-bright opacity-[var(--uv,0)] transition-opacity delay-100 duration-700 [text-shadow:0_0_6px_var(--color-gold-bright),0_0_12px_var(--color-gold-bright)] motion-safe:animate-[uv-glow-pulse_2.6s_ease-in-out_infinite]">
+                    {{ $uvCode }}
+                </span>
+
+                {{-- microprinted border strip: a genuinely tiny repeating
+                     phrase — texture to the naked eye, legible only under
+                     magnification, exactly like currency and ID
+                     microprinting. Shared across every tier. --}}
+                <div class="pointer-events-none absolute inset-x-0 bottom-0 z-10 overflow-hidden bg-black/15 py-[2px]">
+                    <span class="block whitespace-nowrap font-mono text-[4.5px] leading-none tracking-normal text-gold/40">
+                        {{ $microtext }}
+                    </span>
+                </div>
             </div>
 
             {{-- BACK --}}
             <div class="absolute inset-0 overflow-hidden [backface-visibility:hidden] [transform:rotateY(180deg)] {{ $accent['radius'] }} {{ $accent['ring'] }} shadow-[0_30px_70px_-20px_rgba(0,0,0,0.9),0_10px_25px_-10px_rgba(0,0,0,0.7)]">
                 <div class="absolute inset-0 bg-[radial-gradient(130%_120%_at_88%_92%,color-mix(in_srgb,var(--color-gold-bright)_16%,transparent),transparent_45%),linear-gradient(155deg,color-mix(in_srgb,var(--color-surface-raised)_78%,var(--color-gold)_22%)_0%,var(--color-surface)_45%,var(--color-ink)_100%)]"></div>
+
+                {{-- guilloché security backdrop, shared with the front face --}}
+                <svg viewBox="0 0 {{ $gW }} {{ $gH }}" preserveAspectRatio="none" class="pointer-events-none absolute inset-0 h-full w-full text-gold-bright opacity-[0.3] mix-blend-soft-light" fill="none" stroke="currentColor" stroke-width="0.85">
+                    @foreach ($guillocheWaves as $d)
+                        <path d="{{ $d }}" />
+                    @endforeach
+                </svg>
+
                 <div class="absolute inset-0 bg-[repeating-linear-gradient(135deg,rgba(201,162,90,0.09)_0px,rgba(201,162,90,0.09)_1px,transparent_1px,transparent_7px)] mix-blend-soft-light"></div>
 
-                <div class="relative z-10 flex h-full flex-col">
+                {{-- microprinted border strip, mirrored from the front face --}}
+                <div class="pointer-events-none absolute inset-x-0 top-0 z-10 overflow-hidden bg-black/15 py-[2px]">
+                    <span class="block whitespace-nowrap font-mono text-[4.5px] leading-none tracking-normal text-gold/40">
+                        {{ $microtext }}
+                    </span>
+                </div>
+
+                <div class="relative z-10 flex h-full flex-col [filter:brightness(calc(1_-_(var(--uv,0)*0.45)))_saturate(calc(1_-_(var(--uv,0)*0.55)))] transition-[filter] duration-700">
                     {{-- magnetic stripe --}}
                     <div class="relative mt-5 h-8 w-full bg-black/85 shadow-[inset_0_1px_0_rgba(255,255,255,0.08)]">
                         <div class="absolute inset-x-0 top-1/2 h-px -translate-y-1/2 bg-gold/10"></div>
@@ -275,13 +389,37 @@
                         </p>
                     </div>
                 </div>
+
+                {{-- UV-reactive ink, back face: the same darkened wash plus a
+                     fluorescing authenticity stamp over the signature panel --}}
+                <div class="pointer-events-none absolute inset-0 z-20 bg-[color-mix(in_srgb,var(--color-ink)_62%,transparent)] opacity-[var(--uv,0)] transition-opacity duration-700"></div>
+
+                <div class="pointer-events-none absolute inset-0 z-30 flex items-center justify-center opacity-[var(--uv,0)] transition-opacity delay-100 duration-700">
+                    <span class="-rotate-[10deg] whitespace-nowrap font-serif text-lg font-bold uppercase tracking-[0.35em] text-info [text-shadow:0_0_8px_var(--color-info),0_0_18px_var(--color-info)] motion-safe:animate-[uv-glow-pulse_2.6s_ease-in-out_infinite]">
+                        Authentic
+                    </span>
+                </div>
             </div>
         </div>
 
-    <label for="{{ $flipId }}" class="peer-checked:hidden inline-flex cursor-pointer items-center gap-1.5 text-[10px] font-semibold uppercase tracking-widest text-muted transition-colors hover:text-gold">
-        <x-icon name="rotate-cw" class="h-3 w-3" /> View Back
-    </label>
-    <label for="{{ $flipId }}" class="hidden cursor-pointer items-center gap-1.5 text-[10px] font-semibold uppercase tracking-widest text-muted transition-colors hover:text-gold peer-checked:inline-flex">
-        <x-icon name="rotate-cw" class="h-3 w-3" /> View Front
-    </label>
+    <div class="flex items-center gap-4">
+        <label for="{{ $flipId }}" class="peer-checked/flip:hidden inline-flex cursor-pointer items-center gap-1.5 text-[10px] font-semibold uppercase tracking-widest text-muted transition-colors hover:text-gold">
+            <x-icon name="rotate-cw" class="h-3 w-3" /> View Back
+        </label>
+        <label for="{{ $flipId }}" class="hidden cursor-pointer items-center gap-1.5 text-[10px] font-semibold uppercase tracking-widest text-muted transition-colors hover:text-gold peer-checked/flip:inline-flex">
+            <x-icon name="rotate-cw" class="h-3 w-3" /> View Front
+        </label>
+
+        <span class="h-3 w-px bg-border" aria-hidden="true"></span>
+
+        {{-- UV toggle: a real interactive reveal, not a label saying a
+             feature exists — checking it lifts --uv to 1 on the rotating
+             card element above, which every hidden-ink layer reads back. --}}
+        <label for="{{ $uvId }}" class="peer-checked/uv:hidden inline-flex cursor-pointer items-center gap-1.5 text-[10px] font-semibold uppercase tracking-widest text-muted transition-colors hover:text-info">
+            <x-icon name="flashlight" class="h-3 w-3" /> Inspect Under UV
+        </label>
+        <label for="{{ $uvId }}" class="hidden cursor-pointer items-center gap-1.5 text-[10px] font-semibold uppercase tracking-widest text-info transition-colors hover:text-gold-bright peer-checked/uv:inline-flex">
+            <x-icon name="flashlight" class="h-3 w-3" /> UV Light On
+        </label>
+    </div>
 </div>
