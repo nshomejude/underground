@@ -5,6 +5,7 @@ declare(strict_types=1);
 use Illuminate\Support\Facades\Route;
 use Interfaces\Http\Api\V1\Controllers\CapabilityController;
 use Interfaces\Http\Api\V1\Controllers\EngagementModelController;
+use Interfaces\Http\Api\V1\Controllers\InsightController;
 use Interfaces\Http\Api\V1\Controllers\MembershipController;
 use Interfaces\Http\Api\V1\Controllers\MetricController;
 use Interfaces\Http\Api\V1\Controllers\PillarController;
@@ -55,6 +56,9 @@ Route::prefix('v1')->name('api.v1.')->group(function (): void {
     Route::get('/engagement-models', [EngagementModelController::class, 'index'])->name('engagement-models.index');
 
     Route::get('/pillars', [PillarController::class, 'index'])->name('pillars.index');
+
+    Route::get('/insights', [InsightController::class, 'index'])->name('insights.index');
+    Route::get('/insights/{slug}', [InsightController::class, 'show'])->name('insights.show');
 
     Route::prefix('membership')->name('membership.')->group(function (): void {
         Route::get('/tiers', [MembershipController::class, 'tiers'])->name('tiers');
