@@ -2,9 +2,12 @@
 
 use App\Http\Controllers\AboutController;
 use App\Http\Controllers\AccountController;
+use App\Http\Controllers\Auth\EmailVerificationController;
+use App\Http\Controllers\Auth\ForgotPasswordController;
 use App\Http\Controllers\Auth\LoginController;
 use App\Http\Controllers\Auth\LogoutController;
 use App\Http\Controllers\Auth\RegisterController;
+use App\Http\Controllers\Auth\ResetPasswordController;
 use App\Http\Controllers\CapabilityController;
 use App\Http\Controllers\CollaborationController;
 use App\Http\Controllers\ContactController;
@@ -60,6 +63,14 @@ Route::middleware('guest')->group(function (): void {
 
     Route::get('/login', [LoginController::class, 'create'])->name('login');
     Route::post('/login', [LoginController::class, 'store']);
+
+    Route::get('/forgot-password', [ForgotPasswordController::class, 'create'])->name('password.request');
+    Route::post('/forgot-password', [ForgotPasswordController::class, 'store'])
+        ->middleware('throttle:6,1')
+        ->name('password.email');
+
+    Route::get('/reset-password/{token}', [ResetPasswordController::class, 'create'])->name('password.reset');
+    Route::post('/reset-password', [ResetPasswordController::class, 'store'])->name('password.update');
 });
 
 Route::post('/logout', LogoutController::class)
@@ -69,3 +80,20 @@ Route::post('/logout', LogoutController::class)
 Route::get('/account', [AccountController::class, 'show'])
     ->middleware('auth')
     ->name('account.show');
+
+// Email verification: standard Laravel MustVerifyEmail machinery (signed
+// links, the built-in VerifyEmail notification family, EmailVerificationRequest).
+// Deliberately NOT applied as middleware to any existing route (e.g. /account)
+// — wiring it here only makes the mechanism available for a future module to
+// opt routes into without changing current behaviour.
+Route::middleware('auth')->group(function (): void {
+    Route::get('/email/verify', [EmailVerificationController::class, 'notice'])->name('verification.notice');
+
+    Route::get('/email/verify/{id}/{hash}', [EmailVerificationController::class, 'verify'])
+        ->middleware(['signed', 'throttle:6,1'])
+        ->name('verification.verify');
+
+    Route::post('/email/verification-notification', [EmailVerificationController::class, 'resend'])
+        ->middleware('throttle:6,1')
+        ->name('verification.send');
+});
