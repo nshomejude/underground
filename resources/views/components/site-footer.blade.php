@@ -17,7 +17,7 @@
     ];
 @endphp
 
-<footer class="border-t border-border bg-ink">
+<footer class="border-t border-border bg-ink pb-20 lg:pb-0">
     <div class="mx-auto flex max-w-7xl flex-col items-center gap-6 px-4 py-10 text-center sm:px-6 lg:flex-row lg:justify-between lg:px-8 lg:text-left">
         <x-brand-mark />
 

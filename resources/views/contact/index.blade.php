@@ -20,10 +20,10 @@
         </div>
 
         <p class="text-xs leading-relaxed text-muted">
-            Already submitted an inquiry or a membership application? Track its status at
-            <a href="{{ route('inquiries.track') }}" class="text-gold underline hover:text-gold-bright">{{ route('inquiries.track') }}</a>
-            or
-            <a href="{{ route('membership.track') }}" class="text-gold underline hover:text-gold-bright">{{ route('membership.track') }}</a>
+            Already submitted an inquiry or a membership application? Track its status via the
+            <a href="{{ route('inquiries.track') }}" class="text-gold underline hover:text-gold-bright">inquiry tracker</a>
+            or the
+            <a href="{{ route('membership.track') }}" class="text-gold underline hover:text-gold-bright">membership tracker</a>
             &mdash; no account required.
         </p>
 
