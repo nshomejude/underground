@@ -67,3 +67,41 @@ document.addEventListener('DOMContentLoaded', () => {
         });
     });
 });
+
+// Admin light/dark theme toggle. The blocking script in x-admin.layout's
+// <head> already applies a saved 'light' preference before paint; this
+// only needs to handle the click and keep localStorage + the icon swap
+// in sync. Absent entirely on public pages (no [data-theme-toggle] there).
+document.addEventListener('DOMContentLoaded', () => {
+    const toggle = document.querySelector('[data-theme-toggle]');
+
+    if (!toggle) {
+        return;
+    }
+
+    const root = document.documentElement;
+
+    const syncIcon = () => {
+        const isLight = root.getAttribute('data-theme') === 'light';
+        toggle.querySelector('[data-theme-icon="light"]')?.classList.toggle('hidden', isLight);
+        toggle.querySelector('[data-theme-icon="dark"]')?.classList.toggle('hidden', !isLight);
+    };
+
+    syncIcon();
+
+    toggle.addEventListener('click', () => {
+        const next = root.getAttribute('data-theme') === 'light' ? 'dark' : 'light';
+
+        if (next === 'light') {
+            root.setAttribute('data-theme', 'light');
+        } else {
+            root.removeAttribute('data-theme');
+        }
+
+        try {
+            localStorage.setItem('admin-theme', next);
+        } catch (e) {}
+
+        syncIcon();
+    });
+});

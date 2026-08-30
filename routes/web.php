@@ -17,6 +17,7 @@ use App\Http\Controllers\Admin\PillarAdminController;
 use App\Http\Controllers\Admin\PortfolioEngagementAdminController;
 use App\Http\Controllers\Admin\ProjectAdminController;
 use App\Http\Controllers\Admin\SectorAdminController;
+use App\Http\Controllers\Admin\SiteSettingAdminController;
 use App\Http\Controllers\Admin\TeamMemberAdminController;
 use App\Http\Controllers\Auth\EmailVerificationController;
 use App\Http\Controllers\Auth\ForgotPasswordController;
@@ -156,6 +157,9 @@ Route::prefix('admin')->middleware(['auth', 'admin'])->name('admin.')->group(fun
 
     Route::get('narrative', [NarrativeAdminController::class, 'edit'])->name('narrative.edit');
     Route::put('narrative', [NarrativeAdminController::class, 'update'])->name('narrative.update');
+
+    Route::get('settings', [SiteSettingAdminController::class, 'edit'])->name('settings.edit');
+    Route::put('settings', [SiteSettingAdminController::class, 'update'])->name('settings.update');
 });
 
 Route::middleware('auth')->group(function (): void {

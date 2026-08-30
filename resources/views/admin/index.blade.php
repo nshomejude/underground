@@ -208,6 +208,7 @@
                     ['label' => 'Projects', 'description' => 'Manage the ongoing initiatives shown on /projects.', 'route' => 'admin.projects.index', 'icon' => 'rotate-cw'],
                     ['label' => 'Events', 'description' => 'Manage the forums shown on /events.', 'route' => 'admin.events.index', 'icon' => 'clock'],
                     ['label' => 'Narrative', 'description' => 'Edit the singleton narrative copy block.', 'route' => 'admin.narrative.edit', 'icon' => 'library'],
+                    ['label' => 'Configuration', 'description' => 'General site info, social links, SEO, and maintenance mode.', 'route' => 'admin.settings.edit', 'icon' => 'sliders-horizontal'],
                 ];
             @endphp
             @foreach ($sections as $section)

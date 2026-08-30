@@ -21,6 +21,37 @@
     --color-warning: #C97A3A;
     --color-danger: #B5493F;
     --color-info: #4E7FB5;
+
+    /* Fixed dark text laid on top of gold accents (buttons, active nav
+       state, decorative seals). Deliberately NOT part of the light-theme
+       override below — it must stay readably dark against gold in both
+       themes, unlike --color-ink which flips to a light page background
+       in the admin light theme. */
+    --color-onlight: #16140F;
+}
+
+/*
+ * Admin-only light theme. Scoped to [data-theme="light"] on the admin
+ * layout's own <html> element (see x-admin.layout) — the public site
+ * never sets this attribute, so its fixed dark brand palette is
+ * untouched. Every admin view already uses the shared bg-ink/bg-surface/
+ * text-cream/etc. utilities, so overriding the same tokens here re-themes
+ * the whole admin panel with no per-view changes.
+ */
+:root[data-theme='light'] {
+    --color-ink: #F7F5F0;
+    --color-surface: #FFFFFF;
+    --color-surface-raised: #F0ECE2;
+    --color-border: #E1DCD0;
+    --color-gold: #93712F;
+    --color-gold-bright: #6E5320;
+    --color-cream: #1C1A15;
+    --color-body: #4A453C;
+    --color-muted: #6E6A5E;
+    --color-success: #2F7D4A;
+    --color-warning: #A85D22;
+    --color-danger: #9A3A30;
+    --color-info: #3A6AA0;
 }
 
 /* Membership card security-feature animations. No new colours are

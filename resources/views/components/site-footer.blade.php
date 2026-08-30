@@ -1,4 +1,6 @@
 @php
+    $siteSetting = app(\Domain\Content\Repositories\SiteSettingRepository::class)->current();
+
     $navGroups = [
         'Company' => [
             'About' => route('about'),
@@ -47,13 +49,27 @@
             @endforeach
         </div>
 
+        @if (! empty($siteSetting->socialLinks))
+            <nav aria-label="Social" class="mt-10 flex flex-wrap items-center justify-center gap-x-6 gap-y-2 border-t border-border pt-8 sm:justify-start">
+                @foreach ($siteSetting->socialLinks as $social)
+                    <a href="{{ $social['url'] }}" class="text-xs font-semibold uppercase tracking-widest text-body transition-colors hover:text-gold" rel="noopener" target="_blank">
+                        {{ $social['label'] }}
+                    </a>
+                @endforeach
+            </nav>
+        @endif
+
         <div class="mt-12 flex flex-col items-center gap-2 border-t border-border pt-6 text-center sm:flex-row sm:justify-between sm:text-left">
             <p class="text-[11px] uppercase tracking-widest text-muted">
-                &copy; {{ now()->year }} Underground Network Inc. All rights reserved.
+                &copy; {{ now()->year }} {{ $siteSetting->siteName }} Inc. All rights reserved.
             </p>
-            <p class="text-[11px] uppercase tracking-widest text-muted">
-                Powered by <a href="https://opesware.com" class="transition-colors hover:text-gold" rel="noopener">Opesware Technologies</a>
-            </p>
+            @if ($siteSetting->footerNote)
+                <p class="text-[11px] uppercase tracking-widest text-muted">{{ $siteSetting->footerNote }}</p>
+            @else
+                <p class="text-[11px] uppercase tracking-widest text-muted">
+                    Powered by <a href="https://opesware.com" class="transition-colors hover:text-gold" rel="noopener">Opesware Technologies</a>
+                </p>
+            @endif
         </div>
     </div>
 </footer>

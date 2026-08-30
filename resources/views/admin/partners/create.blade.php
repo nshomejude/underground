@@ -1,4 +1,4 @@
-<x-admin.shell title="New Partner Category">
+<x-admin.shell title="New Partner Category" max-width="max-w-2xl">
     <form method="POST" action="{{ route('admin.partners.store') }}" class="flex flex-col gap-6 border border-border bg-surface px-6 py-8 sm:px-10 sm:py-10">
         @csrf
 

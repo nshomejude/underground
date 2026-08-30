@@ -19,7 +19,7 @@
             </thead>
             <tbody>
                 @forelse ($sectors as $sector)
-                    <tr class="border-b border-border last:border-b-0">
+                    <tr class="border-b border-border transition-colors last:border-b-0 hover:bg-surface-raised">
                         <td class="px-4 py-3 text-muted">{{ $sector->position }}</td>
                         <td class="px-4 py-3 text-cream">{{ $sector->name }}</td>
                         <td class="px-4 py-3 font-mono text-xs text-body">{{ $sector->slug->value }}</td>

@@ -18,7 +18,7 @@
             </thead>
             <tbody>
                 @forelse ($engagements as $engagement)
-                    <tr class="border-b border-border last:border-b-0">
+                    <tr class="border-b border-border transition-colors last:border-b-0 hover:bg-surface-raised">
                         <td class="px-4 py-3 text-muted">{{ $engagement->position }}</td>
                         <td class="px-4 py-3 text-body">{{ $engagement->sector }}</td>
                         <td class="px-4 py-3 text-cream">{{ $engagement->title }}</td>

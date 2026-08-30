@@ -1,4 +1,4 @@
-<x-admin.shell title="Edit Metric">
+<x-admin.shell title="Edit Metric" max-width="max-w-2xl">
     <form method="POST" action="{{ route('admin.metrics.update', $metric->slug->value) }}" class="flex flex-col gap-6 border border-border bg-surface px-6 py-8 sm:px-10 sm:py-10">
         @csrf
         @method('PUT')

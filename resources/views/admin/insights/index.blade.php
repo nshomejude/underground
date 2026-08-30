@@ -19,7 +19,7 @@
                 </thead>
                 <tbody class="divide-y divide-border">
                     @forelse ($insights as $insight)
-                        <tr>
+                        <tr class="transition-colors hover:bg-surface-raised">
                             <td class="px-4 py-3 text-cream">
                                 {{ $insight->title }}
                                 <div class="text-xs text-muted">{{ $insight->slug->value }}</div>

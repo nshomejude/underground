@@ -14,6 +14,7 @@ use Domain\Content\Repositories\PillarRepository;
 use Domain\Content\Repositories\PortfolioEngagementRepository;
 use Domain\Content\Repositories\ProjectRepository;
 use Domain\Content\Repositories\SectorRepository;
+use Domain\Content\Repositories\SiteSettingRepository;
 use Domain\Content\Repositories\TeamMemberRepository;
 use Domain\Engagement\Repositories\InquiryRepository;
 use Domain\Insights\Repositories\InsightRepository;
@@ -34,6 +35,7 @@ use Infrastructure\Persistence\Eloquent\Repositories\EloquentPillarRepository;
 use Infrastructure\Persistence\Eloquent\Repositories\EloquentPortfolioEngagementRepository;
 use Infrastructure\Persistence\Eloquent\Repositories\EloquentProjectRepository;
 use Infrastructure\Persistence\Eloquent\Repositories\EloquentSectorRepository;
+use Infrastructure\Persistence\Eloquent\Repositories\EloquentSiteSettingRepository;
 use Infrastructure\Persistence\Eloquent\Repositories\EloquentTeamMemberRepository;
 
 /**
@@ -59,6 +61,7 @@ final class DomainServiceProvider extends ServiceProvider
         PortfolioEngagementRepository::class => EloquentPortfolioEngagementRepository::class,
         ProjectRepository::class => EloquentProjectRepository::class,
         EventRepository::class => EloquentEventRepository::class,
+        SiteSettingRepository::class => EloquentSiteSettingRepository::class,
     ];
 
     public function register(): void

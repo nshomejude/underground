@@ -1,4 +1,4 @@
-<x-admin.shell title="Edit Sector">
+<x-admin.shell title="Edit Sector" max-width="max-w-2xl">
     <form method="POST" action="{{ route('admin.sectors.update', $sector->slug->value) }}" class="flex flex-col gap-6 border border-border bg-surface px-6 py-8 sm:px-10 sm:py-10">
         @csrf
         @method('PUT')

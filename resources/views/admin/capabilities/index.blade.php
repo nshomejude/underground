@@ -19,7 +19,7 @@
                 </thead>
                 <tbody class="divide-y divide-border">
                     @forelse ($capabilities as $capability)
-                        <tr>
+                        <tr class="transition-colors hover:bg-surface-raised">
                             <td class="px-4 py-3 text-cream">
                                 {{ $capability->title }}
                                 <div class="text-xs text-muted">{{ $capability->slug->value }}</div>

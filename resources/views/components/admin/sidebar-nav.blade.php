@@ -21,6 +21,7 @@
             ['label' => 'Events', 'route' => 'admin.events.index', 'pattern' => 'admin.events.*', 'icon' => 'clock'],
         ],
         'Settings' => [
+            ['label' => 'Configuration', 'route' => 'admin.settings.edit', 'pattern' => 'admin.settings.*', 'icon' => 'sliders-horizontal'],
             ['label' => 'Narrative', 'route' => 'admin.narrative.edit', 'pattern' => 'admin.narrative.*', 'icon' => 'library'],
         ],
     ];
@@ -35,7 +36,7 @@
                     href="{{ route($item['route']) }}"
                     @class([
                         'flex items-center gap-2.5 px-3 py-2 text-sm font-medium transition-colors',
-                        'bg-gold text-ink' => request()->routeIs($item['pattern']),
+                        'bg-gold text-onlight' => request()->routeIs($item['pattern']),
                         'text-body hover:bg-surface-raised hover:text-cream' => ! request()->routeIs($item['pattern']),
                     ])
                 >

@@ -14,6 +14,12 @@
             </p>
         @endif
 
+        @if (session('error'))
+            <p class="border border-danger/40 bg-danger/10 px-4 py-3 text-sm text-danger" role="alert">
+                {{ session('error') }}
+            </p>
+        @endif
+
         <form method="POST" action="{{ route('login') }}" novalidate class="flex flex-col gap-6">
             @csrf
 

@@ -1,7 +1,7 @@
 @props([
     'title' => null,
     'eyebrow' => 'Admin',
-    'maxWidth' => 'max-w-5xl',
+    'maxWidth' => 'max-w-7xl',
 ])
 
 <!DOCTYPE html>
@@ -11,6 +11,20 @@
         <meta name="viewport" content="width=device-width, initial-scale=1">
 
         <title>{{ $title ? $title . ' — Admin — ' . config('app.name', 'Underground Network') : 'Admin — ' . config('app.name', 'Underground Network') }}</title>
+
+        {{-- Blocking, pre-paint: apply a previously-saved theme choice
+             before first render so switching themes never flashes the
+             other one. Admin-only — the public site has no such script
+             and always renders its fixed dark brand palette. --}}
+        <script>
+            (function () {
+                try {
+                    if (localStorage.getItem('admin-theme') === 'light') {
+                        document.documentElement.setAttribute('data-theme', 'light');
+                    }
+                } catch (e) {}
+            })();
+        </script>
 
         @if (file_exists(public_path('build/manifest.json')) || file_exists(public_path('hot')))
             @fonts
@@ -78,21 +92,50 @@
 
             {{-- Main column --}}
             <div class="flex min-w-0 flex-1 flex-col">
-                <header class="flex items-center gap-4 border-b border-border bg-ink/95 px-4 py-4 backdrop-blur sm:px-6 lg:hidden">
+                <header class="sticky top-0 z-30 flex items-center gap-4 border-b border-border bg-ink/95 px-4 py-3.5 backdrop-blur sm:px-6 lg:px-10">
                     <button
                         type="button"
                         data-drawer-toggle="admin-sidebar"
                         aria-label="Open admin menu"
                         aria-expanded="false"
                         aria-controls="admin-sidebar"
-                        class="flex h-10 w-10 shrink-0 items-center justify-center border border-gold text-gold"
+                        class="flex h-9 w-9 shrink-0 items-center justify-center border border-gold text-gold lg:hidden"
                     >
-                        <x-icon name="menu" class="h-5 w-5" />
+                        <x-icon name="menu" class="h-4 w-4" />
                     </button>
-                    <x-brand-mark :compact="true" />
+
+                    <x-brand-mark :compact="true" class="lg:hidden" />
+
+                    <span class="hidden text-xs font-semibold uppercase tracking-widest text-muted lg:inline">
+                        {{ $eyebrow }}{{ $title ? ' / '.$title : '' }}
+                    </span>
+
+                    <div class="ml-auto flex items-center gap-3">
+                        <button
+                            type="button"
+                            data-theme-toggle
+                            aria-label="Toggle light and dark mode"
+                            class="flex h-9 w-9 shrink-0 items-center justify-center border border-border text-body transition-colors hover:border-gold hover:text-gold"
+                        >
+                            <x-icon name="sun" class="h-4 w-4" data-theme-icon="light" />
+                            <x-icon name="moon" class="hidden h-4 w-4" data-theme-icon="dark" />
+                        </button>
+
+                        @auth
+                            <span class="hidden items-center gap-2 border-l border-border pl-3 sm:flex">
+                                <span class="flex h-8 w-8 shrink-0 items-center justify-center rounded-full border border-gold text-xs font-semibold uppercase text-gold">
+                                    {{ Str::of(auth()->user()->name)->substr(0, 1) }}
+                                </span>
+                                <span class="flex flex-col leading-tight">
+                                    <span class="text-xs font-semibold text-cream">{{ auth()->user()->name }}</span>
+                                    <span class="text-[11px] text-muted">Staff Admin</span>
+                                </span>
+                            </span>
+                        @endauth
+                    </div>
                 </header>
 
-                <main class="flex-1 px-4 py-10 sm:px-6 lg:px-10 lg:py-12">
+                <main class="flex-1 px-4 py-8 sm:px-6 lg:px-10 lg:py-10">
                     <div class="mx-auto flex w-full {{ $maxWidth }} flex-col gap-8">
                         @if ($title)
                             <x-section-heading :eyebrow="$eyebrow">{{ $title }}</x-section-heading>
