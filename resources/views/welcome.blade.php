@@ -221,20 +221,29 @@
                 </div>
 
                 <div class="flex flex-col gap-px border border-border bg-border">
-                    <p class="bg-ink px-6 py-4 text-xs font-semibold uppercase tracking-[0.2em] text-gold">
-                        {{ $narrative->engagementHeading }}
-                    </p>
+                    <div class="flex items-center justify-between gap-4 bg-ink px-6 py-4">
+                        <p class="text-xs font-semibold uppercase tracking-[0.2em] text-gold">
+                            {{ $narrative->engagementHeading }}
+                        </p>
+                        <a href="{{ route('engagement-models.index') }}" class="inline-flex shrink-0 items-center gap-1.5 text-xs font-semibold uppercase tracking-widest text-gold hover:text-gold-bright">
+                            View All
+                            <x-icon name="chevron-right" class="h-3.5 w-3.5" />
+                        </a>
+                    </div>
 
                     @foreach ($engagementModels as $model)
-                        <div class="flex min-h-[44px] items-center gap-4 bg-ink px-6 py-5">
+                        <a
+                            href="{{ route('engagement-models.show', $model->slug->value) }}"
+                            class="group flex min-h-[44px] items-center gap-4 bg-ink px-6 py-5 transition-colors hover:bg-surface-raised"
+                        >
                             <span class="flex h-9 w-9 shrink-0 items-center justify-center border border-gold text-gold">
                                 <x-icon name="{{ $model->icon }}" class="h-4 w-4" />
                             </span>
-                            <span class="flex-1 text-sm font-semibold uppercase tracking-wide text-cream">
+                            <span class="flex-1 text-sm font-semibold uppercase tracking-wide text-cream group-hover:text-gold">
                                 {{ $model->name }}
                             </span>
                             <x-icon name="chevron-right" class="h-4 w-4 shrink-0 text-gold" />
-                        </div>
+                        </a>
                     @endforeach
                 </div>
             </div>

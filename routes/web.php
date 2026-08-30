@@ -23,6 +23,7 @@ use App\Http\Controllers\CapabilityController;
 use App\Http\Controllers\CareersController;
 use App\Http\Controllers\CollaborationController;
 use App\Http\Controllers\ContactController;
+use App\Http\Controllers\EngagementModelController;
 use App\Http\Controllers\EventController;
 use App\Http\Controllers\InquiryController;
 use App\Http\Controllers\InquiryTrackController;
@@ -60,6 +61,9 @@ Route::get('/capabilities/{slug}', [CapabilityController::class, 'show'])->name(
 
 Route::get('/sectors', [SectorController::class, 'index'])->name('sectors.index');
 Route::get('/sectors/{slug}', [SectorController::class, 'show'])->name('sectors.show');
+
+Route::get('/engagement-models', [EngagementModelController::class, 'index'])->name('engagement-models.index');
+Route::get('/engagement-models/{slug}', [EngagementModelController::class, 'show'])->name('engagement-models.show');
 
 Route::get('/confidential-inquiry', [InquiryController::class, 'create'])->name('inquiries.create');
 Route::post('/confidential-inquiry', [InquiryController::class, 'store'])
