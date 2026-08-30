@@ -3,7 +3,12 @@
 declare(strict_types=1);
 
 use Illuminate\Support\Facades\Route;
+use Interfaces\Http\Api\V1\Controllers\CapabilityController;
+use Interfaces\Http\Api\V1\Controllers\EngagementModelController;
 use Interfaces\Http\Api\V1\Controllers\MembershipController;
+use Interfaces\Http\Api\V1\Controllers\MetricController;
+use Interfaces\Http\Api\V1\Controllers\PillarController;
+use Interfaces\Http\Api\V1\Controllers\SectorController;
 
 /*
 |--------------------------------------------------------------------------
@@ -13,9 +18,9 @@ use Interfaces\Http\Api\V1\Controllers\MembershipController;
 | The public contract of the platform. The HTML landing page is a client of
 | these endpoints, not a parallel implementation of them.
 |
-| WORK IN PROGRESS: only the version handshake and the Membership endpoints
-| are wired up so far. The resource endpoints below are the agreed shape —
-| see README.md.
+| WORK IN PROGRESS: the version handshake, the Content endpoints, and the
+| Membership endpoints are wired up so far. The resource endpoints below
+| are the agreed shape — see README.md.
 |
 |   GET  /api/v1/landing-page
 |   GET  /api/v1/capabilities            GET /api/v1/capabilities/{slug}
@@ -38,6 +43,18 @@ Route::prefix('v1')->name('api.v1.')->group(function (): void {
             'status' => 'in-development',
         ],
     ]))->name('index');
+
+    Route::get('/capabilities', [CapabilityController::class, 'index'])->name('capabilities.index');
+    Route::get('/capabilities/{slug}', [CapabilityController::class, 'show'])->name('capabilities.show');
+
+    Route::get('/sectors', [SectorController::class, 'index'])->name('sectors.index');
+    Route::get('/sectors/{slug}', [SectorController::class, 'show'])->name('sectors.show');
+
+    Route::get('/metrics', [MetricController::class, 'index'])->name('metrics.index');
+
+    Route::get('/engagement-models', [EngagementModelController::class, 'index'])->name('engagement-models.index');
+
+    Route::get('/pillars', [PillarController::class, 'index'])->name('pillars.index');
 
     Route::prefix('membership')->name('membership.')->group(function (): void {
         Route::get('/tiers', [MembershipController::class, 'tiers'])->name('tiers');

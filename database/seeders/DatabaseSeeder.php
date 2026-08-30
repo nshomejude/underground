@@ -24,13 +24,15 @@ class DatabaseSeeder extends Seeder
 
         // Content context: capabilities, sectors, metrics, engagement
         // models, pillars, and the single narrative row.
-        // $this->call(ContentSeeder::class);
+        $this->call(NarrativeSeeder::class);
+        $this->call(CapabilitySeeder::class);
+        $this->call(SectorSeeder::class);
+        $this->call(MetricSeeder::class);
         $this->call(EngagementModelSeeder::class);
         $this->call(PillarSeeder::class);
-        $this->call(NarrativeSeeder::class);
 
         // Insights context: published thought-leadership pieces.
-        // $this->call(InsightSeeder::class);
+        $this->call(InsightSeeder::class);
 
         // Engagement context: confidential inquiries are user-generated and
         // are never seeded.
