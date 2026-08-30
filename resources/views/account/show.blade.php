@@ -58,15 +58,6 @@
                 <p class="inline-flex w-fit items-center gap-2 border border-border bg-ink px-4 py-2 font-mono text-sm tracking-wider text-gold-bright">
                     {{ $application->reference->value }}
                 </p>
-
-                <x-button
-                    variant="secondary"
-                    href="{{ route('api.v1.membership.applications.show', ['reference' => $application->reference->value]) }}"
-                    class="w-fit"
-                >
-                    Track This Application
-                    <x-icon name="chevron-right" class="h-3.5 w-3.5" />
-                </x-button>
             </div>
         @else
             <div class="flex flex-col gap-6 border border-border bg-surface px-6 py-8 sm:px-10 sm:py-10">
