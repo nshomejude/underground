@@ -1,5 +1,9 @@
 <x-layout title="Register">
     <section class="mx-auto flex max-w-md flex-col gap-10 px-4 py-16 sm:px-6 lg:py-24">
+        <a href="{{ url('/') }}" class="mx-auto inline-flex">
+            <x-brand-mark />
+        </a>
+
         <x-section-heading eyebrow="Member Account">
             Register
         </x-section-heading>
