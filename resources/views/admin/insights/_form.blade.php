@@ -2,8 +2,8 @@
 
 @php
     $isEdit = $insight !== null;
-    $labelClass = 'text-xs font-semibold uppercase tracking-widest text-muted';
-    $inputClass = 'w-full border border-border bg-ink px-4 py-3 text-sm text-cream placeholder:text-muted focus:border-gold focus:outline-none';
+    $labelClass = 'text-[13px] font-medium text-body';
+    $inputClass = 'w-full rounded-adm border border-hairline bg-surface px-3 py-2 text-sm text-cream placeholder:text-muted focus:border-gold focus:outline-none focus:ring-2 focus:ring-gold/25';
     $errorClass = 'text-xs text-danger';
 @endphp
 

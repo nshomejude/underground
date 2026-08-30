@@ -1,5 +1,5 @@
 <x-admin.shell title="New Team Member" max-width="max-w-2xl">
-    <form method="POST" action="{{ route('admin.team.store') }}" class="flex flex-col gap-6 border border-border bg-surface px-6 py-8 sm:px-10 sm:py-10">
+    <form method="POST" action="{{ route('admin.team.store') }}" class="flex flex-col gap-6 rounded-adm border border-hairline bg-surface px-5 py-6 shadow-adm-xs sm:px-8 sm:py-8">
         @csrf
 
         <x-admin.field name="name" label="Name" placeholder="Jane Doe" />

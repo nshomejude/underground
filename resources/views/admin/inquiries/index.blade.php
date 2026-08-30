@@ -15,19 +15,20 @@
     ];
 @endphp
 
-<x-admin.shell title="Confidential Inquiries" eyebrow="Staff Review">
+<x-admin.shell title="Confidential Inquiries" eyebrow="Staff Review" description="Work confidential inquiries through the review pipeline.">
         @if (empty($inquiries))
-            <p class="border border-border bg-surface px-6 py-8 text-sm text-muted">
-                No confidential inquiries have been submitted yet.
-            </p>
+            <div class="flex flex-col items-center gap-3 rounded-adm border border-dashed border-hairline px-6 py-16 text-center">
+                <x-icon name="lock" class="h-6 w-6 text-muted" />
+                <p class="text-sm text-muted">No confidential inquiries have been submitted yet.</p>
+            </div>
         @else
-            <div class="flex flex-col gap-4">
+            <div class="flex flex-col gap-3">
                 @foreach ($inquiries as $inquiry)
-                    <article class="flex flex-col gap-4 border border-border bg-surface px-5 py-5 sm:px-6 sm:py-6">
+                    <article class="flex flex-col gap-4 rounded-adm border border-hairline bg-surface px-5 py-5 shadow-adm-xs sm:px-6 sm:py-6">
                         <div class="flex flex-wrap items-start justify-between gap-3">
                             <div class="flex flex-col gap-1">
                                 <span class="font-mono text-xs tracking-wider text-muted">{{ $inquiry->reference->value }}</span>
-                                <h3 class="font-serif text-xl font-semibold text-cream">{{ $inquiry->name }}</h3>
+                                <h3 class="text-base font-semibold text-cream">{{ $inquiry->name }}</h3>
                                 @if ($inquiry->organisation)
                                     <span class="text-sm text-body">{{ $inquiry->organisation }}</span>
                                 @endif
@@ -61,7 +62,7 @@
                         </dl>
 
                         @if (! empty($inquiry->status()->allowedTransitions()))
-                            <div class="flex flex-wrap gap-3 border-t border-border pt-4">
+                            <div class="flex flex-wrap gap-3 border-t border-hairline pt-4">
                                 @foreach ($inquiry->status()->allowedTransitions() as $target)
                                     <form method="POST" action="{{ route('admin.inquiries.transition', $inquiry->reference->value) }}">
                                         @csrf

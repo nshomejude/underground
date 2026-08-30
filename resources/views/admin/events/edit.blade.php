@@ -1,5 +1,5 @@
 <x-admin.shell title="Edit Event" max-width="max-w-2xl">
-    <form method="POST" action="{{ route('admin.events.update', $event->slug->value) }}" class="flex flex-col gap-6 border border-border bg-surface px-6 py-8 sm:px-10 sm:py-10">
+    <form method="POST" action="{{ route('admin.events.update', $event->slug->value) }}" class="flex flex-col gap-6 rounded-adm border border-hairline bg-surface px-5 py-6 shadow-adm-xs sm:px-8 sm:py-8">
         @csrf
         @method('PUT')
 

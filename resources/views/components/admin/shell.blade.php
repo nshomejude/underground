@@ -1,9 +1,14 @@
 @props([
     'title',
     'eyebrow' => 'Content Admin',
-    'maxWidth' => 'max-w-5xl',
+    'description' => null,
+    'maxWidth' => 'max-w-7xl',
 ])
 
-<x-admin.layout :title="$title" :eyebrow="$eyebrow" :max-width="$maxWidth">
+<x-admin.layout :title="$title" :eyebrow="$eyebrow" :description="$description" :max-width="$maxWidth">
+    @isset($actions)
+        <x-slot:actions>{{ $actions }}</x-slot:actions>
+    @endisset
+
     {{ $slot }}
 </x-admin.layout>

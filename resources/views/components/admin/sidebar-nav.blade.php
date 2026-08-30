@@ -27,20 +27,27 @@
     ];
 @endphp
 
-<nav class="flex flex-col gap-6" aria-label="Admin">
+<nav class="flex flex-col gap-4" aria-label="Admin">
     @foreach ($groups as $group => $items)
-        <div class="flex flex-col gap-1">
-            <p class="px-3 text-[10px] font-semibold uppercase tracking-[0.2em] text-muted">{{ $group }}</p>
+        <div class="flex flex-col gap-0.5">
+            <p class="px-2.5 pb-1 text-[11px] font-semibold uppercase tracking-wider text-muted/70">{{ $group }}</p>
             @foreach ($items as $item)
                 <a
                     href="{{ route($item['route']) }}"
                     @class([
-                        'flex items-center gap-2.5 px-3 py-2 text-sm font-medium transition-colors',
-                        'bg-gold text-onlight' => request()->routeIs($item['pattern']),
+                        'group flex items-center gap-2.5 rounded-adm px-2.5 py-1.5 text-[13px] font-medium transition-colors',
+                        'bg-gold/10 text-gold' => request()->routeIs($item['pattern']),
                         'text-body hover:bg-surface-raised hover:text-cream' => ! request()->routeIs($item['pattern']),
                     ])
                 >
-                    <x-icon :name="$item['icon']" class="h-4 w-4 shrink-0" />
+                    <x-icon
+                        :name="$item['icon']"
+                        @class([
+                            'h-4 w-4 shrink-0',
+                            'text-gold' => request()->routeIs($item['pattern']),
+                            'text-muted group-hover:text-body' => ! request()->routeIs($item['pattern']),
+                        ])
+                    />
                     {{ $item['label'] }}
                 </a>
             @endforeach

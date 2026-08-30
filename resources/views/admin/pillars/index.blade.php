@@ -1,15 +1,15 @@
 <x-admin.shell title="Pillars">
-    <div class="flex items-center justify-end">
+    <x-slot:actions>
         <x-button variant="primary" href="{{ route('admin.pillars.create') }}">
             <x-icon name="chevron-right" class="h-3.5 w-3.5 rotate-[-45deg]" />
             New Pillar
         </x-button>
-    </div>
+    </x-slot:actions>
 
-    <div class="overflow-x-auto border border-border">
+    <div class="overflow-x-auto rounded-adm border border-hairline bg-surface shadow-adm-xs">
         <table class="w-full min-w-[640px] border-collapse text-left text-sm">
             <thead>
-                <tr class="border-b border-border bg-surface text-xs uppercase tracking-wider text-muted">
+                <tr class="border-b border-hairline bg-surface-raised/40 text-[11px] font-medium uppercase tracking-wider text-muted">
                     <th class="px-4 py-3 font-semibold">Position</th>
                     <th class="px-4 py-3 font-semibold">Title</th>
                     <th class="px-4 py-3 font-semibold">Qualifier</th>
@@ -19,7 +19,7 @@
             </thead>
             <tbody>
                 @forelse ($pillars as $pillar)
-                    <tr class="border-b border-border transition-colors last:border-b-0 hover:bg-surface-raised">
+                    <tr class="border-b border-hairline transition-colors last:border-b-0 hover:bg-surface-raised">
                         <td class="px-4 py-3 text-muted">{{ $pillar->position }}</td>
                         <td class="px-4 py-3 text-cream">{{ $pillar->title }}</td>
                         <td class="px-4 py-3 text-body">{{ $pillar->qualifier }}</td>

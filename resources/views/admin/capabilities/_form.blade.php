@@ -2,8 +2,8 @@
 
 @php
     $isEdit = $capability !== null;
-    $labelClass = 'text-xs font-semibold uppercase tracking-widest text-muted';
-    $inputClass = 'w-full border border-border bg-ink px-4 py-3 text-sm text-cream placeholder:text-muted focus:border-gold focus:outline-none';
+    $labelClass = 'text-[13px] font-medium text-body';
+    $inputClass = 'w-full rounded-adm border border-hairline bg-surface px-3 py-2 text-sm text-cream placeholder:text-muted focus:border-gold focus:outline-none focus:ring-2 focus:ring-gold/25';
     $errorClass = 'text-xs text-danger';
     $selectedIcon = old('icon', $capability->icon ?? $icons[0] ?? '');
 @endphp
@@ -49,6 +49,6 @@
 </div>
 
 <label class="flex items-center gap-3 text-sm text-body">
-    <input type="checkbox" id="is_featured" name="is_featured" value="1" @checked(old('is_featured', $capability->isFeatured ?? false)) class="h-4 w-4 border-border bg-ink accent-gold">
+    <input type="checkbox" id="is_featured" name="is_featured" value="1" @checked(old('is_featured', $capability->isFeatured ?? false)) class="h-4 w-4 rounded-[3px] border-hairline bg-ink accent-gold">
     Feature on the mobile capability summary
 </label>

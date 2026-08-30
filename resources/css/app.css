@@ -28,6 +28,21 @@
        themes, unlike --color-ink which flips to a light page background
        in the admin light theme. */
     --color-onlight: #16140F;
+
+    /* Admin-only design tokens (Linear/Vercel-style: dense, monochrome
+       surfaces, a single sharp accent, real elevation via shadow rather
+       than heavy borders). A hairline auto-adapts to whichever theme is
+       active because it's a faint tint of --color-cream, which itself
+       flips between near-white (dark theme) and near-black (light theme) —
+       one definition, correct contrast in both. Shadows are theme-specific
+       (see the light override below): dark surfaces get almost none, since
+       shadow is invisible on a near-black background and elevation there
+       reads through the surface/surface-raised tone step instead. */
+    --color-hairline: color-mix(in srgb, var(--color-cream) 8%, transparent);
+    --radius-adm: 0.5rem;
+    --shadow-adm-xs: 0 1px 2px color-mix(in srgb, black 20%, transparent);
+    --shadow-adm-sm: 0 1px 3px color-mix(in srgb, black 30%, transparent), 0 1px 2px color-mix(in srgb, black 20%, transparent);
+    --shadow-adm-md: 0 4px 12px color-mix(in srgb, black 35%, transparent), 0 2px 4px color-mix(in srgb, black 20%, transparent);
 }
 
 /*
@@ -52,6 +67,12 @@
     --color-warning: #A85D22;
     --color-danger: #9A3A30;
     --color-info: #3A6AA0;
+
+    /* Real, soft elevation reads correctly against a white/light surface,
+       unlike the near-invisible dark-mode shadow above. */
+    --shadow-adm-xs: 0 1px 2px color-mix(in srgb, #16140F 6%, transparent);
+    --shadow-adm-sm: 0 1px 3px color-mix(in srgb, #16140F 8%, transparent), 0 1px 2px color-mix(in srgb, #16140F 4%, transparent);
+    --shadow-adm-md: 0 8px 20px color-mix(in srgb, #16140F 10%, transparent), 0 2px 6px color-mix(in srgb, #16140F 6%, transparent);
 }
 
 /* Membership card security-feature animations. No new colours are

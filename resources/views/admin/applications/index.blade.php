@@ -7,19 +7,20 @@
     ];
 @endphp
 
-<x-admin.shell title="Membership Applications" eyebrow="Staff Review">
+<x-admin.shell title="Membership Applications" eyebrow="Staff Review" description="Review, approve, or decline pending applications.">
         @if (empty($applications))
-            <p class="border border-border bg-surface px-6 py-8 text-sm text-muted">
-                No membership applications have been submitted yet.
-            </p>
+            <div class="flex flex-col items-center gap-3 rounded-adm border border-dashed border-hairline px-6 py-16 text-center">
+                <x-icon name="briefcase" class="h-6 w-6 text-muted" />
+                <p class="text-sm text-muted">No membership applications have been submitted yet.</p>
+            </div>
         @else
-            <div class="flex flex-col gap-4">
+            <div class="flex flex-col gap-3">
                 @foreach ($applications as $application)
-                    <article class="flex flex-col gap-4 border border-border bg-surface px-5 py-5 sm:px-6 sm:py-6">
+                    <article class="flex flex-col gap-4 rounded-adm border border-hairline bg-surface px-5 py-5 shadow-adm-xs sm:px-6 sm:py-6">
                         <div class="flex flex-wrap items-start justify-between gap-3">
                             <div class="flex flex-col gap-1">
                                 <span class="font-mono text-xs tracking-wider text-muted">{{ $application->reference->value }}</span>
-                                <h3 class="font-serif text-xl font-semibold text-cream">{{ $application->name }}</h3>
+                                <h3 class="text-base font-semibold text-cream">{{ $application->name }}</h3>
                                 @if ($application->organisation)
                                     <span class="text-sm text-body">{{ $application->organisation }}</span>
                                 @endif
@@ -53,7 +54,7 @@
                         </dl>
 
                         @unless ($application->status()->isTerminal())
-                            <div class="flex flex-wrap gap-3 border-t border-border pt-4">
+                            <div class="flex flex-wrap gap-3 border-t border-hairline pt-4">
                                 <form method="POST" action="{{ route('admin.applications.approve', $application->reference->value) }}">
                                     @csrf
                                     <x-button type="submit" variant="primary" class="!px-4 !py-2 !text-[11px]">

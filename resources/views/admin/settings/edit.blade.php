@@ -9,8 +9,8 @@
         @csrf
         @method('PUT')
 
-        <fieldset class="flex flex-col gap-4 border border-border bg-surface px-6 py-8 sm:px-10 sm:py-10">
-            <legend class="px-2 font-serif text-lg text-cream">General</legend>
+        <fieldset class="flex flex-col gap-4 rounded-adm border border-hairline bg-surface px-5 py-6 shadow-adm-xs sm:px-8 sm:py-8">
+            <legend class="px-1 text-sm font-semibold text-cream">General</legend>
 
             <x-admin.field name="site_name" label="Site Name" :value="$setting->siteName" />
             <x-admin.field name="site_tagline" label="Tagline" :value="$setting->siteTagline" />
@@ -20,8 +20,8 @@
             </div>
         </fieldset>
 
-        <fieldset class="flex flex-col gap-4 border border-border bg-surface px-6 py-8 sm:px-10 sm:py-10">
-            <legend class="px-2 font-serif text-lg text-cream">Social &amp; Footer Links</legend>
+        <fieldset class="flex flex-col gap-4 rounded-adm border border-hairline bg-surface px-5 py-6 shadow-adm-xs sm:px-8 sm:py-8">
+            <legend class="px-1 text-sm font-semibold text-cream">Social &amp; Footer Links</legend>
             <p class="text-xs text-muted">Leave a row's label and URL both blank to drop it. Shown in the site footer when at least one link is set.</p>
 
             @foreach ($socialLinkRows as $index => $row)
@@ -48,8 +48,8 @@
             <x-admin.field name="footer_note" label="Footer Note" :value="$setting->footerNote" :required="false" />
         </fieldset>
 
-        <fieldset class="flex flex-col gap-4 border border-border bg-surface px-6 py-8 sm:px-10 sm:py-10">
-            <legend class="px-2 font-serif text-lg text-cream">SEO &amp; Meta Cards</legend>
+        <fieldset class="flex flex-col gap-4 rounded-adm border border-hairline bg-surface px-5 py-6 shadow-adm-xs sm:px-8 sm:py-8">
+            <legend class="px-1 text-sm font-semibold text-cream">SEO &amp; Meta Cards</legend>
             <p class="text-xs text-muted">Used for the page &lt;title&gt;, search results, and the preview card shown when a page is shared on social media.</p>
 
             <x-admin.field name="meta_title" label="Default Meta Title" :value="$setting->metaTitle" />
@@ -58,13 +58,13 @@
             <x-admin.field name="twitter_handle" label="X / Twitter Handle" :value="$setting->twitterHandle" :required="false" placeholder="@underground" />
         </fieldset>
 
-        <fieldset class="flex flex-col gap-4 border border-border bg-surface px-6 py-8 sm:px-10 sm:py-10">
-            <legend class="px-2 font-serif text-lg text-cream">Maintenance &amp; Feature Toggles</legend>
+        <fieldset class="flex flex-col gap-4 rounded-adm border border-hairline bg-surface px-5 py-6 shadow-adm-xs sm:px-8 sm:py-8">
+            <legend class="px-1 text-sm font-semibold text-cream">Maintenance &amp; Feature Toggles</legend>
 
             <x-admin.checkbox-field name="maintenance_mode" label="Maintenance mode — takes the public site offline for everyone but staff" :checked="$setting->maintenanceMode" />
             <x-admin.textarea-field name="maintenance_message" label="Maintenance Message" rows="2" :value="$setting->maintenanceMessage" :required="false" />
 
-            <div class="border-t border-border pt-4">
+            <div class="border-t border-hairline pt-4">
                 <x-admin.checkbox-field name="public_registration_enabled" label="Allow new member account registration" :checked="$setting->publicRegistrationEnabled" />
             </div>
         </fieldset>

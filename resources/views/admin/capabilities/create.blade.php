@@ -1,5 +1,5 @@
 <x-admin.shell title="New Capability" max-width="max-w-2xl">
-        <form method="POST" action="{{ route('admin.capabilities.store') }}" class="flex flex-col gap-6">
+        <form method="POST" action="{{ route('admin.capabilities.store') }}" class="flex flex-col gap-6 rounded-adm border border-hairline bg-surface px-5 py-6 shadow-adm-xs sm:px-8 sm:py-8">
             @csrf
             @include('admin.capabilities._form', ['icons' => $icons])
 

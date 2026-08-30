@@ -14,15 +14,15 @@
         @csrf
         @method('PUT')
 
-        <fieldset class="flex flex-col gap-6 border border-border bg-surface px-6 py-8 sm:px-10 sm:py-10">
-            <legend class="px-2 font-serif text-lg text-cream">Identity</legend>
+        <fieldset class="flex flex-col gap-6 rounded-adm border border-hairline bg-surface px-5 py-6 shadow-adm-xs sm:px-8 sm:py-8">
+            <legend class="px-1 text-sm font-semibold text-cream">Identity</legend>
             <x-admin.field name="company" label="Company" :value="$narrative->company" />
             <x-admin.field name="tagline" label="Tagline" :value="$narrative->tagline" />
             <x-admin.field name="copyright" label="Copyright Line" :value="$narrative->copyright" />
         </fieldset>
 
-        <fieldset class="flex flex-col gap-6 border border-border bg-surface px-6 py-8 sm:px-10 sm:py-10">
-            <legend class="px-2 font-serif text-lg text-cream">Hero</legend>
+        <fieldset class="flex flex-col gap-6 rounded-adm border border-hairline bg-surface px-5 py-6 shadow-adm-xs sm:px-8 sm:py-8">
+            <legend class="px-1 text-sm font-semibold text-cream">Hero</legend>
             <x-admin.field name="eyebrow" label="Eyebrow" :value="$narrative->eyebrow" />
             <x-admin.textarea-field name="headline_text" label="Headline (one line per rendered line)" :value="old('headline_text', implode(PHP_EOL, $narrative->headline))" :rows="3" />
             <x-admin.field name="accent_line" label="Accent Line" :value="$narrative->accentLine" />
@@ -36,22 +36,22 @@
             </div>
         </fieldset>
 
-        <fieldset class="flex flex-col gap-6 border border-border bg-surface px-6 py-8 sm:px-10 sm:py-10">
-            <legend class="px-2 font-serif text-lg text-cream">Creed</legend>
+        <fieldset class="flex flex-col gap-6 rounded-adm border border-hairline bg-surface px-5 py-6 shadow-adm-xs sm:px-8 sm:py-8">
+            <legend class="px-1 text-sm font-semibold text-cream">Creed</legend>
             <x-admin.field name="creed_title" label="Creed Title" :value="$narrative->creedTitle" />
             <x-admin.textarea-field name="creed_body" label="Creed Body" :value="$narrative->creedBody" />
         </fieldset>
 
-        <fieldset class="flex flex-col gap-6 border border-border bg-surface px-6 py-8 sm:px-10 sm:py-10">
-            <legend class="px-2 font-serif text-lg text-cream">Section Headings</legend>
+        <fieldset class="flex flex-col gap-6 rounded-adm border border-hairline bg-surface px-5 py-6 shadow-adm-xs sm:px-8 sm:py-8">
+            <legend class="px-1 text-sm font-semibold text-cream">Section Headings</legend>
             <x-admin.field name="capabilities_eyebrow" label="Capabilities Eyebrow" :value="$narrative->capabilitiesEyebrow" />
             <x-admin.field name="capabilities_heading" label="Capabilities Heading" :value="$narrative->capabilitiesHeading" />
             <x-admin.field name="sectors_heading" label="Sectors Heading" :value="$narrative->sectorsHeading" />
             <x-admin.field name="engagement_heading" label="Engagement Heading" :value="$narrative->engagementHeading" />
         </fieldset>
 
-        <fieldset class="flex flex-col gap-6 border border-border bg-surface px-6 py-8 sm:px-10 sm:py-10">
-            <legend class="px-2 font-serif text-lg text-cream">Reach</legend>
+        <fieldset class="flex flex-col gap-6 rounded-adm border border-hairline bg-surface px-5 py-6 shadow-adm-xs sm:px-8 sm:py-8">
+            <legend class="px-1 text-sm font-semibold text-cream">Reach</legend>
             <x-admin.field name="reach_heading" label="Reach Heading" :value="$narrative->reachHeading" />
             <x-admin.textarea-field name="reach_body" label="Reach Body" :value="$narrative->reachBody" />
             <div class="grid grid-cols-1 gap-6 sm:grid-cols-2">
@@ -60,8 +60,8 @@
             </div>
         </fieldset>
 
-        <fieldset class="flex flex-col gap-6 border border-border bg-surface px-6 py-8 sm:px-10 sm:py-10">
-            <legend class="px-2 font-serif text-lg text-cream">Closing</legend>
+        <fieldset class="flex flex-col gap-6 rounded-adm border border-hairline bg-surface px-5 py-6 shadow-adm-xs sm:px-8 sm:py-8">
+            <legend class="px-1 text-sm font-semibold text-cream">Closing</legend>
             <x-admin.field name="closing_heading" label="Closing Heading" :value="$narrative->closingHeading" />
             <x-admin.textarea-field name="closing_support" label="Closing Support" :value="$narrative->closingSupport" />
             <div class="grid grid-cols-1 gap-6 sm:grid-cols-2">
@@ -70,8 +70,8 @@
             </div>
         </fieldset>
 
-        <fieldset class="flex flex-col gap-4 border border-border bg-surface px-6 py-8 sm:px-10 sm:py-10">
-            <legend class="px-2 font-serif text-lg text-cream">Navigation</legend>
+        <fieldset class="flex flex-col gap-4 rounded-adm border border-hairline bg-surface px-5 py-6 shadow-adm-xs sm:px-8 sm:py-8">
+            <legend class="px-1 text-sm font-semibold text-cream">Navigation</legend>
             <p class="text-xs text-muted">Leave a row's label and href both blank to drop it.</p>
 
             @foreach ($navRows as $index => $row)

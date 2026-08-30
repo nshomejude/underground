@@ -1,133 +1,71 @@
-<x-admin.layout title="Dashboard" eyebrow="Staff" max-width="max-w-7xl">
-    <p class="max-w-2xl text-base leading-relaxed text-body">
-        Everything staff need to review member activity and manage site content, in one place.
-    </p>
-
+<x-admin.layout title="Dashboard" eyebrow="Staff" description="Everything staff need to review member activity and manage site content, in one place." max-width="max-w-7xl">
     {{-- KPI cards --}}
-    <div class="grid grid-cols-2 gap-4 lg:grid-cols-4">
-        <div class="flex flex-col gap-2 border border-border bg-surface p-5">
-            <span class="flex items-center gap-2 text-xs font-semibold uppercase tracking-widest text-muted">
-                <x-icon name="briefcase" class="h-3.5 w-3.5 text-gold" />
-                Pending Applications
-            </span>
-            <span class="font-serif text-3xl font-semibold text-cream">{{ $kpis['pending_applications'] }}</span>
-        </div>
-
-        <div class="flex flex-col gap-2 border border-border bg-surface p-5">
-            <span class="flex items-center gap-2 text-xs font-semibold uppercase tracking-widest text-muted">
-                <x-icon name="check-circle" class="h-3.5 w-3.5 text-gold" />
-                Approval Rate
-            </span>
-            <span class="font-serif text-3xl font-semibold text-cream">
-                {{ $kpis['approval_rate'] !== null ? $kpis['approval_rate'].'%' : '—' }}
-            </span>
-        </div>
-
-        <div class="flex flex-col gap-2 border border-border bg-surface p-5">
-            <span class="flex items-center gap-2 text-xs font-semibold uppercase tracking-widest text-muted">
-                <x-icon name="lock" class="h-3.5 w-3.5 text-gold" />
-                Open Inquiries
-            </span>
-            <span class="font-serif text-3xl font-semibold text-cream">{{ $kpis['open_inquiries'] }}</span>
-        </div>
-
-        <div class="flex flex-col gap-2 border border-border bg-surface p-5">
-            <span class="flex items-center gap-2 text-xs font-semibold uppercase tracking-widest text-muted">
-                <x-icon name="clock" class="h-3.5 w-3.5 text-gold" />
-                Upcoming Events
-            </span>
-            <span class="font-serif text-3xl font-semibold text-cream">{{ $kpis['upcoming_events'] }}</span>
-        </div>
+    <div class="grid grid-cols-2 gap-3 lg:grid-cols-4">
+        <x-admin.stat-card label="Pending Applications" :value="$kpis['pending_applications']" icon="briefcase" tone="warning" />
+        <x-admin.stat-card label="Approval Rate" :value="$kpis['approval_rate'] !== null ? $kpis['approval_rate'].'%' : '—'" icon="check-circle" tone="success" />
+        <x-admin.stat-card label="Open Inquiries" :value="$kpis['open_inquiries']" icon="lock" tone="info" />
+        <x-admin.stat-card label="Upcoming Events" :value="$kpis['upcoming_events']" icon="clock" tone="gold" />
     </div>
 
-    <div class="grid grid-cols-1 gap-6 lg:grid-cols-3">
+    <div class="grid grid-cols-1 gap-4 lg:grid-cols-3">
         {{-- Pipeline performance --}}
-        <div class="flex flex-col gap-6 border border-border bg-surface p-6 lg:col-span-2">
-            <h3 class="text-xs font-semibold uppercase tracking-widest text-muted">Pipeline Performance</h3>
+        <div class="flex flex-col gap-6 rounded-adm border border-hairline bg-surface p-5 shadow-adm-xs lg:col-span-2">
+            <h3 class="text-[13px] font-semibold text-cream">Pipeline Performance</h3>
 
-            <div class="flex flex-col gap-4">
-                <div class="flex flex-col gap-2">
-                    <div class="flex items-center justify-between text-sm">
-                        <span class="text-body">Applications ({{ $pipeline['applications']['total'] }} total)</span>
-                        <span class="text-muted">{{ $pipeline['applications']['pending'] }} pending</span>
-                    </div>
-                    @php
-                        $appTotal = max(1, $pipeline['applications']['total']);
-                        $approvedPct = $pipeline['applications']['approved'] / $appTotal * 100;
-                        $declinedPct = $pipeline['applications']['declined'] / $appTotal * 100;
-                        $pendingPct = $pipeline['applications']['pending'] / $appTotal * 100;
-                    @endphp
-                    <div class="flex h-2 w-full overflow-hidden bg-border">
-                        <div class="h-full bg-success" style="width: {{ $approvedPct }}%"></div>
-                        <div class="h-full bg-danger" style="width: {{ $declinedPct }}%"></div>
-                        <div class="h-full bg-warning" style="width: {{ $pendingPct }}%"></div>
-                    </div>
-                    <div class="flex flex-wrap gap-4 text-xs text-muted">
-                        <span class="inline-flex items-center gap-1.5"><span class="h-2 w-2 bg-success"></span> {{ $pipeline['applications']['approved'] }} approved</span>
-                        <span class="inline-flex items-center gap-1.5"><span class="h-2 w-2 bg-danger"></span> {{ $pipeline['applications']['declined'] }} declined</span>
-                        <span class="inline-flex items-center gap-1.5"><span class="h-2 w-2 bg-warning"></span> {{ $pipeline['applications']['pending'] }} pending</span>
-                    </div>
-                </div>
+            <div class="grid grid-cols-1 gap-6 sm:grid-cols-2">
+                <x-admin.donut-chart
+                    center-label="Applications"
+                    :segments="[
+                        ['label' => 'Approved', 'value' => $pipeline['applications']['approved'], 'color' => 'success'],
+                        ['label' => 'Declined', 'value' => $pipeline['applications']['declined'], 'color' => 'danger'],
+                        ['label' => 'Pending', 'value' => $pipeline['applications']['pending'], 'color' => 'warning'],
+                    ]"
+                />
+                <x-admin.donut-chart
+                    center-label="Inquiries"
+                    :segments="[
+                        ['label' => 'Open', 'value' => $pipeline['inquiries']['open'], 'color' => 'info'],
+                        ['label' => 'Resolved', 'value' => $pipeline['inquiries']['resolved'], 'color' => 'muted'],
+                    ]"
+                />
+            </div>
 
-                <div class="flex flex-col gap-2 border-t border-border pt-4">
-                    <div class="flex items-center justify-between text-sm">
-                        <span class="text-body">Inquiries ({{ $pipeline['inquiries']['total'] }} total)</span>
-                        <span class="text-muted">{{ $pipeline['inquiries']['open'] }} open</span>
-                    </div>
-                    @php
-                        $inqTotal = max(1, $pipeline['inquiries']['total']);
-                        $openPct = $pipeline['inquiries']['open'] / $inqTotal * 100;
-                        $resolvedPct = $pipeline['inquiries']['resolved'] / $inqTotal * 100;
-                    @endphp
-                    <div class="flex h-2 w-full overflow-hidden bg-border">
-                        <div class="h-full bg-info" style="width: {{ $openPct }}%"></div>
-                        <div class="h-full bg-muted" style="width: {{ $resolvedPct }}%"></div>
-                    </div>
-                    <div class="flex flex-wrap gap-4 text-xs text-muted">
-                        <span class="inline-flex items-center gap-1.5"><span class="h-2 w-2 bg-info"></span> {{ $pipeline['inquiries']['open'] }} open</span>
-                        <span class="inline-flex items-center gap-1.5"><span class="h-2 w-2 bg-muted"></span> {{ $pipeline['inquiries']['resolved'] }} resolved</span>
-                    </div>
-                </div>
-
-                <div class="flex flex-col gap-2 border-t border-border pt-4">
-                    <div class="flex items-center justify-between text-sm">
-                        <span class="text-body">Insights</span>
-                        <span class="text-muted">{{ $kpis['published_insights'] }} published &middot; {{ $kpis['draft_insights'] }} draft</span>
-                    </div>
-                </div>
+            <div class="flex items-center justify-between border-t border-hairline pt-4 text-[13px]">
+                <span class="text-body">Insights</span>
+                <span class="text-muted">{{ $kpis['published_insights'] }} published &middot; {{ $kpis['draft_insights'] }} draft</span>
             </div>
         </div>
 
         {{-- Upcoming events --}}
-        <div class="flex flex-col gap-4 border border-border bg-surface p-6">
+        <div class="flex flex-col gap-3 rounded-adm border border-hairline bg-surface p-5 shadow-adm-xs">
             <div class="flex items-center justify-between">
-                <h3 class="text-xs font-semibold uppercase tracking-widest text-muted">Upcoming Events</h3>
-                <a href="{{ route('admin.events.index') }}" class="text-xs font-semibold uppercase tracking-wider text-gold hover:text-gold-bright">Manage</a>
+                <h3 class="text-[13px] font-semibold text-cream">Upcoming Events</h3>
+                <a href="{{ route('admin.events.index') }}" class="text-xs font-medium text-gold hover:text-gold-bright">Manage</a>
             </div>
 
             @forelse ($upcomingEvents as $event)
-                <div class="flex flex-col gap-0.5 border-b border-border pb-3 last:border-b-0 last:pb-0">
-                    <span class="text-sm font-semibold text-cream">{{ $event->name }}</span>
+                <div class="flex flex-col gap-0.5 border-b border-hairline pb-3 last:border-b-0 last:pb-0">
+                    <span class="text-[13px] font-medium text-cream">{{ $event->name }}</span>
                     <span class="text-xs text-muted">{{ \Illuminate\Support\Carbon::parse($event->date)->format('M j, Y') }} &middot; {{ $event->location }}</span>
                 </div>
             @empty
-                <p class="text-sm text-muted">No upcoming events scheduled.</p>
+                <p class="text-[13px] text-muted">No upcoming events scheduled.</p>
             @endforelse
         </div>
     </div>
 
-    <div class="grid grid-cols-1 gap-6 lg:grid-cols-2">
+    <div class="grid grid-cols-1 gap-4 lg:grid-cols-2">
         {{-- Recent applications --}}
-        <div class="flex flex-col gap-4 border border-border bg-surface p-6">
+        <div class="flex flex-col gap-3 rounded-adm border border-hairline bg-surface p-5 shadow-adm-xs">
             <div class="flex items-center justify-between">
-                <h3 class="text-xs font-semibold uppercase tracking-widest text-muted">Recent Applications</h3>
-                <a href="{{ route('admin.applications.index') }}" class="text-xs font-semibold uppercase tracking-wider text-gold hover:text-gold-bright">Review Queue</a>
+                <h3 class="text-[13px] font-semibold text-cream">Recent Applications</h3>
+                <a href="{{ route('admin.applications.index') }}" class="text-xs font-medium text-gold hover:text-gold-bright">Review Queue</a>
             </div>
 
             @forelse ($recentApplications as $application)
-                <div class="flex items-center justify-between gap-3 border-b border-border pb-3 last:border-b-0 last:pb-0">
+                <div class="flex items-center justify-between gap-3 border-b border-hairline pb-3 last:border-b-0 last:pb-0">
                     <div class="flex min-w-0 flex-col">
-                        <span class="truncate text-sm font-semibold text-cream">{{ $application->applicant_name }}</span>
+                        <span class="truncate text-[13px] font-medium text-cream">{{ $application->applicant_name }}</span>
                         <span class="font-mono text-xs text-muted">{{ $application->reference }}</span>
                     </div>
                     <x-status-badge
@@ -141,21 +79,21 @@
                     />
                 </div>
             @empty
-                <p class="text-sm text-muted">No applications yet.</p>
+                <p class="text-[13px] text-muted">No applications yet.</p>
             @endforelse
         </div>
 
         {{-- Recent inquiries --}}
-        <div class="flex flex-col gap-4 border border-border bg-surface p-6">
+        <div class="flex flex-col gap-3 rounded-adm border border-hairline bg-surface p-5 shadow-adm-xs">
             <div class="flex items-center justify-between">
-                <h3 class="text-xs font-semibold uppercase tracking-widest text-muted">Recent Inquiries</h3>
-                <a href="{{ route('admin.inquiries.index') }}" class="text-xs font-semibold uppercase tracking-wider text-gold hover:text-gold-bright">Review Queue</a>
+                <h3 class="text-[13px] font-semibold text-cream">Recent Inquiries</h3>
+                <a href="{{ route('admin.inquiries.index') }}" class="text-xs font-medium text-gold hover:text-gold-bright">Review Queue</a>
             </div>
 
             @forelse ($recentInquiries as $inquiry)
-                <div class="flex items-center justify-between gap-3 border-b border-border pb-3 last:border-b-0 last:pb-0">
+                <div class="flex items-center justify-between gap-3 border-b border-hairline pb-3 last:border-b-0 last:pb-0">
                     <div class="flex min-w-0 flex-col">
-                        <span class="truncate text-sm font-semibold text-cream">{{ $inquiry->name }}</span>
+                        <span class="truncate text-[13px] font-medium text-cream">{{ $inquiry->name }}</span>
                         <span class="font-mono text-xs text-muted">{{ $inquiry->reference }}</span>
                     </div>
                     <x-status-badge
@@ -170,28 +108,21 @@
                     />
                 </div>
             @empty
-                <p class="text-sm text-muted">No inquiries yet.</p>
+                <p class="text-[13px] text-muted">No inquiries yet.</p>
             @endforelse
         </div>
     </div>
 
-    {{-- Content library quick access --}}
-    <div class="flex flex-col gap-4">
-        <h3 class="text-xs font-semibold uppercase tracking-widest text-muted">Content Library</h3>
-        <div class="grid grid-cols-2 gap-4 sm:grid-cols-3 lg:grid-cols-6">
-            @foreach ($contentCounts as $item)
-                <a href="{{ route($item['route']) }}" class="group flex flex-col gap-1 border border-border bg-surface p-4 transition-colors hover:border-gold">
-                    <span class="font-serif text-2xl font-semibold text-cream group-hover:text-gold-bright">{{ $item['count'] }}</span>
-                    <span class="text-xs font-semibold uppercase tracking-wide text-muted group-hover:text-gold">{{ $item['label'] }}</span>
-                </a>
-            @endforeach
-        </div>
+    {{-- Content library --}}
+    <div class="flex flex-col gap-3 rounded-adm border border-hairline bg-surface p-5 shadow-adm-xs">
+        <h3 class="text-[13px] font-semibold text-cream">Content Library</h3>
+        <x-admin.bar-chart :items="$contentCounts" />
     </div>
 
     {{-- Quick access --}}
-    <div class="flex flex-col gap-4">
-        <h3 class="text-xs font-semibold uppercase tracking-widest text-muted">Quick Access</h3>
-        <div class="grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-3">
+    <div class="flex flex-col gap-3">
+        <h3 class="text-[13px] font-semibold text-cream">Quick Access</h3>
+        <div class="grid grid-cols-1 gap-3 sm:grid-cols-2 lg:grid-cols-3">
             @php
                 $sections = [
                     ['label' => 'Applications', 'description' => 'Review and approve or decline membership applications.', 'route' => 'admin.applications.index', 'icon' => 'briefcase'],
@@ -214,13 +145,15 @@
             @foreach ($sections as $section)
                 <a
                     href="{{ route($section['route']) }}"
-                    class="group flex flex-col gap-3 border border-border bg-surface p-6 transition-colors hover:border-gold"
+                    class="group flex flex-col gap-2.5 rounded-adm border border-hairline bg-surface p-4 shadow-adm-xs transition-colors hover:border-gold/40"
                 >
-                    <x-icon name="{{ $section['icon'] }}" class="h-6 w-6 text-gold" />
-                    <span class="text-sm font-semibold uppercase tracking-widest text-cream group-hover:text-gold-bright">
+                    <span class="flex h-8 w-8 items-center justify-center rounded-adm bg-gold/10 text-gold">
+                        <x-icon name="{{ $section['icon'] }}" class="h-4 w-4" />
+                    </span>
+                    <span class="text-[13px] font-semibold text-cream">
                         {{ $section['label'] }}
                     </span>
-                    <span class="text-sm leading-relaxed text-muted">
+                    <span class="text-[13px] leading-relaxed text-muted">
                         {{ $section['description'] }}
                     </span>
                 </a>

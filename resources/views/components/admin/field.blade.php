@@ -16,14 +16,14 @@
 @endphp
 
 <div class="flex flex-col gap-1.5">
-    <label for="{{ $inputId }}" class="text-xs font-semibold uppercase tracking-wider text-muted">{{ $label }}</label>
+    <label for="{{ $inputId }}" class="text-[13px] font-medium text-body">{{ $label }}</label>
     <input
         type="{{ $type }}"
         name="{{ $name }}"
         id="{{ $inputId }}"
         value="{{ old($errorKey, $value) }}"
         @if ($required) required @endif
-        {{ $attributes->merge(['class' => 'border border-border bg-surface px-4 py-2.5 text-sm text-cream placeholder:text-muted focus:border-gold focus:outline-none']) }}
+        {{ $attributes->merge(['class' => 'rounded-adm border border-hairline bg-surface px-3 py-2 text-sm text-cream placeholder:text-muted focus:border-gold focus:outline-none focus:ring-2 focus:ring-gold/25']) }}
     >
     @error($errorKey)
         <p class="text-xs text-danger">{{ $message }}</p>
