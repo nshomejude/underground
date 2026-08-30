@@ -15,24 +15,7 @@
     ];
 @endphp
 
-<x-layout title="Confidential Inquiries">
-    <section class="mx-auto flex max-w-5xl flex-col gap-8 px-4 py-16 sm:px-6 lg:px-8 lg:py-24">
-        <x-section-heading eyebrow="Staff Review">Confidential Inquiries</x-section-heading>
-
-        @if (session('status'))
-            <div class="flex items-center gap-3 border border-success/40 bg-success/10 px-4 py-3 text-sm text-success">
-                <x-icon name="check-circle" class="h-5 w-5 shrink-0" />
-                {{ session('status') }}
-            </div>
-        @endif
-
-        @if (session('error'))
-            <div class="flex items-center gap-3 border border-danger/40 bg-danger/10 px-4 py-3 text-sm text-danger">
-                <x-icon name="flag" class="h-5 w-5 shrink-0" />
-                {{ session('error') }}
-            </div>
-        @endif
-
+<x-admin.shell title="Confidential Inquiries" eyebrow="Staff Review">
         @if (empty($inquiries))
             <p class="border border-border bg-surface px-6 py-8 text-sm text-muted">
                 No confidential inquiries have been submitted yet.
@@ -98,5 +81,4 @@
                 @endforeach
             </div>
         @endif
-    </section>
-</x-layout>
+</x-admin.shell>

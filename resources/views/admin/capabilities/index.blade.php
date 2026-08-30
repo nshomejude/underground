@@ -1,22 +1,9 @@
-<x-layout title="Admin · Capabilities">
-    <section class="mx-auto flex max-w-5xl flex-col gap-8 px-4 py-16 sm:px-6 lg:px-8 lg:py-24">
-        <div class="flex flex-col gap-6 sm:flex-row sm:items-end sm:justify-between">
-            <x-section-heading eyebrow="Content Admin">Capabilities</x-section-heading>
-
+<x-admin.shell title="Capabilities">
+        <div class="flex items-center justify-end">
             <x-button variant="primary" href="{{ route('admin.capabilities.create') }}" class="w-fit">
                 <x-icon name="landmark" class="h-3.5 w-3.5" />
                 New Capability
             </x-button>
-        </div>
-
-        @if (session('status'))
-            <x-status-badge :label="session('status')" tone="success" class="w-fit" />
-        @endif
-
-        <div class="flex flex-wrap gap-3 text-xs font-semibold uppercase tracking-widest">
-            <a href="{{ route('admin.insights.index') }}" class="text-muted hover:text-gold">Insights</a>
-            <span class="text-muted">/</span>
-            <a href="{{ route('admin.capabilities.index') }}" class="text-gold-bright">Capabilities</a>
         </div>
 
         <div class="overflow-x-auto border border-border bg-surface">
@@ -73,5 +60,4 @@
                 </tbody>
             </table>
         </div>
-    </section>
-</x-layout>
+</x-admin.shell>
