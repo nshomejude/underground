@@ -58,21 +58,21 @@
 
                         <dl class="grid grid-cols-1 gap-x-6 gap-y-2 text-sm sm:grid-cols-2">
                             <div class="flex justify-between gap-4 sm:justify-start">
-                                <dt class="text-muted">Interest</dt>
-                                <dd class="text-body">{{ $inquiry->interest->label() }}</dd>
+                                <dt class="shrink-0 text-muted">Interest</dt>
+                                <dd class="min-w-0 break-words text-right text-body sm:text-left">{{ $inquiry->interest->label() }}</dd>
                             </div>
                             <div class="flex justify-between gap-4 sm:justify-start">
-                                <dt class="text-muted">Email</dt>
-                                <dd class="text-body">{{ $inquiry->email->value }}</dd>
+                                <dt class="shrink-0 text-muted">Email</dt>
+                                <dd class="min-w-0 break-words text-right text-body sm:text-left">{{ $inquiry->email->value }}</dd>
                             </div>
                             <div class="flex justify-between gap-4 sm:justify-start">
-                                <dt class="text-muted">Submitted</dt>
-                                <dd class="text-body">{{ $inquiry->submittedAt->format('j M Y') }}</dd>
+                                <dt class="shrink-0 text-muted">Submitted</dt>
+                                <dd class="min-w-0 break-words text-right text-body sm:text-left">{{ $inquiry->submittedAt->format('j M Y') }}</dd>
                             </div>
                             @if ($inquiry->needsPartnerTriage())
                                 <div class="flex justify-between gap-4 sm:justify-start">
-                                    <dt class="text-muted">Triage</dt>
-                                    <dd class="text-warning">Partner triage required</dd>
+                                    <dt class="shrink-0 text-muted">Triage</dt>
+                                    <dd class="min-w-0 break-words text-right text-warning sm:text-left">Partner triage required</dd>
                                 </div>
                             @endif
                         </dl>

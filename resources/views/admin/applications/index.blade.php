@@ -50,21 +50,21 @@
 
                         <dl class="grid grid-cols-1 gap-x-6 gap-y-2 text-sm sm:grid-cols-2">
                             <div class="flex justify-between gap-4 sm:justify-start">
-                                <dt class="text-muted">Tier</dt>
-                                <dd class="text-body">{{ $application->tier->value }}</dd>
+                                <dt class="shrink-0 text-muted">Tier</dt>
+                                <dd class="min-w-0 break-words text-right text-body sm:text-left">{{ $application->tier->value }}</dd>
                             </div>
                             <div class="flex justify-between gap-4 sm:justify-start">
-                                <dt class="text-muted">Email</dt>
-                                <dd class="text-body">{{ $application->email->value }}</dd>
+                                <dt class="shrink-0 text-muted">Email</dt>
+                                <dd class="min-w-0 break-words text-right text-body sm:text-left">{{ $application->email->value }}</dd>
                             </div>
                             <div class="flex justify-between gap-4 sm:justify-start">
-                                <dt class="text-muted">Submitted</dt>
-                                <dd class="text-body">{{ $application->submittedAt->format('j M Y') }}</dd>
+                                <dt class="shrink-0 text-muted">Submitted</dt>
+                                <dd class="min-w-0 break-words text-right text-body sm:text-left">{{ $application->submittedAt->format('j M Y') }}</dd>
                             </div>
                             @if ($application->memberId())
                                 <div class="flex justify-between gap-4 sm:justify-start">
-                                    <dt class="text-muted">Member ID</dt>
-                                    <dd class="font-mono text-gold-bright">{{ $application->memberId() }}</dd>
+                                    <dt class="shrink-0 text-muted">Member ID</dt>
+                                    <dd class="min-w-0 break-words text-right font-mono text-gold-bright sm:text-left">{{ $application->memberId() }}</dd>
                                 </div>
                             @endif
                         </dl>
