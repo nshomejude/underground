@@ -25,7 +25,7 @@
 
 <footer class="border-t border-border bg-ink pb-20 lg:pb-0">
     <div class="mx-auto max-w-7xl px-4 py-14 sm:px-6 lg:px-8">
-        <div class="grid grid-cols-2 gap-x-6 gap-y-10 lg:grid-cols-[minmax(0,1.4fr)_repeat(3,minmax(0,1fr))] lg:gap-12">
+        <div class="grid grid-cols-2 gap-x-6 gap-y-10 lg:grid-cols-4 lg:gap-12">
             <div class="col-span-2 flex flex-col items-start gap-4 lg:col-span-1">
                 <x-brand-mark />
                 <p class="max-w-xs text-sm leading-relaxed text-body">
