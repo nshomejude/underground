@@ -37,6 +37,8 @@ final class RegisterController extends Controller
             'password' => Hash::make($validated['password']),
         ]);
 
+        $user->sendEmailVerificationNotification();
+
         Auth::login($user);
 
         $request->session()->regenerate();
