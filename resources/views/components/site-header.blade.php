@@ -18,7 +18,7 @@
 
         <nav class="hidden items-center gap-6 xl:flex" aria-label="Primary">
             @foreach ($navLinks as $label => $href)
-                <a href="{{ $href }}" class="text-xs font-semibold uppercase tracking-widest text-body transition-colors hover:text-gold">
+                <a href="{{ $href }}" class="whitespace-nowrap text-xs font-semibold uppercase tracking-widest text-body transition-colors hover:text-gold">
                     {{ $label }}
                 </a>
             @endforeach
