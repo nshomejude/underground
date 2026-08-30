@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Tests\Feature\Content;
 
+use Domain\Content\Entities\Capability;
 use Domain\Shared\ValueObjects\Slug;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Infrastructure\Persistence\Eloquent\Models\CapabilityRecord;
@@ -13,6 +14,53 @@ use Tests\TestCase;
 final class EloquentCapabilityRepositoryTest extends TestCase
 {
     use RefreshDatabase;
+
+    public function test_save_creates_a_new_capability(): void
+    {
+        $repository = new EloquentCapabilityRepository;
+
+        $repository->save(new Capability(
+            slug: Slug::fromString('freshly-created'),
+            title: 'Freshly Created',
+            summary: 'A summary.',
+            icon: 'landmark',
+            position: 9,
+            isFeatured: false,
+        ));
+
+        $this->assertDatabaseHas('capabilities', ['slug' => 'freshly-created', 'title' => 'Freshly Created']);
+    }
+
+    public function test_save_updates_an_existing_capability_by_slug(): void
+    {
+        CapabilityRecord::factory()->create(['slug' => 'to-update', 'title' => 'Before']);
+
+        $repository = new EloquentCapabilityRepository;
+
+        $repository->save(new Capability(
+            slug: Slug::fromString('to-update'),
+            title: 'After',
+            summary: 'A summary.',
+            icon: 'landmark',
+            position: 3,
+            isFeatured: true,
+        ));
+
+        $this->assertDatabaseCount('capabilities', 1);
+        $this->assertDatabaseHas('capabilities', ['slug' => 'to-update', 'title' => 'After', 'is_featured' => true]);
+    }
+
+    public function test_delete_removes_the_capability_with_the_given_slug(): void
+    {
+        CapabilityRecord::factory()->create(['slug' => 'to-delete']);
+        CapabilityRecord::factory()->create(['slug' => 'to-keep']);
+
+        $repository = new EloquentCapabilityRepository;
+        $repository->delete(Slug::fromString('to-delete'));
+
+        $this->assertDatabaseMissing('capabilities', ['slug' => 'to-delete']);
+        $this->assertDatabaseHas('capabilities', ['slug' => 'to-keep']);
+    }
 
     public function test_all_returns_capabilities_ordered_by_position(): void
     {

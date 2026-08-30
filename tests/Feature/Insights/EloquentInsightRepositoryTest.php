@@ -4,6 +4,8 @@ declare(strict_types=1);
 
 namespace Tests\Feature\Insights;
 
+use DateTimeImmutable;
+use Domain\Insights\Entities\Insight;
 use Domain\Shared\ValueObjects\Slug;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Infrastructure\Persistence\Eloquent\Models\InsightRecord;
@@ -13,6 +15,67 @@ use Tests\TestCase;
 final class EloquentInsightRepositoryTest extends TestCase
 {
     use RefreshDatabase;
+
+    public function test_all_returns_every_insight_published_or_not_most_recent_first(): void
+    {
+        InsightRecord::factory()->create(['slug' => 'first-created', 'created_at' => now()->subDays(2)]);
+        InsightRecord::factory()->unpublished()->create(['slug' => 'second-created', 'created_at' => now()->subDay()]);
+        InsightRecord::factory()->create(['slug' => 'third-created', 'created_at' => now()]);
+
+        $repository = new EloquentInsightRepository;
+
+        $this->assertSame(
+            ['third-created', 'second-created', 'first-created'],
+            array_map(fn ($insight) => $insight->slug->value, $repository->all()),
+        );
+    }
+
+    public function test_save_creates_a_new_insight(): void
+    {
+        $repository = new EloquentInsightRepository;
+
+        $repository->save(new Insight(
+            slug: Slug::fromString('freshly-created'),
+            title: 'Freshly Created',
+            category: 'Strategy',
+            excerpt: 'An excerpt.',
+            body: 'A body.',
+            publishedAt: null,
+        ));
+
+        $this->assertDatabaseHas('insights', ['slug' => 'freshly-created', 'title' => 'Freshly Created']);
+    }
+
+    public function test_save_updates_an_existing_insight_by_slug(): void
+    {
+        InsightRecord::factory()->create(['slug' => 'to-update', 'title' => 'Before']);
+
+        $repository = new EloquentInsightRepository;
+
+        $repository->save(new Insight(
+            slug: Slug::fromString('to-update'),
+            title: 'After',
+            category: 'Strategy',
+            excerpt: 'An excerpt.',
+            body: 'A body.',
+            publishedAt: new DateTimeImmutable('2026-01-01'),
+        ));
+
+        $this->assertDatabaseCount('insights', 1);
+        $this->assertDatabaseHas('insights', ['slug' => 'to-update', 'title' => 'After']);
+    }
+
+    public function test_delete_removes_the_insight_with_the_given_slug(): void
+    {
+        InsightRecord::factory()->create(['slug' => 'to-delete']);
+        InsightRecord::factory()->create(['slug' => 'to-keep']);
+
+        $repository = new EloquentInsightRepository;
+        $repository->delete(Slug::fromString('to-delete'));
+
+        $this->assertDatabaseMissing('insights', ['slug' => 'to-delete']);
+        $this->assertDatabaseHas('insights', ['slug' => 'to-keep']);
+    }
 
     public function test_published_orders_most_recent_first_and_respects_limit(): void
     {

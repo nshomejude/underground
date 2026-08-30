@@ -4,7 +4,9 @@ use App\Http\Controllers\AboutController;
 use App\Http\Controllers\AccountController;
 use App\Http\Controllers\AccountSettingsController;
 use App\Http\Controllers\Admin\ApplicationReviewController;
+use App\Http\Controllers\Admin\CapabilityAdminController;
 use App\Http\Controllers\Admin\InquiryReviewController;
+use App\Http\Controllers\Admin\InsightAdminController;
 use App\Http\Controllers\Auth\EmailVerificationController;
 use App\Http\Controllers\Auth\ForgotPasswordController;
 use App\Http\Controllers\Auth\LoginController;
@@ -85,9 +87,10 @@ Route::get('/account', [AccountController::class, 'show'])
     ->name('account.show');
 
 // Staff admin review queue: membership applications and confidential
-// inquiries. `admin` implies a logged-in user (see EnsureUserIsAdmin's
-// doc block); `auth` is still applied explicitly so a guest is redirected
-// to /login rather than refused outright.
+// inquiries, plus content admin CRUD over Insights and Capabilities.
+// `admin` implies a logged-in user (see EnsureUserIsAdmin's doc block);
+// `auth` is still applied explicitly so a guest is redirected to /login
+// rather than refused outright.
 Route::prefix('admin')->middleware(['auth', 'admin'])->name('admin.')->group(function (): void {
     Route::get('/applications', [ApplicationReviewController::class, 'index'])->name('applications.index');
     Route::post('/applications/{reference}/approve', [ApplicationReviewController::class, 'approve'])->name('applications.approve');
@@ -95,6 +98,9 @@ Route::prefix('admin')->middleware(['auth', 'admin'])->name('admin.')->group(fun
 
     Route::get('/inquiries', [InquiryReviewController::class, 'index'])->name('inquiries.index');
     Route::post('/inquiries/{reference}/transition', [InquiryReviewController::class, 'transition'])->name('inquiries.transition');
+
+    Route::resource('insights', InsightAdminController::class)->except('show');
+    Route::resource('capabilities', CapabilityAdminController::class)->except('show');
 });
 
 Route::middleware('auth')->group(function (): void {
