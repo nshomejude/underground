@@ -20,6 +20,7 @@ use App\Http\Controllers\Auth\LogoutController;
 use App\Http\Controllers\Auth\RegisterController;
 use App\Http\Controllers\Auth\ResetPasswordController;
 use App\Http\Controllers\CapabilityController;
+use App\Http\Controllers\CareersController;
 use App\Http\Controllers\CollaborationController;
 use App\Http\Controllers\ContactController;
 use App\Http\Controllers\EventController;
@@ -44,6 +45,7 @@ Route::get('/collaboration', [CollaborationController::class, 'index'])->name('c
 Route::get('/portfolio', [PortfolioController::class, 'index'])->name('portfolio');
 Route::get('/projects', [ProjectController::class, 'index'])->name('projects');
 Route::get('/events', [EventController::class, 'index'])->name('events');
+Route::get('/careers', [CareersController::class, 'index'])->name('careers');
 
 Route::get('/terms', [LegalController::class, 'terms'])->name('terms');
 Route::get('/privacy', [LegalController::class, 'privacy'])->name('privacy');
