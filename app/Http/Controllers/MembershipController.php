@@ -8,10 +8,12 @@ use App\Http\Requests\StoreMembershipApplicationRequest;
 use Application\Membership\Actions\ApplyForMembership;
 use Application\Membership\DataTransferObjects\MembershipApplicationPayload;
 use Application\Membership\Queries\ListMembershipTiers;
+use Domain\Membership\Entities\MembershipTier;
 use Domain\Shared\Exceptions\DomainException;
 use Domain\Shared\ValueObjects\EmailAddress;
 use Domain\Shared\ValueObjects\Slug;
 use Illuminate\Http\RedirectResponse;
+use Illuminate\Support\Carbon;
 use Illuminate\View\View;
 use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 
@@ -32,6 +34,56 @@ final class MembershipController extends Controller
         return view('membership.index', [
             'tiers' => ($this->tiers)(),
         ]);
+    }
+
+    /**
+     * A visual preview of the physical membership card issued once an
+     * application clears review — one illustrative sample per tier. There is
+     * no per-member lookup here yet; a real card would be populated from an
+     * approved MembershipApplication plus the permanent member id assigned
+     * at issuance, using this same component.
+     */
+    public function cards(): View
+    {
+        $tiers = ($this->tiers)();
+
+        $bySlug = static fn (string $slug): ?MembershipTier => collect($tiers)
+            ->first(fn (MembershipTier $tier): bool => $tier->slug->value === $slug);
+
+        $samples = [
+            [
+                'tier' => $bySlug('sovereign-partner'),
+                'variant' => 'organisation',
+                'name' => 'Republic of Valcoria — Ministry of Finance',
+                'representative' => 'Dr. Amara N. Osei',
+                'representativeTitle' => 'Permanent Secretary',
+                'memberId' => 'UG · 2018 · 000012',
+                'issuedOn' => Carbon::parse('2024-01-15'),
+                'validThrough' => Carbon::parse('2029-01-14'),
+            ],
+            [
+                'tier' => $bySlug('principal-circle'),
+                'variant' => 'individual',
+                'name' => 'Isabelle Fontaine-Whitmore',
+                'representative' => null,
+                'representativeTitle' => null,
+                'memberId' => 'UG · 2023 · 004821',
+                'issuedOn' => Carbon::parse('2026-06-01'),
+                'validThrough' => Carbon::parse('2031-05-31'),
+            ],
+            [
+                'tier' => $bySlug('corporate-affiliate'),
+                'variant' => 'organisation',
+                'name' => 'Castellane Atlantic Holdings',
+                'representative' => 'Marcus Reyes',
+                'representativeTitle' => 'Chief Strategy Officer',
+                'memberId' => 'UG · 2021 · 001147',
+                'issuedOn' => Carbon::parse('2025-03-01'),
+                'validThrough' => Carbon::parse('2030-02-28'),
+            ],
+        ];
+
+        return view('membership.cards', ['samples' => $samples]);
     }
 
     public function create(string $tier): View

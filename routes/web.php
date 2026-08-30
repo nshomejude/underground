@@ -41,6 +41,7 @@ Route::post('/confidential-inquiry', [InquiryController::class, 'store'])
     ->name('inquiries.store');
 
 Route::get('/membership', [MembershipController::class, 'index'])->name('membership.index');
+Route::get('/membership/cards', [MembershipController::class, 'cards'])->name('membership.cards');
 Route::get('/membership/apply/{tier}', [MembershipController::class, 'create'])->name('membership.apply');
 Route::post('/membership/apply/{tier}', [MembershipController::class, 'store'])
     ->middleware('throttle:10,1')

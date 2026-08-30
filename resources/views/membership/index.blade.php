@@ -29,5 +29,13 @@
                 </div>
             @endforeach
         </div>
+
+        <div class="flex flex-col gap-4 border-t border-border pt-8 sm:flex-row sm:items-center sm:justify-between">
+            <p class="text-sm text-body">Curious what membership itself looks like once granted?</p>
+            <x-button variant="secondary" href="{{ route('membership.cards') }}" class="w-fit">
+                View Sample Membership Cards
+                <x-icon name="chevron-right" class="h-3.5 w-3.5" />
+            </x-button>
+        </div>
     </section>
 </x-layout>
