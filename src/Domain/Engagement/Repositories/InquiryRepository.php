@@ -12,4 +12,7 @@ interface InquiryRepository
     public function save(ConfidentialInquiry $inquiry): void;
 
     public function findByReference(InquiryReference $reference): ?ConfidentialInquiry;
+
+    /** Every inquiry, most recently submitted first — backs the staff review queue. */
+    public function all(): array;
 }

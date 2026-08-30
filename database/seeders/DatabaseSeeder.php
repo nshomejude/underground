@@ -45,5 +45,9 @@ class DatabaseSeeder extends Seeder
         // Demo/seed-only member accounts (see class doc for credentials) so
         // /account can be exercised end-to-end without a staff approval UI.
         $this->call(MembershipAccountDemoSeeder::class);
+
+        // Demo/seed-only staff admin account (see class doc for credentials)
+        // so the /admin review queue can be exercised end-to-end.
+        $this->call(AdminUserSeeder::class);
     }
 }

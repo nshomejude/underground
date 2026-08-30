@@ -39,6 +39,15 @@ final class EloquentInquiryRepository implements InquiryRepository
         return $record === null ? null : $this->toEntity($record);
     }
 
+    public function all(): array
+    {
+        return InquiryRecord::query()
+            ->orderByDesc('submitted_at')
+            ->get()
+            ->map($this->toEntity(...))
+            ->all();
+    }
+
     private function toEntity(InquiryRecord $record): ConfidentialInquiry
     {
         return ConfidentialInquiry::reconstitute(

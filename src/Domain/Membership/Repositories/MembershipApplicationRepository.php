@@ -22,4 +22,7 @@ interface MembershipApplicationRepository
      * one greater than however many member ids have been assigned so far.
      */
     public function nextMemberIdSequence(): int;
+
+    /** Every application, most recently submitted first — backs the staff review queue. */
+    public function all(): array;
 }

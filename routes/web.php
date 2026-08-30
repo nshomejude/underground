@@ -2,6 +2,8 @@
 
 use App\Http\Controllers\AboutController;
 use App\Http\Controllers\AccountController;
+use App\Http\Controllers\Admin\ApplicationReviewController;
+use App\Http\Controllers\Admin\InquiryReviewController;
 use App\Http\Controllers\Auth\LoginController;
 use App\Http\Controllers\Auth\LogoutController;
 use App\Http\Controllers\Auth\RegisterController;
@@ -69,3 +71,16 @@ Route::post('/logout', LogoutController::class)
 Route::get('/account', [AccountController::class, 'show'])
     ->middleware('auth')
     ->name('account.show');
+
+// Staff admin review queue: membership applications and confidential
+// inquiries. `admin` implies a logged-in user (see EnsureUserIsAdmin's
+// doc block); `auth` is still applied explicitly so a guest is redirected
+// to /login rather than refused outright.
+Route::prefix('admin')->middleware(['auth', 'admin'])->name('admin.')->group(function (): void {
+    Route::get('/applications', [ApplicationReviewController::class, 'index'])->name('applications.index');
+    Route::post('/applications/{reference}/approve', [ApplicationReviewController::class, 'approve'])->name('applications.approve');
+    Route::post('/applications/{reference}/decline', [ApplicationReviewController::class, 'decline'])->name('applications.decline');
+
+    Route::get('/inquiries', [InquiryReviewController::class, 'index'])->name('inquiries.index');
+    Route::post('/inquiries/{reference}/transition', [InquiryReviewController::class, 'transition'])->name('inquiries.transition');
+});

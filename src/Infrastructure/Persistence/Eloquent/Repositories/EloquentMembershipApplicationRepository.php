@@ -73,6 +73,16 @@ final class EloquentMembershipApplicationRepository implements MembershipApplica
         return MembershipApplicationRecord::query()->whereNotNull('member_id')->count() + 1;
     }
 
+    public function all(): array
+    {
+        return MembershipApplicationRecord::query()
+            ->with('tier')
+            ->orderByDesc('submitted_at')
+            ->get()
+            ->map($this->toEntity(...))
+            ->all();
+    }
+
     private function toEntity(MembershipApplicationRecord $record): MembershipApplication
     {
         return MembershipApplication::reconstitute(
