@@ -180,14 +180,24 @@
 
             <div class="mt-10 grid grid-cols-2 gap-px bg-border sm:grid-cols-3 lg:grid-cols-6">
                 @foreach ($sectors as $sector)
-                    <div class="flex aspect-square flex-col justify-end bg-gradient-to-b from-surface to-ink p-4">
-                        <p class="text-xs font-semibold uppercase leading-snug tracking-wide text-cream">
+                    <a
+                        href="{{ route('sectors.show', $sector->slug->value) }}"
+                        class="group flex aspect-square flex-col justify-end bg-gradient-to-b from-surface to-ink p-4 transition-colors hover:from-surface-raised"
+                    >
+                        <p class="text-xs font-semibold uppercase leading-snug tracking-wide text-cream group-hover:text-gold">
                             @foreach ($sector->nameLines() as $line)
                                 {{ $line }}@if (!$loop->last)<br>@endif
                             @endforeach
                         </p>
-                    </div>
+                    </a>
                 @endforeach
+            </div>
+
+            <div class="mt-8">
+                <a href="{{ route('sectors.index') }}" class="inline-flex items-center gap-2 text-xs font-semibold uppercase tracking-widest text-gold hover:text-gold-bright">
+                    View All Sectors
+                    <x-icon name="chevron-right" class="h-3.5 w-3.5" />
+                </a>
             </div>
         </div>
     </section>
