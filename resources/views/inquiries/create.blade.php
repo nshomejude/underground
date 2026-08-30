@@ -25,6 +25,14 @@
                 <p class="inline-flex w-fit items-center gap-2 border border-border bg-ink px-4 py-2 font-mono text-sm tracking-wider text-gold-bright">
                     {{ session('reference') }}
                 </p>
+
+                <p class="text-xs leading-relaxed text-muted">
+                    You can check on this inquiry anytime at
+                    <a href="{{ route('inquiries.track', ['reference' => session('reference')]) }}" class="text-gold underline hover:text-gold-bright">
+                        {{ route('inquiries.track') }}
+                    </a>
+                    &mdash; no account required.
+                </p>
             </div>
         @else
             <form method="POST" action="{{ route('inquiries.store') }}" novalidate class="flex flex-col gap-6">
