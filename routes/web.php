@@ -2,6 +2,8 @@
 
 use App\Http\Controllers\AboutController;
 use App\Http\Controllers\AccountController;
+use App\Http\Controllers\Admin\CapabilityAdminController;
+use App\Http\Controllers\Admin\InsightAdminController;
 use App\Http\Controllers\Auth\LoginController;
 use App\Http\Controllers\Auth\LogoutController;
 use App\Http\Controllers\Auth\RegisterController;
@@ -69,3 +71,15 @@ Route::post('/logout', LogoutController::class)
 Route::get('/account', [AccountController::class, 'show'])
     ->middleware('auth')
     ->name('account.show');
+
+// Content admin: staff-facing CRUD over Insights and Capabilities. See
+// App\Http\Controllers\Admin\InsightAdminController and CapabilityAdminController.
+// Assumes the `admin` middleware alias (Gate-based, aborts 403 for a
+// logged-in non-admin) is registered — see bootstrap/app.php.
+Route::prefix('admin')
+    ->middleware(['auth', 'admin'])
+    ->name('admin.')
+    ->group(function (): void {
+        Route::resource('insights', InsightAdminController::class)->except('show');
+        Route::resource('capabilities', CapabilityAdminController::class)->except('show');
+    });

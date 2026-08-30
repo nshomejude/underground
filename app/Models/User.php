@@ -27,6 +27,9 @@ class User extends Authenticatable
         return [
             'email_verified_at' => 'datetime',
             'password' => 'hashed',
+            // STUB: a sibling module owns the real admin foundation, this
+            // may be superseded at merge time.
+            'is_admin' => 'boolean',
         ];
     }
 }

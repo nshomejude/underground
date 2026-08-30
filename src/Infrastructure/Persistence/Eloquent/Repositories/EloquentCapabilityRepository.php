@@ -38,6 +38,25 @@ final class EloquentCapabilityRepository implements CapabilityRepository
         return $record === null ? null : $this->toEntity($record);
     }
 
+    public function save(Capability $capability): void
+    {
+        CapabilityRecord::query()->updateOrCreate(
+            ['slug' => $capability->slug->value],
+            [
+                'title' => $capability->title,
+                'summary' => $capability->summary,
+                'icon' => $capability->icon,
+                'position' => $capability->position,
+                'is_featured' => $capability->isFeatured,
+            ],
+        );
+    }
+
+    public function delete(Slug $slug): void
+    {
+        CapabilityRecord::query()->where('slug', $slug->value)->delete();
+    }
+
     private function toEntity(CapabilityRecord $record): Capability
     {
         return new Capability(

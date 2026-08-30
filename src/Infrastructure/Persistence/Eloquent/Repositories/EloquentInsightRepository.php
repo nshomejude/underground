@@ -23,11 +23,39 @@ final class EloquentInsightRepository implements InsightRepository
             ->all();
     }
 
+    public function all(): array
+    {
+        return InsightRecord::query()
+            ->orderByDesc('created_at')
+            ->get()
+            ->map($this->toEntity(...))
+            ->all();
+    }
+
     public function findBySlug(Slug $slug): ?Insight
     {
         $record = InsightRecord::query()->where('slug', $slug->value)->first();
 
         return $record === null ? null : $this->toEntity($record);
+    }
+
+    public function save(Insight $insight): void
+    {
+        InsightRecord::query()->updateOrCreate(
+            ['slug' => $insight->slug->value],
+            [
+                'title' => $insight->title,
+                'category' => $insight->category,
+                'excerpt' => $insight->excerpt,
+                'body' => $insight->body,
+                'published_at' => $insight->publishedAt,
+            ],
+        );
+    }
+
+    public function delete(Slug $slug): void
+    {
+        InsightRecord::query()->where('slug', $slug->value)->delete();
     }
 
     private function toEntity(InsightRecord $record): Insight
