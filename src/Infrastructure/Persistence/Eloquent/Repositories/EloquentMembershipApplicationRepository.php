@@ -6,6 +6,7 @@ namespace Infrastructure\Persistence\Eloquent\Repositories;
 
 use Domain\Membership\Entities\MembershipApplication;
 use Domain\Membership\Repositories\MembershipApplicationRepository;
+use Domain\Membership\ValueObjects\MemberId;
 use Domain\Membership\ValueObjects\MembershipApplicationStatus;
 use Domain\Membership\ValueObjects\MembershipReference;
 use Domain\Shared\Exceptions\DomainException;
@@ -41,6 +42,7 @@ final class EloquentMembershipApplicationRepository implements MembershipApplica
                 'statement' => $application->statement,
                 'status' => $application->status()->value,
                 'submitted_at' => $application->submittedAt,
+                'member_id' => $application->memberId()?->value,
             ],
         );
     }
@@ -53,6 +55,22 @@ final class EloquentMembershipApplicationRepository implements MembershipApplica
             ->first();
 
         return $record === null ? null : $this->toEntity($record);
+    }
+
+    public function findByEmail(EmailAddress $email): ?MembershipApplication
+    {
+        $record = MembershipApplicationRecord::query()
+            ->with('tier')
+            ->whereRaw('LOWER(email) = ?', [strtolower($email->value)])
+            ->orderByDesc('submitted_at')
+            ->first();
+
+        return $record === null ? null : $this->toEntity($record);
+    }
+
+    public function nextMemberIdSequence(): int
+    {
+        return MembershipApplicationRecord::query()->whereNotNull('member_id')->count() + 1;
     }
 
     private function toEntity(MembershipApplicationRecord $record): MembershipApplication
@@ -68,6 +86,7 @@ final class EloquentMembershipApplicationRepository implements MembershipApplica
             statement: $record->statement,
             submittedAt: $record->submitted_at,
             status: MembershipApplicationStatus::from($record->status),
+            memberId: $record->member_id === null ? null : MemberId::fromString($record->member_id),
         );
     }
 }

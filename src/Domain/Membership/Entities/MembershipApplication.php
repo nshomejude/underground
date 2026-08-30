@@ -6,6 +6,7 @@ namespace Domain\Membership\Entities;
 
 use DateTimeImmutable;
 use Domain\Membership\Exceptions\IllegalMembershipTransition;
+use Domain\Membership\ValueObjects\MemberId;
 use Domain\Membership\ValueObjects\MembershipApplicationStatus;
 use Domain\Membership\ValueObjects\MembershipReference;
 use Domain\Shared\Exceptions\DomainException;
@@ -31,6 +32,7 @@ final class MembershipApplication
         public readonly string $statement,
         public readonly DateTimeImmutable $submittedAt,
         private MembershipApplicationStatus $status,
+        private ?MemberId $memberId = null,
     ) {}
 
     public static function submit(
@@ -86,16 +88,22 @@ final class MembershipApplication
         string $statement,
         DateTimeImmutable $submittedAt,
         MembershipApplicationStatus $status,
+        ?MemberId $memberId = null,
     ): self {
         return new self(
             $reference, $tier, $name, $organisation, $email,
-            $phone, $country, $statement, $submittedAt, $status,
+            $phone, $country, $statement, $submittedAt, $status, $memberId,
         );
     }
 
     public function status(): MembershipApplicationStatus
     {
         return $this->status;
+    }
+
+    public function memberId(): ?MemberId
+    {
+        return $this->memberId;
     }
 
     public function transitionTo(MembershipApplicationStatus $target): void
@@ -105,6 +113,28 @@ final class MembershipApplication
         }
 
         $this->status = $target;
+    }
+
+    /**
+     * Approve the application, issuing its permanent member id in the same
+     * motion — the card credential exists from the instant membership is
+     * granted, never as a separate step an operator can forget.
+     *
+     * Idempotent: calling this again (e.g. a retried job) leaves an
+     * already-assigned member id untouched rather than replacing it, and
+     * skips the transition if the application is already approved. The
+     * caller supplies the id (see Application\Membership\Actions\
+     * ApproveMembershipApplication) because only storage knows the next
+     * sequence number — the aggregate itself stays free of persistence
+     * concerns.
+     */
+    public function approve(MemberId $memberId): void
+    {
+        if ($this->status !== MembershipApplicationStatus::Approved) {
+            $this->transitionTo(MembershipApplicationStatus::Approved);
+        }
+
+        $this->memberId ??= $memberId;
     }
 
     public function toArray(): array
@@ -121,6 +151,7 @@ final class MembershipApplication
             'status' => $this->status->value,
             'status_label' => $this->status->label(),
             'submitted_at' => $this->submittedAt->format(DATE_ATOM),
+            'member_id' => $this->memberId?->value,
         ];
     }
 

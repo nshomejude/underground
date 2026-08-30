@@ -24,7 +24,27 @@
             @endforeach
         </nav>
 
-        <div class="hidden lg:block">
+        <div class="hidden items-center gap-6 lg:flex">
+            @auth
+                <a href="{{ route('account.show') }}" class="inline-flex items-center gap-1.5 text-xs font-semibold uppercase tracking-widest text-body transition-colors hover:text-gold">
+                    <x-icon name="user" class="h-3.5 w-3.5" />
+                    Account
+                </a>
+                <form method="POST" action="{{ route('logout') }}">
+                    @csrf
+                    <button type="submit" class="text-xs font-semibold uppercase tracking-widest text-muted transition-colors hover:text-gold">
+                        Log Out
+                    </button>
+                </form>
+            @else
+                <a href="{{ route('login') }}" class="text-xs font-semibold uppercase tracking-widest text-body transition-colors hover:text-gold">
+                    Login
+                </a>
+                <a href="{{ route('register') }}" class="text-xs font-semibold uppercase tracking-widest text-body transition-colors hover:text-gold">
+                    Register
+                </a>
+            @endauth
+
             <x-button variant="secondary" href="{{ route('inquiries.create') }}">
                 Confidential Inquiry
                 <x-icon name="lock" class="h-3.5 w-3.5" />

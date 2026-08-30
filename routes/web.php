@@ -1,6 +1,10 @@
 <?php
 
 use App\Http\Controllers\AboutController;
+use App\Http\Controllers\AccountController;
+use App\Http\Controllers\Auth\LoginController;
+use App\Http\Controllers\Auth\LogoutController;
+use App\Http\Controllers\Auth\RegisterController;
 use App\Http\Controllers\CapabilityController;
 use App\Http\Controllers\CollaborationController;
 use App\Http\Controllers\ContactController;
@@ -46,3 +50,22 @@ Route::get('/membership/apply/{tier}', [MembershipController::class, 'create'])-
 Route::post('/membership/apply/{tier}', [MembershipController::class, 'store'])
     ->middleware('throttle:10,1')
     ->name('membership.store');
+
+// Member account area: standard Laravel session auth, hand-rolled on core
+// framework primitives (Auth/Hash facades, session) — no Breeze/Fortify/
+// Jetstream. See App\Http\Controllers\Auth and App\Http\Controllers\AccountController.
+Route::middleware('guest')->group(function (): void {
+    Route::get('/register', [RegisterController::class, 'create'])->name('register');
+    Route::post('/register', [RegisterController::class, 'store']);
+
+    Route::get('/login', [LoginController::class, 'create'])->name('login');
+    Route::post('/login', [LoginController::class, 'store']);
+});
+
+Route::post('/logout', LogoutController::class)
+    ->middleware('auth')
+    ->name('logout');
+
+Route::get('/account', [AccountController::class, 'show'])
+    ->middleware('auth')
+    ->name('account.show');

@@ -38,7 +38,12 @@ class DatabaseSeeder extends Seeder
         // are never seeded.
 
         // Membership context: the vetted tiers Underground extends.
-        // Applications are user-generated and are never seeded.
+        // Applications are user-generated and are never seeded, except for
+        // the two demo accounts below that exercise the member account area.
         $this->call(MembershipTierSeeder::class);
+
+        // Demo/seed-only member accounts (see class doc for credentials) so
+        // /account can be exercised end-to-end without a staff approval UI.
+        $this->call(MembershipAccountDemoSeeder::class);
     }
 }
