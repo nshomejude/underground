@@ -40,6 +40,12 @@
             @endforeach
 
             @auth
+                @if (auth()->user()->is_admin)
+                    <a href="{{ route('admin.index') }}" class="inline-flex items-center gap-2 text-sm font-semibold uppercase tracking-widest text-body transition-colors hover:text-gold">
+                        <x-icon name="shield-check" class="h-4 w-4" />
+                        Admin
+                    </a>
+                @endif
                 <a href="{{ route('account.show') }}" class="inline-flex items-center gap-2 text-sm font-semibold uppercase tracking-widest text-body transition-colors hover:text-gold">
                     <x-icon name="user" class="h-4 w-4" />
                     Account

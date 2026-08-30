@@ -26,6 +26,12 @@
 
         <div class="hidden items-center gap-6 lg:flex">
             @auth
+                @if (auth()->user()->is_admin)
+                    <a href="{{ route('admin.index') }}" class="inline-flex items-center gap-1.5 text-xs font-semibold uppercase tracking-widest text-body transition-colors hover:text-gold">
+                        <x-icon name="shield-check" class="h-3.5 w-3.5" />
+                        Admin
+                    </a>
+                @endif
                 <a href="{{ route('account.show') }}" class="inline-flex items-center gap-1.5 text-xs font-semibold uppercase tracking-widest text-body transition-colors hover:text-gold">
                     <x-icon name="user" class="h-3.5 w-3.5" />
                     Account

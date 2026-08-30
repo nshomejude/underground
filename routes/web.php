@@ -3,6 +3,7 @@
 use App\Http\Controllers\AboutController;
 use App\Http\Controllers\AccountController;
 use App\Http\Controllers\AccountSettingsController;
+use App\Http\Controllers\Admin\AdminDashboardController;
 use App\Http\Controllers\Admin\ApplicationReviewController;
 use App\Http\Controllers\Admin\CapabilityAdminController;
 use App\Http\Controllers\Admin\EngagementModelAdminController;
@@ -98,6 +99,8 @@ Route::get('/account', [AccountController::class, 'show'])
 // `auth` is still applied explicitly so a guest is redirected to /login
 // rather than refused outright.
 Route::prefix('admin')->middleware(['auth', 'admin'])->name('admin.')->group(function (): void {
+    Route::get('/', [AdminDashboardController::class, 'index'])->name('index');
+
     Route::get('/applications', [ApplicationReviewController::class, 'index'])->name('applications.index');
     Route::post('/applications/{reference}/approve', [ApplicationReviewController::class, 'approve'])->name('applications.approve');
     Route::post('/applications/{reference}/decline', [ApplicationReviewController::class, 'decline'])->name('applications.decline');
