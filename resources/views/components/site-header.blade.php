@@ -16,7 +16,7 @@
             <x-brand-mark />
         </a>
 
-        <nav class="hidden items-center gap-8 lg:flex" aria-label="Primary">
+        <nav class="hidden items-center gap-6 xl:flex" aria-label="Primary">
             @foreach ($navLinks as $label => $href)
                 <a href="{{ $href }}" class="text-xs font-semibold uppercase tracking-widest text-body transition-colors hover:text-gold">
                     {{ $label }}
@@ -24,7 +24,7 @@
             @endforeach
         </nav>
 
-        <div class="hidden items-center gap-6 lg:flex">
+        <div class="hidden items-center gap-4 xl:flex">
             @auth
                 @if (auth()->user()->is_admin)
                     <a href="{{ route('admin.index') }}" class="inline-flex items-center gap-1.5 text-xs font-semibold uppercase tracking-widest text-body transition-colors hover:text-gold">
@@ -46,9 +46,6 @@
                 <a href="{{ route('login') }}" class="text-xs font-semibold uppercase tracking-widest text-body transition-colors hover:text-gold">
                     Login
                 </a>
-                <a href="{{ route('register') }}" class="text-xs font-semibold uppercase tracking-widest text-body transition-colors hover:text-gold">
-                    Register
-                </a>
             @endauth
 
             <x-button variant="secondary" href="{{ route('inquiries.create') }}">
@@ -63,7 +60,7 @@
             aria-label="Open menu"
             aria-expanded="false"
             aria-controls="mobile-drawer"
-            class="flex h-10 w-10 shrink-0 items-center justify-center border border-gold text-gold lg:hidden"
+            class="flex h-10 w-10 shrink-0 items-center justify-center border border-gold text-gold xl:hidden"
         >
             <x-icon name="menu" class="h-5 w-5" />
         </button>

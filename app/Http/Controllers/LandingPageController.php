@@ -6,9 +6,7 @@ namespace App\Http\Controllers;
 
 use Application\Content\Queries\ComposeLandingPage;
 use Illuminate\Contracts\View\View;
-use Illuminate\Foundation\Vite;
 use Illuminate\Support\Facades\Route;
-use Throwable;
 
 /**
  * The flagship page: everything on it is assembled once by
@@ -24,21 +22,7 @@ final class LandingPageController extends Controller
         return view('welcome', [
             'landingPage' => ($this->composeLandingPage)(),
             'aboutHref' => Route::has('about') ? route('about') : '#',
-            'founderPortraitSrc' => $this->founderPortraitSrc(),
+            'founderPortraitSrc' => asset('images/founder-portrait.jpg'),
         ]);
-    }
-
-    /**
-     * Resolved through Vite so the asset is fingerprinted in production;
-     * falls back to a plain public path when no build manifest exists yet
-     * (e.g. the test environment, or before `npm run build` has run).
-     */
-    private function founderPortraitSrc(): string
-    {
-        try {
-            return app(Vite::class)->asset('resources/images/founder-portrait.jpg');
-        } catch (Throwable) {
-            return asset('images/founder-portrait.jpg');
-        }
     }
 }

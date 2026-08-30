@@ -5,8 +5,6 @@ declare(strict_types=1);
 namespace App\Http\Controllers;
 
 use Illuminate\Contracts\View\View;
-use Illuminate\Foundation\Vite;
-use Throwable;
 
 /**
  * Leadership bios. The founder gets a real portrait (reused from the
@@ -18,7 +16,7 @@ final class TeamController extends Controller
     public function index(): View
     {
         return view('team.index', [
-            'founderPortraitSrc' => $this->founderPortraitSrc(),
+            'founderPortraitSrc' => asset('images/founder-portrait.jpg'),
             'leaders' => [
                 [
                     'name' => 'Adrian Voss',
@@ -58,19 +56,5 @@ final class TeamController extends Controller
                 ],
             ],
         ]);
-    }
-
-    /**
-     * Mirrors LandingPageController::founderPortraitSrc — resolved through
-     * Vite so the asset is fingerprinted in production, falling back to a
-     * plain public path when no build manifest exists (e.g. tests).
-     */
-    private function founderPortraitSrc(): string
-    {
-        try {
-            return app(Vite::class)->asset('resources/images/founder-portrait.jpg');
-        } catch (Throwable) {
-            return asset('images/founder-portrait.jpg');
-        }
     }
 }
