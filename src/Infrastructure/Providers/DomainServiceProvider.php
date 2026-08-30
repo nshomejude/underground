@@ -7,8 +7,12 @@ namespace Infrastructure\Providers;
 use Domain\Content\Repositories\CapabilityRepository;
 use Domain\Content\Repositories\MetricRepository;
 use Domain\Content\Repositories\SectorRepository;
+use Domain\Engagement\Repositories\InquiryRepository;
+use Domain\Insights\Repositories\InsightRepository;
 use Illuminate\Support\ServiceProvider;
 use Infrastructure\Persistence\Eloquent\Repositories\EloquentCapabilityRepository;
+use Infrastructure\Persistence\Eloquent\Repositories\EloquentInquiryRepository;
+use Infrastructure\Persistence\Eloquent\Repositories\EloquentInsightRepository;
 use Infrastructure\Persistence\Eloquent\Repositories\EloquentMetricRepository;
 use Infrastructure\Persistence\Eloquent\Repositories\EloquentSectorRepository;
 
@@ -27,6 +31,8 @@ final class DomainServiceProvider extends ServiceProvider
         CapabilityRepository::class => EloquentCapabilityRepository::class,
         SectorRepository::class => EloquentSectorRepository::class,
         MetricRepository::class => EloquentMetricRepository::class,
+        InsightRepository::class => EloquentInsightRepository::class,
+        InquiryRepository::class => EloquentInquiryRepository::class,
     ];
 
     public function register(): void
