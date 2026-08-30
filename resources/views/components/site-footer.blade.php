@@ -1,0 +1,27 @@
+@php
+    $navLinks = [
+        'About' => '#',
+        'Capabilities' => '#',
+        'Expertise' => '#',
+        'Global Reach' => '#',
+        'Insights' => '#',
+        'Careers' => '#',
+        'Contact' => '#',
+    ];
+@endphp
+
+<footer class="border-t border-border bg-ink">
+    <div class="mx-auto flex max-w-7xl flex-col items-center gap-6 px-4 py-10 text-center sm:px-6 lg:flex-row lg:justify-between lg:px-8 lg:text-left">
+        <x-brand-mark />
+
+        <nav class="flex flex-wrap items-center justify-center gap-x-8 gap-y-3 text-xs font-semibold uppercase tracking-widest text-body" aria-label="Footer">
+            @foreach ($navLinks as $label => $href)
+                <a href="{{ $href }}" class="transition-colors hover:text-gold">{{ $label }}</a>
+            @endforeach
+        </nav>
+
+        <p class="text-xs uppercase tracking-widest text-muted">
+            &copy; {{ now()->year }} Underground Network Inc. All rights reserved.
+        </p>
+    </div>
+</footer>
