@@ -19,7 +19,7 @@ final class TeamController extends Controller
             'founderPortraitSrc' => asset('images/founder-portrait.jpg'),
             'leaders' => [
                 [
-                    'name' => 'Adrian Voss',
+                    'name' => 'Tony Smith',
                     'title' => 'Founder & Managing Partner',
                     'background' => 'Two decades brokering quiet agreements between sovereigns, capital, and the institutions caught between them.',
                     'portrait' => true,
