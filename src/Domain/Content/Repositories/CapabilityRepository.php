@@ -16,4 +16,8 @@ interface CapabilityRepository
     public function featured(?int $limit = null): array;
 
     public function findBySlug(Slug $slug): ?Capability;
+
+    public function save(Capability $capability): void;
+
+    public function delete(Slug $slug): void;
 }

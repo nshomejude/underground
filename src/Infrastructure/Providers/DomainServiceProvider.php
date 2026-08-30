@@ -5,20 +5,30 @@ declare(strict_types=1);
 namespace Infrastructure\Providers;
 
 use Domain\Content\Repositories\CapabilityRepository;
+use Domain\Content\Repositories\EngagementModelRepository;
 use Domain\Content\Repositories\MetricRepository;
+use Domain\Content\Repositories\NarrativeRepository;
+use Domain\Content\Repositories\PillarRepository;
 use Domain\Content\Repositories\SectorRepository;
+use Domain\Engagement\Repositories\InquiryRepository;
+use Domain\Insights\Repositories\InsightRepository;
+use Domain\Membership\Repositories\MembershipApplicationRepository;
+use Domain\Membership\Repositories\MembershipTierRepository;
 use Illuminate\Support\ServiceProvider;
 use Infrastructure\Persistence\Eloquent\Repositories\EloquentCapabilityRepository;
+use Infrastructure\Persistence\Eloquent\Repositories\EloquentEngagementModelRepository;
+use Infrastructure\Persistence\Eloquent\Repositories\EloquentInquiryRepository;
+use Infrastructure\Persistence\Eloquent\Repositories\EloquentInsightRepository;
+use Infrastructure\Persistence\Eloquent\Repositories\EloquentMembershipApplicationRepository;
+use Infrastructure\Persistence\Eloquent\Repositories\EloquentMembershipTierRepository;
 use Infrastructure\Persistence\Eloquent\Repositories\EloquentMetricRepository;
+use Infrastructure\Persistence\Eloquent\Repositories\EloquentNarrativeRepository;
+use Infrastructure\Persistence\Eloquent\Repositories\EloquentPillarRepository;
 use Infrastructure\Persistence\Eloquent\Repositories\EloquentSectorRepository;
 
 /**
  * Binds the domain's repository contracts to their Eloquent implementations.
  * This is the only place the domain layer and the database meet.
- *
- * WORK IN PROGRESS: the remaining contracts (engagement models, pillars,
- * insights, inquiries, narrative) are declared in src/Domain but not yet
- * implemented — see the roadmap in README.md.
  */
 final class DomainServiceProvider extends ServiceProvider
 {
@@ -27,6 +37,13 @@ final class DomainServiceProvider extends ServiceProvider
         CapabilityRepository::class => EloquentCapabilityRepository::class,
         SectorRepository::class => EloquentSectorRepository::class,
         MetricRepository::class => EloquentMetricRepository::class,
+        InsightRepository::class => EloquentInsightRepository::class,
+        InquiryRepository::class => EloquentInquiryRepository::class,
+        EngagementModelRepository::class => EloquentEngagementModelRepository::class,
+        PillarRepository::class => EloquentPillarRepository::class,
+        NarrativeRepository::class => EloquentNarrativeRepository::class,
+        MembershipTierRepository::class => EloquentMembershipTierRepository::class,
+        MembershipApplicationRepository::class => EloquentMembershipApplicationRepository::class,
     ];
 
     public function register(): void

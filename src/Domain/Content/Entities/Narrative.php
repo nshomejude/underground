@@ -41,8 +41,7 @@ final readonly class Narrative
         public array $closingCta,
         public array $navigation,
         public string $copyright,
-    ) {
-    }
+    ) {}
 
     public function toArray(): array
     {

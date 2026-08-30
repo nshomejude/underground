@@ -19,13 +19,12 @@ final readonly class Insight
         public string $excerpt,
         public string $body,
         public ?DateTimeImmutable $publishedAt,
-    ) {
-    }
+    ) {}
 
     public function isPublished(?DateTimeImmutable $now = null): bool
     {
         return $this->publishedAt !== null
-            && $this->publishedAt <= ($now ?? new DateTimeImmutable());
+            && $this->publishedAt <= ($now ?? new DateTimeImmutable);
     }
 
     public function readingMinutes(): int

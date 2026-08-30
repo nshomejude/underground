@@ -12,7 +12,5 @@ use Domain\Engagement\Entities\ConfidentialInquiry;
  */
 final readonly class InquirySubmitted
 {
-    public function __construct(public ConfidentialInquiry $inquiry)
-    {
-    }
+    public function __construct(public ConfidentialInquiry $inquiry) {}
 }

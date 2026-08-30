@@ -10,9 +10,7 @@ use Domain\Engagement\ValueObjects\InquiryReference;
 
 final readonly class TrackInquiry
 {
-    public function __construct(private InquiryRepository $inquiries)
-    {
-    }
+    public function __construct(private InquiryRepository $inquiries) {}
 
     public function __invoke(string $reference): ?ConfidentialInquiry
     {

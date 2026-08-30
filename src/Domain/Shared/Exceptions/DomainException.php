@@ -10,6 +10,4 @@ namespace Domain\Shared\Exceptions;
  * Infrastructure and interface layers may catch this to translate a broken
  * business rule into a transport specific response (HTTP 422, CLI error, ...).
  */
-class DomainException extends \DomainException
-{
-}
+class DomainException extends \DomainException {}

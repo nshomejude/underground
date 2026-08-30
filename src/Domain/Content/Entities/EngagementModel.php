@@ -18,8 +18,7 @@ final readonly class EngagementModel
         public string $summary,
         public string $icon,
         public int $position,
-    ) {
-    }
+    ) {}
 
     public function toArray(): array
     {

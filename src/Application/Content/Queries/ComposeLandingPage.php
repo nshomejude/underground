@@ -21,8 +21,7 @@ final readonly class ComposeLandingPage
         private ListEngagementModels $engagementModels,
         private ListPillars $pillars,
         private ListInsights $insights,
-    ) {
-    }
+    ) {}
 
     public function __invoke(): LandingPage
     {

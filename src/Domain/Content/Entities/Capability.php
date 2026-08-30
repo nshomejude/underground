@@ -19,8 +19,7 @@ final readonly class Capability
         public string $icon,
         public int $position,
         public bool $isFeatured,
-    ) {
-    }
+    ) {}
 
     /**
      * The mobile layout shows the title on a single line, the desktop card

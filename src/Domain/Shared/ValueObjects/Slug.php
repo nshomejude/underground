@@ -14,9 +14,7 @@ final readonly class Slug implements Stringable
 {
     private const PATTERN = '/^[a-z0-9]+(?:-[a-z0-9]+)*$/';
 
-    private function __construct(public string $value)
-    {
-    }
+    private function __construct(public string $value) {}
 
     public static function fromString(string $value): self
     {

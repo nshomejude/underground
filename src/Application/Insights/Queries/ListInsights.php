@@ -10,9 +10,7 @@ use Domain\Shared\ValueObjects\Slug;
 
 final readonly class ListInsights
 {
-    public function __construct(private InsightRepository $insights)
-    {
-    }
+    public function __construct(private InsightRepository $insights) {}
 
     /** @return list<Insight> */
     public function __invoke(?int $limit = null): array

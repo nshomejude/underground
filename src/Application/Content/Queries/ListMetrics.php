@@ -9,9 +9,7 @@ use Domain\Content\Repositories\MetricRepository;
 
 final readonly class ListMetrics
 {
-    public function __construct(private MetricRepository $metrics)
-    {
-    }
+    public function __construct(private MetricRepository $metrics) {}
 
     /** @return list<Metric> */
     public function __invoke(): array

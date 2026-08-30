@@ -19,9 +19,7 @@ final readonly class InquiryReference implements Stringable
 
     private const PATTERN = '/^UG-\d{4}-[A-HJ-NP-Z2-9]{6}$/';
 
-    private function __construct(public string $value)
-    {
-    }
+    private function __construct(public string $value) {}
 
     public static function fromString(string $value): self
     {

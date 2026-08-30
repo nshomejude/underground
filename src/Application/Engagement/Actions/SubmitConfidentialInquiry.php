@@ -15,8 +15,7 @@ final readonly class SubmitConfidentialInquiry
     public function __construct(
         private InquiryRepository $inquiries,
         private Dispatcher $events,
-    ) {
-    }
+    ) {}
 
     public function __invoke(InquiryPayload $payload): ConfidentialInquiry
     {

@@ -4,6 +4,8 @@ declare(strict_types=1);
 
 namespace Infrastructure\Persistence\Eloquent\Models;
 
+use Database\Factories\CapabilityRecordFactory;
+use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
 /**
@@ -12,6 +14,9 @@ use Illuminate\Database\Eloquent\Model;
  */
 final class CapabilityRecord extends Model
 {
+    /** @use HasFactory<CapabilityRecordFactory> */
+    use HasFactory;
+
     protected $table = 'capabilities';
 
     protected $guarded = [];
@@ -20,4 +25,9 @@ final class CapabilityRecord extends Model
         'position' => 'integer',
         'is_featured' => 'boolean',
     ];
+
+    protected static function newFactory(): CapabilityRecordFactory
+    {
+        return CapabilityRecordFactory::new();
+    }
 }

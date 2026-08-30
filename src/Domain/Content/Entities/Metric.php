@@ -18,8 +18,7 @@ final readonly class Metric
         public string $label,
         public string $icon,
         public int $position,
-    ) {
-    }
+    ) {}
 
     /** The bar prints the label across two short lines under the figure. */
     public function labelLines(): array
