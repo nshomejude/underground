@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\AboutController;
 use App\Http\Controllers\AccountController;
+use App\Http\Controllers\AccountSettingsController;
 use App\Http\Controllers\Auth\LoginController;
 use App\Http\Controllers\Auth\LogoutController;
 use App\Http\Controllers\Auth\RegisterController;
@@ -69,3 +70,9 @@ Route::post('/logout', LogoutController::class)
 Route::get('/account', [AccountController::class, 'show'])
     ->middleware('auth')
     ->name('account.show');
+
+Route::middleware('auth')->group(function (): void {
+    Route::get('/account/settings', [AccountSettingsController::class, 'edit'])->name('account.settings');
+    Route::post('/account/settings', [AccountSettingsController::class, 'update'])->name('account.settings.update');
+    Route::post('/account/settings/password', [AccountSettingsController::class, 'updatePassword'])->name('account.settings.password');
+});
