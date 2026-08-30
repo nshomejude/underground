@@ -7,6 +7,8 @@ namespace App\Http\Controllers\Admin;
 use App\Http\Controllers\Controller;
 use Application\Engagement\Actions\TransitionInquiryStatus;
 use Application\Engagement\Queries\ListInquiries;
+use Domain\Engagement\Repositories\InquiryRepository;
+use Domain\Engagement\ValueObjects\InquiryReference;
 use Domain\Engagement\ValueObjects\InquiryStatus;
 use Domain\Shared\Exceptions\DomainException;
 use Illuminate\Contracts\View\View;
@@ -25,6 +27,7 @@ final class InquiryReviewController extends Controller
 {
     public function __construct(
         private readonly ListInquiries $list,
+        private readonly InquiryRepository $inquiries,
         private readonly TransitionInquiryStatus $transition,
     ) {}
 
@@ -33,6 +36,15 @@ final class InquiryReviewController extends Controller
         return view('admin.inquiries.index', [
             'inquiries' => ($this->list)(),
         ]);
+    }
+
+    public function show(string $reference): View
+    {
+        $inquiry = $this->inquiries->findByReference(InquiryReference::fromString($reference));
+
+        abort_if($inquiry === null, 404);
+
+        return view('admin.inquiries.show', ['inquiry' => $inquiry]);
     }
 
     public function transition(Request $request, string $reference): RedirectResponse

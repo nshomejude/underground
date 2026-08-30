@@ -20,7 +20,7 @@
                         <div class="flex flex-wrap items-start justify-between gap-3">
                             <div class="flex flex-col gap-1">
                                 <span class="font-mono text-xs tracking-wider text-muted">{{ $application->reference->value }}</span>
-                                <h3 class="text-base font-semibold text-cream">{{ $application->name }}</h3>
+                                <a href="{{ route('admin.applications.show', $application->reference->value) }}" class="text-base font-semibold text-cream hover:text-gold">{{ $application->name }}</a>
                                 @if ($application->organisation)
                                     <span class="text-sm text-body">{{ $application->organisation }}</span>
                                 @endif

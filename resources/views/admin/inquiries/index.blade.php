@@ -28,7 +28,7 @@
                         <div class="flex flex-wrap items-start justify-between gap-3">
                             <div class="flex flex-col gap-1">
                                 <span class="font-mono text-xs tracking-wider text-muted">{{ $inquiry->reference->value }}</span>
-                                <h3 class="text-base font-semibold text-cream">{{ $inquiry->name }}</h3>
+                                <a href="{{ route('admin.inquiries.show', $inquiry->reference->value) }}" class="text-base font-semibold text-cream hover:text-gold">{{ $inquiry->name }}</a>
                                 @if ($inquiry->organisation)
                                     <span class="text-sm text-body">{{ $inquiry->organisation }}</span>
                                 @endif

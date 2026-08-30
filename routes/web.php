@@ -10,6 +10,7 @@ use App\Http\Controllers\Admin\EngagementModelAdminController;
 use App\Http\Controllers\Admin\EventAdminController;
 use App\Http\Controllers\Admin\InquiryReviewController;
 use App\Http\Controllers\Admin\InsightAdminController;
+use App\Http\Controllers\Admin\MembershipTierAdminController;
 use App\Http\Controllers\Admin\MetricAdminController;
 use App\Http\Controllers\Admin\NarrativeAdminController;
 use App\Http\Controllers\Admin\PartnerCategoryAdminController;
@@ -19,6 +20,7 @@ use App\Http\Controllers\Admin\ProjectAdminController;
 use App\Http\Controllers\Admin\SectorAdminController;
 use App\Http\Controllers\Admin\SiteSettingAdminController;
 use App\Http\Controllers\Admin\TeamMemberAdminController;
+use App\Http\Controllers\Admin\UserAdminController;
 use App\Http\Controllers\Auth\EmailVerificationController;
 use App\Http\Controllers\Auth\ForgotPasswordController;
 use App\Http\Controllers\Auth\LoginController;
@@ -127,11 +129,16 @@ Route::prefix('admin')->middleware(['auth', 'admin'])->name('admin.')->group(fun
     Route::get('/', [AdminDashboardController::class, 'index'])->name('index');
 
     Route::get('/applications', [ApplicationReviewController::class, 'index'])->name('applications.index');
+    Route::get('/applications/{reference}', [ApplicationReviewController::class, 'show'])->name('applications.show');
     Route::post('/applications/{reference}/approve', [ApplicationReviewController::class, 'approve'])->name('applications.approve');
     Route::post('/applications/{reference}/decline', [ApplicationReviewController::class, 'decline'])->name('applications.decline');
 
     Route::get('/inquiries', [InquiryReviewController::class, 'index'])->name('inquiries.index');
+    Route::get('/inquiries/{reference}', [InquiryReviewController::class, 'show'])->name('inquiries.show');
     Route::post('/inquiries/{reference}/transition', [InquiryReviewController::class, 'transition'])->name('inquiries.transition');
+
+    Route::get('/users', [UserAdminController::class, 'index'])->name('users.index');
+    Route::post('/users/{user}/toggle-admin', [UserAdminController::class, 'toggleAdmin'])->name('users.toggle-admin');
 
     Route::resource('insights', InsightAdminController::class)->except('show');
     Route::resource('capabilities', CapabilityAdminController::class)->except('show');
@@ -142,6 +149,9 @@ Route::prefix('admin')->middleware(['auth', 'admin'])->name('admin.')->group(fun
         ->except(['show'])
         ->parameters(['engagement-models' => 'engagement_model']);
     Route::resource('pillars', PillarAdminController::class)->except(['show']);
+    Route::resource('membership-tiers', MembershipTierAdminController::class)
+        ->except(['show'])
+        ->parameters(['membership-tiers' => 'membership_tier']);
 
     Route::resource('team', TeamMemberAdminController::class)
         ->except(['show'])

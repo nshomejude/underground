@@ -27,6 +27,25 @@ final class EloquentMembershipTierRepository implements MembershipTierRepository
         return $record === null ? null : $this->toEntity($record);
     }
 
+    public function save(MembershipTier $tier, ?Slug $originalSlug = null): void
+    {
+        MembershipTierRecord::query()->updateOrCreate(
+            ['slug' => ($originalSlug ?? $tier->slug)->value],
+            [
+                'slug' => $tier->slug->value,
+                'name' => $tier->name,
+                'audience' => $tier->audience,
+                'icon' => $tier->icon,
+                'position' => $tier->position,
+            ],
+        );
+    }
+
+    public function delete(Slug $slug): void
+    {
+        MembershipTierRecord::query()->where('slug', $slug->value)->delete();
+    }
+
     private function toEntity(MembershipTierRecord $record): MembershipTier
     {
         return new MembershipTier(

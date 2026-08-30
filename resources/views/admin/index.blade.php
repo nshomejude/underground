@@ -5,6 +5,7 @@
         <x-admin.stat-card label="Approval Rate" :value="$kpis['approval_rate'] !== null ? $kpis['approval_rate'].'%' : '—'" icon="check-circle" tone="success" />
         <x-admin.stat-card label="Open Inquiries" :value="$kpis['open_inquiries']" icon="lock" tone="info" />
         <x-admin.stat-card label="Upcoming Events" :value="$kpis['upcoming_events']" icon="clock" tone="gold" />
+        <x-admin.stat-card label="Registered Users" :value="$kpis['total_users']" icon="user" tone="info" />
     </div>
 
     <div class="grid grid-cols-1 gap-4 lg:grid-cols-3">
@@ -65,7 +66,7 @@
             @forelse ($recentApplications as $application)
                 <div class="flex items-center justify-between gap-3 border-b border-hairline pb-3 last:border-b-0 last:pb-0">
                     <div class="flex min-w-0 flex-col">
-                        <span class="truncate text-[13px] font-medium text-cream">{{ $application->applicant_name }}</span>
+                        <a href="{{ route('admin.applications.show', $application->reference) }}" class="truncate text-[13px] font-medium text-cream hover:text-gold">{{ $application->applicant_name }}</a>
                         <span class="font-mono text-xs text-muted">{{ $application->reference }}</span>
                     </div>
                     <x-status-badge
@@ -93,7 +94,7 @@
             @forelse ($recentInquiries as $inquiry)
                 <div class="flex items-center justify-between gap-3 border-b border-hairline pb-3 last:border-b-0 last:pb-0">
                     <div class="flex min-w-0 flex-col">
-                        <span class="truncate text-[13px] font-medium text-cream">{{ $inquiry->name }}</span>
+                        <a href="{{ route('admin.inquiries.show', $inquiry->reference) }}" class="truncate text-[13px] font-medium text-cream hover:text-gold">{{ $inquiry->name }}</a>
                         <span class="font-mono text-xs text-muted">{{ $inquiry->reference }}</span>
                     </div>
                     <x-status-badge
@@ -127,12 +128,14 @@
                 $sections = [
                     ['label' => 'Applications', 'description' => 'Review and approve or decline membership applications.', 'route' => 'admin.applications.index', 'icon' => 'briefcase'],
                     ['label' => 'Inquiries', 'description' => 'Work confidential inquiries through the review pipeline.', 'route' => 'admin.inquiries.index', 'icon' => 'lock'],
+                    ['label' => 'Users', 'description' => 'Manage registered accounts and staff admin access.', 'route' => 'admin.users.index', 'icon' => 'user'],
                     ['label' => 'Insights', 'description' => 'Publish and manage editorial insights content.', 'route' => 'admin.insights.index', 'icon' => 'newspaper'],
                     ['label' => 'Capabilities', 'description' => 'Maintain the capabilities shown across the site.', 'route' => 'admin.capabilities.index', 'icon' => 'gem'],
                     ['label' => 'Sectors', 'description' => 'Manage the sectors the network operates across.', 'route' => 'admin.sectors.index', 'icon' => 'globe'],
                     ['label' => 'Metrics', 'description' => 'Update the headline metrics shown to members.', 'route' => 'admin.metrics.index', 'icon' => 'target'],
                     ['label' => 'Engagement Models', 'description' => 'Curate the ways members engage with the network.', 'route' => 'admin.engagement-models.index', 'icon' => 'handshake'],
                     ['label' => 'Pillars', 'description' => 'Manage the organization\'s foundational pillars.', 'route' => 'admin.pillars.index', 'icon' => 'landmark'],
+                    ['label' => 'Membership Tiers', 'description' => 'Manage the vetted tiers shown on /membership.', 'route' => 'admin.membership-tiers.index', 'icon' => 'flag'],
                     ['label' => 'Team', 'description' => 'Manage the leadership bios shown on /team.', 'route' => 'admin.team.index', 'icon' => 'users'],
                     ['label' => 'Partners', 'description' => 'Manage the partner categories shown on /partners.', 'route' => 'admin.partners.index', 'icon' => 'building-2'],
                     ['label' => 'Portfolio', 'description' => 'Manage the past engagements shown on /portfolio.', 'route' => 'admin.portfolio.index', 'icon' => 'check-circle'],

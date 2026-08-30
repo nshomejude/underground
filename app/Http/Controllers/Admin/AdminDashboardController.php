@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
+use App\Models\User;
 use Illuminate\Contracts\View\View;
 use Infrastructure\Persistence\Eloquent\Models\CapabilityRecord;
 use Infrastructure\Persistence\Eloquent\Models\EngagementModelRecord;
@@ -12,6 +13,7 @@ use Infrastructure\Persistence\Eloquent\Models\EventRecord;
 use Infrastructure\Persistence\Eloquent\Models\InquiryRecord;
 use Infrastructure\Persistence\Eloquent\Models\InsightRecord;
 use Infrastructure\Persistence\Eloquent\Models\MembershipApplicationRecord;
+use Infrastructure\Persistence\Eloquent\Models\MembershipTierRecord;
 use Infrastructure\Persistence\Eloquent\Models\MetricRecord;
 use Infrastructure\Persistence\Eloquent\Models\PartnerCategoryRecord;
 use Infrastructure\Persistence\Eloquent\Models\PillarRecord;
@@ -74,6 +76,7 @@ final class AdminDashboardController extends Controller
                 'published_insights' => $publishedInsights,
                 'draft_insights' => $draftInsights,
                 'upcoming_events' => $upcomingEvents->count(),
+                'total_users' => User::query()->count(),
             ],
             'pipeline' => [
                 'applications' => [
@@ -95,6 +98,7 @@ final class AdminDashboardController extends Controller
                 ['label' => 'Metrics', 'route' => 'admin.metrics.index', 'count' => MetricRecord::query()->count()],
                 ['label' => 'Engagement Models', 'route' => 'admin.engagement-models.index', 'count' => EngagementModelRecord::query()->count()],
                 ['label' => 'Pillars', 'route' => 'admin.pillars.index', 'count' => PillarRecord::query()->count()],
+                ['label' => 'Membership Tiers', 'route' => 'admin.membership-tiers.index', 'count' => MembershipTierRecord::query()->count()],
                 ['label' => 'Team', 'route' => 'admin.team.index', 'count' => TeamMemberRecord::query()->count()],
                 ['label' => 'Partners', 'route' => 'admin.partners.index', 'count' => PartnerCategoryRecord::query()->count()],
                 ['label' => 'Portfolio', 'route' => 'admin.portfolio.index', 'count' => PortfolioEngagementRecord::query()->count()],

@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Database\Factories;
 
+use Domain\Engagement\ValueObjects\InquiryReference;
 use Domain\Engagement\ValueObjects\InquiryStatus;
 use Domain\Engagement\ValueObjects\InterestArea;
 use Illuminate\Database\Eloquent\Factories\Factory;
@@ -21,11 +22,11 @@ final class InquiryRecordFactory extends Factory
         $submittedAt = fake()->dateTimeBetween('-6 months', 'now');
 
         return [
-            'reference' => sprintf(
-                'UG-%s-%s',
-                $submittedAt->format('Y'),
-                strtoupper(fake()->bothify('??####')),
-            ),
+            // Built through the real value object rather than a hand-rolled
+            // pattern, so it always matches InquiryReference's strict
+            // alphabet (no 0/1/I/O — see its class doc) instead of only
+            // usually matching, as fake()->bothify('??####') did.
+            'reference' => InquiryReference::generate((int) $submittedAt->format('Y'))->value,
             'name' => fake()->name(),
             'organisation' => fake()->optional()->company(),
             'email' => fake()->unique()->safeEmail(),

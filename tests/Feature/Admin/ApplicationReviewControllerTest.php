@@ -56,6 +56,26 @@ final class ApplicationReviewControllerTest extends TestCase
         $response->assertSee('Submitted');
     }
 
+    public function test_the_show_page_renders_the_full_application_detail(): void
+    {
+        $application = $this->submitApplication();
+
+        $response = $this->actingAs($this->admin)->get(route('admin.applications.show', $application->reference->value));
+
+        $response->assertOk();
+        $response->assertSee($application->reference->value);
+        $response->assertSee($application->name);
+        $response->assertSee($application->statement);
+    }
+
+    public function test_a_non_admin_cannot_view_the_show_page(): void
+    {
+        $application = $this->submitApplication();
+        $member = User::factory()->create(['is_admin' => false]);
+
+        $this->actingAs($member)->get(route('admin.applications.show', $application->reference->value))->assertForbidden();
+    }
+
     public function test_an_admin_can_approve_a_pending_application(): void
     {
         $application = $this->submitApplication();

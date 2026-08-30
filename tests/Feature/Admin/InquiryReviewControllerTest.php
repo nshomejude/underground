@@ -60,6 +60,26 @@ final class InquiryReviewControllerTest extends TestCase
         $response->assertSee('Received');
     }
 
+    public function test_the_show_page_renders_the_full_inquiry_detail(): void
+    {
+        $inquiry = $this->submitInquiry();
+
+        $response = $this->actingAs($this->admin)->get(route('admin.inquiries.show', $inquiry->reference->value));
+
+        $response->assertOk();
+        $response->assertSee($inquiry->reference->value);
+        $response->assertSee($inquiry->name);
+        $response->assertSee($inquiry->brief);
+    }
+
+    public function test_a_non_admin_cannot_view_the_show_page(): void
+    {
+        $inquiry = $this->submitInquiry();
+        $member = User::factory()->create(['is_admin' => false]);
+
+        $this->actingAs($member)->get(route('admin.inquiries.show', $inquiry->reference->value))->assertForbidden();
+    }
+
     public function test_a_legal_transition_succeeds(): void
     {
         $inquiry = $this->submitInquiry('legal@example.com');

@@ -41,6 +41,13 @@ final class ApplicationReviewController extends Controller
         ]);
     }
 
+    public function show(string $reference): View
+    {
+        return view('admin.applications.show', [
+            'application' => $this->findOrFail($reference),
+        ]);
+    }
+
     public function approve(string $reference): RedirectResponse
     {
         $application = $this->findOrFail($reference);

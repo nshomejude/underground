@@ -6,6 +6,7 @@
         'Review Queue' => [
             ['label' => 'Applications', 'route' => 'admin.applications.index', 'pattern' => 'admin.applications.*', 'icon' => 'briefcase'],
             ['label' => 'Inquiries', 'route' => 'admin.inquiries.index', 'pattern' => 'admin.inquiries.*', 'icon' => 'lock'],
+            ['label' => 'Users', 'route' => 'admin.users.index', 'pattern' => 'admin.users.*', 'icon' => 'user'],
         ],
         'Content' => [
             ['label' => 'Insights', 'route' => 'admin.insights.index', 'pattern' => 'admin.insights.*', 'icon' => 'newspaper'],
@@ -14,6 +15,7 @@
             ['label' => 'Metrics', 'route' => 'admin.metrics.index', 'pattern' => 'admin.metrics.*', 'icon' => 'target'],
             ['label' => 'Engagement Models', 'route' => 'admin.engagement-models.index', 'pattern' => 'admin.engagement-models.*', 'icon' => 'handshake'],
             ['label' => 'Pillars', 'route' => 'admin.pillars.index', 'pattern' => 'admin.pillars.*', 'icon' => 'landmark'],
+            ['label' => 'Membership Tiers', 'route' => 'admin.membership-tiers.index', 'pattern' => 'admin.membership-tiers.*', 'icon' => 'flag'],
             ['label' => 'Team', 'route' => 'admin.team.index', 'pattern' => 'admin.team.*', 'icon' => 'users'],
             ['label' => 'Partners', 'route' => 'admin.partners.index', 'pattern' => 'admin.partners.*', 'icon' => 'building-2'],
             ['label' => 'Portfolio', 'route' => 'admin.portfolio.index', 'pattern' => 'admin.portfolio.*', 'icon' => 'check-circle'],
