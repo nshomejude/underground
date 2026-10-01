@@ -15,7 +15,7 @@
     aria-label="Primary"
 >
     @foreach ($tabs as $tab)
-        @php($isActive = $tab['href'] === $currentUrl)
+        @php($isActive = ! str_contains($tab['href'], '#') && rtrim($tab['href'], '/') === rtrim($currentUrl, '/'))
 
         <a
             href="{{ $tab['href'] }}"
