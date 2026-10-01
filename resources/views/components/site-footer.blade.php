@@ -63,13 +63,14 @@
             <p class="text-[11px] uppercase tracking-widest text-muted">
                 &copy; {{ now()->year }} {{ $siteSetting->siteName }} Inc. All rights reserved.
             </p>
-            @if ($siteSetting->footerNote)
-                <p class="text-[11px] uppercase tracking-widest text-muted">{{ $siteSetting->footerNote }}</p>
-            @else
+            <div class="flex flex-col items-center gap-1 sm:items-end">
+                @if ($siteSetting->footerNote)
+                    <p class="text-[11px] uppercase tracking-widest text-muted">{{ $siteSetting->footerNote }}</p>
+                @endif
                 <p class="text-[11px] uppercase tracking-widest text-muted">
-                    Powered by <a href="https://opesware.com" class="transition-colors hover:text-gold" rel="noopener">Opesware Technologies</a>
+                    Powered by <a href="https://opesware.com" class="text-body transition-colors hover:text-gold" rel="noopener" target="_blank">opesware.com</a>
                 </p>
-            @endif
+            </div>
         </div>
     </div>
 </footer>

@@ -6,12 +6,15 @@ namespace App\Http\Controllers\Auth;
 
 use App\Http\Controllers\Controller;
 use App\Http\Requests\RegisterRequest;
+use App\Mail\WelcomeMail;
 use App\Models\User;
 use Domain\Content\Repositories\SiteSettingRepository;
 use Illuminate\Contracts\View\View;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Facades\Mail;
+use Throwable;
 
 /**
  * Member account registration: standard Laravel session auth built on core
@@ -54,11 +57,25 @@ final class RegisterController extends Controller
 
         $user->sendEmailVerificationNotification();
 
+        $this->sendWelcomeEmail($user);
+
         Auth::login($user);
 
         $request->session()->regenerate();
 
         return redirect()->route('account.show');
+    }
+
+    /**
+     * A mail transport failure must never block or undo a registration.
+     */
+    private function sendWelcomeEmail(User $user): void
+    {
+        try {
+            Mail::to($user->email)->send(new WelcomeMail($user));
+        } catch (Throwable $e) {
+            report($e);
+        }
     }
 
     private function registrationClosed(): RedirectResponse

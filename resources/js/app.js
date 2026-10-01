@@ -105,3 +105,62 @@ document.addEventListener('DOMContentLoaded', () => {
         syncIcon();
     });
 });
+
+// Hero maxim slides: cross-fades through [data-hero-slide] every 7s, with
+// [data-hero-dot] controls. Pauses on hover/focus and when the tab is hidden;
+// stays on the first slide for visitors who prefer reduced motion.
+document.addEventListener('DOMContentLoaded', () => {
+    document.querySelectorAll('[data-hero-slides]').forEach((root) => {
+        const slides = [...root.querySelectorAll('[data-hero-slide]')];
+        const dots = [...root.querySelectorAll('[data-hero-dot]')];
+
+        if (slides.length < 2) {
+            return;
+        }
+
+        let current = 0;
+        let timer = null;
+
+        const show = (index) => {
+            current = (index + slides.length) % slides.length;
+
+            slides.forEach((slide, i) => {
+                const active = i === current;
+                slide.classList.toggle('opacity-100', active);
+                slide.classList.toggle('opacity-0', !active);
+                slide.classList.toggle('pointer-events-none', !active);
+                slide.setAttribute('aria-hidden', active ? 'false' : 'true');
+            });
+
+            dots.forEach((dot, i) => dot.setAttribute('aria-selected', i === current ? 'true' : 'false'));
+        };
+
+        const stop = () => {
+            if (timer) {
+                clearInterval(timer);
+                timer = null;
+            }
+        };
+
+        const start = () => {
+            stop();
+
+            if (!window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
+                timer = setInterval(() => show(current + 1), 7000);
+            }
+        };
+
+        dots.forEach((dot, i) => dot.addEventListener('click', () => {
+            show(i);
+            start();
+        }));
+
+        root.addEventListener('mouseenter', stop);
+        root.addEventListener('mouseleave', start);
+        root.addEventListener('focusin', stop);
+        root.addEventListener('focusout', start);
+        document.addEventListener('visibilitychange', () => (document.hidden ? stop() : start()));
+
+        start();
+    });
+});

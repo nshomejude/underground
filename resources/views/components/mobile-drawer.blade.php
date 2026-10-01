@@ -1,13 +1,15 @@
 @php
     $navLinks = [
-        'About' => route('about'),
-        'Capabilities' => url('/').'#capabilities',
-        'Expertise' => url('/').'#sectors',
-        'Global Reach' => url('/').'#reach',
-        'Insights' => route('insights.index'),
-        'Careers' => route('careers'),
-        'Contact' => route('contact'),
+        'About' => ['href' => route('about'), 'icon' => 'building-2'],
+        'Capabilities' => ['href' => url('/').'#capabilities', 'icon' => 'landmark'],
+        'Expertise' => ['href' => url('/').'#sectors', 'icon' => 'target'],
+        'Global Reach' => ['href' => url('/').'#reach', 'icon' => 'globe'],
+        'Insights' => ['href' => route('insights.index'), 'icon' => 'newspaper'],
+        'Careers' => ['href' => route('careers'), 'icon' => 'briefcase'],
+        'Contact' => ['href' => route('contact'), 'icon' => 'mail'],
     ];
+
+    $linkClass = 'inline-flex items-center gap-3 text-sm font-semibold uppercase tracking-widest text-body transition-colors hover:text-gold';
 @endphp
 
 <div
@@ -33,28 +35,31 @@
         </div>
 
         <nav class="flex flex-col gap-6">
-            @foreach ($navLinks as $label => $href)
-                <a href="{{ $href }}" class="text-sm font-semibold uppercase tracking-widest text-body transition-colors hover:text-gold">
+            @foreach ($navLinks as $label => $link)
+                <a href="{{ $link['href'] }}" class="{{ $linkClass }}">
+                    <x-icon :name="$link['icon']" class="h-4 w-4 shrink-0 text-gold" />
                     {{ $label }}
                 </a>
             @endforeach
 
             @auth
                 @if (auth()->user()->is_admin)
-                    <a href="{{ route('admin.index') }}" class="inline-flex items-center gap-2 text-sm font-semibold uppercase tracking-widest text-body transition-colors hover:text-gold">
-                        <x-icon name="shield-check" class="h-4 w-4" />
+                    <a href="{{ route('admin.index') }}" class="{{ $linkClass }}">
+                        <x-icon name="shield-check" class="h-4 w-4 shrink-0 text-gold" />
                         Admin
                     </a>
                 @endif
-                <a href="{{ route('account.show') }}" class="inline-flex items-center gap-2 text-sm font-semibold uppercase tracking-widest text-body transition-colors hover:text-gold">
-                    <x-icon name="user" class="h-4 w-4" />
+                <a href="{{ route('account.show') }}" class="{{ $linkClass }}">
+                    <x-icon name="user" class="h-4 w-4 shrink-0 text-gold" />
                     Account
                 </a>
             @else
-                <a href="{{ route('login') }}" class="text-sm font-semibold uppercase tracking-widest text-body transition-colors hover:text-gold">
+                <a href="{{ route('login') }}" class="{{ $linkClass }}">
+                    <x-icon name="lock" class="h-4 w-4 shrink-0 text-gold" />
                     Login
                 </a>
-                <a href="{{ route('register') }}" class="text-sm font-semibold uppercase tracking-widest text-body transition-colors hover:text-gold">
+                <a href="{{ route('register') }}" class="{{ $linkClass }}">
+                    <x-icon name="users" class="h-4 w-4 shrink-0 text-gold" />
                     Register
                 </a>
             @endauth
