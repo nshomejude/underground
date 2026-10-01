@@ -34,7 +34,7 @@
                     A global network delivering discreet, high-conviction execution across sectors and borders.
                 </p>
                 <ul class="flex flex-col gap-1.5 text-sm text-body">
-                    <li><a href="mailto:under@un-der.com" class="transition-colors hover:text-gold">under@un-der.com</a></li>
+                    <li><a href="mailto:info@un-der.com" class="transition-colors hover:text-gold">info@un-der.com</a></li>
                     <li><a href="tel:+15715089170" class="transition-colors hover:text-gold">+1-571-508-9170</a></li>
                     <li class="text-muted">Washington, DC &middot; Douala &middot; Abidjan &middot; Lagos &middot; Paris</li>
                 </ul>

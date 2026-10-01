@@ -22,7 +22,7 @@ final class SiteSettingSeeder extends Seeder
         SiteSettingRecord::query()->create([
             'site_name' => 'Underground Network',
             'site_tagline' => 'Power Beneath The Surface',
-            'contact_email' => 'under@un-der.com',
+            'contact_email' => 'info@un-der.com',
             'contact_phone' => '+1-571-508-9170',
             'social_links' => [],
             'footer_note' => null,

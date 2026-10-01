@@ -215,7 +215,7 @@
             ['q' => 'What should I include?', 'a' => 'A clear description of the situation, what you hope to achieve, and your timeline. Please avoid including highly sensitive details at this stage; we will agree how to share those securely.'],
             ['q' => 'When will I hear back?', 'a' => 'Because partners review each inquiry personally, we cannot promise a fixed time, but time-sensitive matters are prioritized. Use the tracker to follow progress.'],
             ['q' => 'Is there any obligation?', 'a' => 'No. Submitting an inquiry does not commit you to anything, and a first conversation is always confidential.'],
-            ['q' => 'I would prefer to email.', 'a' => 'For general questions you can write to under@un-der.com. New mandates are best submitted here so they reach the right partner securely.'],
+            ['q' => 'I would prefer to email.', 'a' => 'For general questions you can write to info@un-der.com. New mandates are best submitted here so they reach the right partner securely.'],
         ]"
     />
 </x-layout>

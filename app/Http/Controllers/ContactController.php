@@ -17,7 +17,7 @@ final class ContactController extends Controller
     public function index(): View
     {
         return view('contact.index', [
-            'generalEmail' => 'under@un-der.com',
+            'generalEmail' => 'info@un-der.com',
             'generalPhone' => '+1-571-508-9170',
             'offices' => OfficeDirectory::all(),
             'departments' => OfficeDirectory::departments(),

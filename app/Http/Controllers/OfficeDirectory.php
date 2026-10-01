@@ -20,7 +20,7 @@ final class OfficeDirectory
                 'city' => 'Washington, D.C.',
                 'region' => 'United States',
                 'address' => "200 Massachusetts Ave NW\nWashington, DC 20001, USA",
-                'email' => 'under@un-der.com',
+                'email' => 'info@un-der.com',
                 'phone' => '+1-571-508-9170',
                 'note' => 'Headquarters',
             ],
