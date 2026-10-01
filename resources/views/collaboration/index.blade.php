@@ -36,4 +36,31 @@
             </ul>
         </div>
     </section>
+
+    <x-value-grid
+        tone="surface"
+        eyebrow="The Lifecycle"
+        heading="How a Collaboration Unfolds"
+        :items="[
+            ['icon' => 'handshake', 'title' => '1. Onboard', 'text' => 'We agree scope, governance and confidentiality terms, and establish the secure channels the mandate will run on.'],
+            ['icon' => 'users', 'title' => '2. Mobilize', 'text' => 'The named team is assembled, briefed and introduced to your principals and any other parties involved.'],
+            ['icon' => 'radar', 'title' => '3. Operate', 'text' => 'Weekly briefings, same-day escalation and milestone reviews keep everyone aligned and decisions moving.'],
+            ['icon' => 'check-circle', 'title' => '4. Close', 'text' => 'We deliver a closing review, hand over relationships and materials, and wind down every working channel.'],
+        ]"
+        :columns="4"
+    />
+
+    <x-faq
+        tone="ink"
+        eyebrow="Working With Us"
+        heading="Collaboration Questions"
+        :items="[
+            ['q' => 'Do we need to share sensitive information?', 'a' => 'Only what the mandate requires, and only through the secure channels we set up. Our team is bound by confidentiality, and nothing is shared beyond the working group without your consent.'],
+            ['q' => 'Who makes the decisions?', 'a' => 'You do. We advise and recommend, and nothing material moves without the principal’s sign-off.'],
+            ['q' => 'Can you work alongside our existing advisors?', 'a' => 'Yes. We regularly work with a client’s legal, financial and communications advisors, and are comfortable fitting into an established team.'],
+            ['q' => 'What happens when the mandate ends?', 'a' => 'Every working group and channel is closed and archived. Relationships we have built on your behalf are handed over to you.'],
+        ]"
+    />
+
+    <x-cta-band heading="Ready to work together?" text="Tell us about the outcome you are aiming for and we will propose how we would collaborate." />
 </x-layout>

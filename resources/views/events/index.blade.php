@@ -40,4 +40,18 @@
             @endforeach
         </div>
     </section>
+
+    <x-faq
+        tone="surface"
+        eyebrow="Attending"
+        heading="About Our Forums"
+        :items="[
+            ['q' => 'Who attends?', 'a' => 'Sovereign principals, institutional allocators, senior officials, operators and invited experts. Each forum is kept deliberately small.'],
+            ['q' => 'How are forums conducted?', 'a' => 'Sessions run under the Chatham House Rule: participants may use what they learn, but may not attribute it to a person or organization.'],
+            ['q' => 'How do I receive an invitation?', 'a' => 'Attendance is by invitation only. If you believe you should be on our list, write to us and a partner will respond.'],
+            ['q' => 'Can we host or co-host a forum?', 'a' => 'We occasionally co-host with aligned institutions. Please contact our business team with a short outline.'],
+        ]"
+    />
+
+    <x-cta-band tone="ink" heading="Request an invitation." text="Tell us who you are and which forum interests you." primary-label="Request an Invitation" primary-href="mailto:business@un-der.com?subject=Event%20invitation%20request" />
 </x-layout>

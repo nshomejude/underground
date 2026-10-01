@@ -30,4 +30,17 @@
             @endforeach
         </div>
     </section>
+
+    <x-value-grid
+        tone="surface"
+        eyebrow="Why Standing Initiatives"
+        heading="Work That Outlasts a Single Mandate"
+        :items="[
+            ['icon' => 'users', 'title' => 'Multi-party by design', 'text' => 'These initiatives bring several institutions to one table, which is where progress on shared problems is made.'],
+            ['icon' => 'clock', 'title' => 'Long-horizon', 'text' => 'Policy, financing and governance do not change overnight. Our standing programs are built to run for years.'],
+            ['icon' => 'radar', 'title' => 'Feeding our advice', 'text' => 'What we learn from these programs sharpens the counsel we give every client, within the bounds of confidentiality.'],
+        ]"
+    />
+
+    <x-cta-band tone="ink" heading="Interested in collaborating on a project?" text="We welcome conversations with institutions working on shared challenges in these areas." primary-label="Write to Our Projects Team" primary-href="mailto:projects@un-der.com" />
 </x-layout>

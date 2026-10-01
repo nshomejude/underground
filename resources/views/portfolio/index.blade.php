@@ -31,4 +31,22 @@
             @endforeach
         </div>
     </section>
+
+    <x-value-grid
+        tone="surface"
+        eyebrow="Reading the Record"
+        heading="What Our Track Record Reflects"
+        :items="[
+            ['icon' => 'lock', 'title' => 'Anonymised by design', 'text' => 'No client, government or institution is named here. Details are generalized so that no engagement can be identified.'],
+            ['icon' => 'target', 'title' => 'Outcomes that matter', 'text' => 'We record results in terms the client cares about: a policy retained, a deal closed, a crisis contained.'],
+            ['icon' => 'globe', 'title' => 'Across sectors and regions', 'text' => 'The mandates shown span government, energy, infrastructure, security, technology and finance.'],
+        ]"
+    />
+
+    <x-cta-band tone="ink" heading="Have a similar challenge?" text="Every engagement is different, but many begin with a problem much like those above. Tell us about yours.">
+        <x-button variant="secondary" href="{{ route('capabilities.index') }}">
+            Our Capabilities
+            <x-icon name="chevron-right" class="h-3.5 w-3.5" />
+        </x-button>
+    </x-cta-band>
 </x-layout>

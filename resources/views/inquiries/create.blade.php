@@ -195,4 +195,27 @@
             </form>
         @endif
     </section>
+
+    <x-value-grid
+        tone="surface"
+        eyebrow="Before You Submit"
+        heading="What to Expect"
+        :items="[
+            ['icon' => 'lock', 'title' => 'Handled in confidence', 'text' => 'Your inquiry is seen only by the partners who review it. It is never shared or used for any other purpose.'],
+            ['icon' => 'users', 'title' => 'Reviewed by a partner', 'text' => 'A partner reads every inquiry personally, with no screening by an intermediary.'],
+            ['icon' => 'scan-line', 'title' => 'Track your reference', 'text' => 'You will receive an opaque reference number and can follow your inquiry on the tracker with no account needed.'],
+        ]"
+    />
+
+    <x-faq
+        tone="ink"
+        eyebrow="Your Inquiry"
+        heading="Common Questions"
+        :items="[
+            ['q' => 'What should I include?', 'a' => 'A clear description of the situation, what you hope to achieve, and your timeline. Please avoid including highly sensitive details at this stage; we will agree how to share those securely.'],
+            ['q' => 'When will I hear back?', 'a' => 'Because partners review each inquiry personally, we cannot promise a fixed time, but time-sensitive matters are prioritized. Use the tracker to follow progress.'],
+            ['q' => 'Is there any obligation?', 'a' => 'No. Submitting an inquiry does not commit you to anything, and a first conversation is always confidential.'],
+            ['q' => 'I would prefer to email.', 'a' => 'For general questions you can write to under@un-der.com. New mandates are best submitted here so they reach the right partner securely.'],
+        ]"
+    />
 </x-layout>

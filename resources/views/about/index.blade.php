@@ -61,4 +61,24 @@
             </div>
         </div>
     </section>
+
+    <x-value-grid
+        tone="surface"
+        eyebrow="Where We Stand"
+        heading="Our Commitments"
+        :items="[
+            ['icon' => 'shield-check', 'title' => 'Integrity', 'text' => 'We operate lawfully and ethically, everywhere. Influence that cannot withstand daylight is not influence we want.'],
+            ['icon' => 'lock', 'title' => 'Discretion', 'text' => 'Client confidence is the foundation of the firm. It is never traded, never published, never diluted.'],
+            ['icon' => 'handshake', 'title' => 'Trust', 'text' => 'We build relationships that outlast a single mandate, and treat every party at the table with respect.'],
+            ['icon' => 'target', 'title' => 'Results', 'text' => 'We exist to deliver outcomes, and we measure ourselves by whether the decision our client needed was made.'],
+        ]"
+        :columns="4"
+    />
+
+    <x-cta-band tone="ink" heading="Meet the people behind the firm." text="A small group of partners leads every engagement. Learn who they are, or begin a conversation.">
+        <x-button variant="secondary" href="{{ route('team') }}">
+            Meet the Partners
+            <x-icon name="chevron-right" class="h-3.5 w-3.5" />
+        </x-button>
+    </x-cta-band>
 </x-layout>

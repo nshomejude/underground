@@ -43,4 +43,20 @@
             </div>
         @endif
     </section>
+
+    <x-value-grid
+        tone="surface"
+        eyebrow="Our Perspective"
+        heading="What We Write About"
+        :items="[
+            ['icon' => 'globe', 'title' => 'Geopolitics', 'text' => 'How shifting alliances and strategic competition change the terms of access, trade and security.'],
+            ['icon' => 'coins', 'title' => 'Capital & markets', 'text' => 'Where capital is moving, why, and what political context investors should understand.'],
+            ['icon' => 'landmark', 'title' => 'Government affairs', 'text' => 'How decisions are made inside public institutions, and how to engage them well.'],
+            ['icon' => 'ship-wheel', 'title' => 'Infrastructure & energy', 'text' => 'The projects and transitions that are redrawing economic and strategic maps.'],
+            ['icon' => 'shield-check', 'title' => 'Security & risk', 'text' => 'Emerging risks, and how institutions can prepare for them without overreacting.'],
+            ['icon' => 'newspaper', 'title' => 'Strategy & influence', 'text' => 'The quiet mechanics of persuasion, reputation and relationships.'],
+        ]"
+    />
+
+    <x-cta-band tone="ink" heading="Want to contribute or be featured?" text="We welcome pitches and perspectives from practitioners and institutions with something new to say." primary-label="Contact Our Media Team" primary-href="mailto:media@un-der.com" />
 </x-layout>

@@ -29,6 +29,19 @@
                     </a>
                 @endforeach
             </div>
+
+            <div class="mt-12 grid grid-cols-1 gap-px bg-border md:grid-cols-2">
+                @foreach ($sectors as $sector)
+                    <a href="{{ route('sectors.show', $sector->slug->value) }}" class="group flex items-start gap-4 bg-surface p-6 transition-colors hover:bg-surface-raised">
+                        <x-icon name="{{ $sector->motif }}" class="mt-1 h-5 w-5 shrink-0 text-gold" />
+                        <span class="flex flex-1 flex-col gap-1">
+                            <span class="font-serif text-lg font-semibold text-cream group-hover:text-gold">{{ $sector->name }}</span>
+                            <span class="text-sm leading-relaxed text-body">{{ $sector->summary }}</span>
+                        </span>
+                        <x-icon name="chevron-right" class="mt-1 h-4 w-4 shrink-0 text-gold" />
+                    </a>
+                @endforeach
+            </div>
         @endif
     </section>
 

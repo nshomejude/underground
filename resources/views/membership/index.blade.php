@@ -38,4 +38,29 @@
             </x-button>
         </div>
     </section>
+
+    <x-value-grid
+        tone="surface"
+        eyebrow="Membership Benefits"
+        heading="What Membership Offers"
+        :items="[
+            ['icon' => 'handshake', 'title' => 'Access to the network', 'text' => 'Introductions to a trusted circle of principals, institutions and operators across our regions.'],
+            ['icon' => 'radar', 'title' => 'Briefings and insight', 'text' => 'Regular strategic briefings and early access to our research and analysis.'],
+            ['icon' => 'users', 'title' => 'Closed forums', 'text' => 'Priority consideration for invitation-only roundtables and dialogues.'],
+            ['icon' => 'lock', 'title' => 'Private channel', 'text' => 'A confidential line to the firm for questions that cannot wait for a formal engagement.'],
+        ]"
+        :columns="4"
+    />
+
+    <x-faq
+        tone="ink"
+        eyebrow="Applying"
+        heading="Membership Questions"
+        :items="[
+            ['q' => 'How does the application process work?', 'a' => 'Submit an application for the tier that fits. A partner reviews every application personally and will respond with a decision. You will receive a reference number to track your application.'],
+            ['q' => 'Is there a fee?', 'a' => 'There is no public checkout. Terms are discussed directly with approved applicants.'],
+            ['q' => 'How long does review take?', 'a' => 'Reviews are handled personally by partners, so timing varies. Use your reference number on the membership tracker to check progress at any time.'],
+            ['q' => 'Can I apply for more than one tier?', 'a' => 'Please apply for the tier that best describes you or your organization. If circumstances change, we can revisit it.'],
+        ]"
+    />
 </x-layout>

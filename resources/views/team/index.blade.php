@@ -40,4 +40,25 @@
             @endforeach
         </div>
     </section>
+
+    <x-value-grid
+        tone="surface"
+        eyebrow="What Partners Commit To"
+        heading="The Standard Every Partner Holds"
+        :items="[
+            ['icon' => 'users', 'title' => 'Personal accountability', 'text' => 'Each mandate is led by a named partner who answers to the client directly, from first conversation to closing review.'],
+            ['icon' => 'lock', 'title' => 'Absolute discretion', 'text' => 'What is learned in one room stays out of every other. Confidentiality is a condition of partnership, not a policy.'],
+            ['icon' => 'handshake', 'title' => 'Independent judgment', 'text' => 'Partners advise candidly, including when the answer is not what a client hoped to hear.'],
+            ['icon' => 'globe', 'title' => 'Earned relationships', 'text' => 'Every partner brings standing of their own, built over years inside the institutions they now advise.'],
+            ['icon' => 'scan-line', 'title' => 'Depth over breadth', 'text' => 'We take on fewer mandates, so that each partner can give every one the attention it deserves.'],
+            ['icon' => 'shield-check', 'title' => 'Principled conduct', 'text' => 'We act within the law and decline work that would compromise our integrity or that of our clients.'],
+        ]"
+    />
+
+    <x-cta-band tone="ink" heading="Interested in joining the team?" text="We do not run a public job board. The people who join us tend to be introduced, or to introduce themselves thoughtfully.">
+        <x-button variant="secondary" href="{{ route('careers') }}">
+            About Careers
+            <x-icon name="chevron-right" class="h-3.5 w-3.5" />
+        </x-button>
+    </x-cta-band>
 </x-layout>
