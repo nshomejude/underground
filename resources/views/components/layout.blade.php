@@ -33,7 +33,7 @@
     <body class="min-h-screen bg-ink font-sans text-body antialiased">
         <x-site-header />
 
-        <main class="pb-20 lg:pb-0">
+        <main>
             {{ $slot }}
         </main>
 

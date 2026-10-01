@@ -65,6 +65,9 @@ Route::get('/privacy', [LegalController::class, 'privacy'])->name('privacy');
 Route::get('/insights', [InsightController::class, 'index'])->name('insights.index');
 Route::get('/insights/{slug}', [InsightController::class, 'show'])->name('insights.show');
 
+Route::redirect('/capabilities', '/#capabilities');
+Route::redirect('/legal/terms', '/terms');
+Route::redirect('/legal/privacy', '/privacy');
 Route::get('/capabilities/{slug}', [CapabilityController::class, 'show'])->name('capabilities.show');
 
 Route::get('/sectors', [SectorController::class, 'index'])->name('sectors.index');
