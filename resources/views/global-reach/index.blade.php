@@ -59,4 +59,30 @@
             </div>
         </div>
     </section>
+
+    <x-value-grid
+        tone="surface"
+        eyebrow="Where We Operate"
+        heading="Regions We Cover"
+        :items="[
+            ['icon' => 'flag', 'title' => 'North America', 'text' => 'Our headquarters in Washington, D.C. anchors relationships with policy, finance and institutional audiences across the United States and Canada.'],
+            ['icon' => 'globe', 'title' => 'Central Africa', 'text' => 'Our Douala office supports clients across Cameroon and the wider CEMAC region on government, infrastructure and resources.'],
+            ['icon' => 'globe', 'title' => 'West Africa', 'text' => 'Offices in Abidjan and Lagos cover Côte d’Ivoire, Nigeria and the broader ECOWAS community.'],
+            ['icon' => 'landmark', 'title' => 'Europe', 'text' => 'Our Paris office connects European institutions, investors and corporates with partners across Africa and beyond.'],
+        ]"
+        :columns="4"
+    />
+
+    <x-value-grid
+        tone="ink"
+        eyebrow="Our Model"
+        heading="Global Network, Local Insight"
+        :items="[
+            ['icon' => 'users', 'title' => 'People on the ground', 'text' => 'Partners and associates who live and work in the markets we serve, and who know the people and customs that matter.'],
+            ['icon' => 'handshake', 'title' => 'Trusted partners', 'text' => 'A vetted network of advisors, institutions and operators we introduce to one another when it serves the client.'],
+            ['icon' => 'radar', 'title' => 'One coordinated team', 'text' => 'A single point of accountability, whichever combination of offices and specialists an engagement needs.'],
+        ]"
+    />
+
+    <x-cta-band heading="Planning to operate in a new market?" text="Tell us where you are going. We will tell you who to meet, what to expect and how to begin." />
 </x-layout>

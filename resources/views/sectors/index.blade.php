@@ -31,4 +31,23 @@
             </div>
         @endif
     </section>
+
+    <x-value-grid
+        tone="surface"
+        eyebrow="Our Edge"
+        heading="What Sets Our Sector Work Apart"
+        :items="[
+            ['icon' => 'landmark', 'title' => 'Institutional fluency', 'text' => 'We understand how ministries, regulators, boards and investment committees actually make decisions.'],
+            ['icon' => 'handshake', 'title' => 'Cross-sector connections', 'text' => 'A project in energy often needs government, finance and infrastructure at the same table. We bring them together.'],
+            ['icon' => 'radar', 'title' => 'Context before action', 'text' => 'We read the political, regulatory and security environment first, so that engagement is timely and well judged.'],
+        ]"
+        :columns="3"
+    />
+
+    <x-cta-band tone="ink" heading="Operating in more than one sector?" text="Many of our engagements cross sectors. Tell us what you are working on and we will assemble the right team.">
+        <x-button variant="secondary" href="{{ route('capabilities.index') }}">
+            Our Capabilities
+            <x-icon name="chevron-right" class="h-3.5 w-3.5" />
+        </x-button>
+    </x-cta-band>
 </x-layout>

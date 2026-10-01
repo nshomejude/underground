@@ -35,4 +35,20 @@
             </div>
         @endif
     </section>
+
+    <x-value-grid
+        tone="surface"
+        eyebrow="Every Engagement"
+        heading="What You Can Expect, Whichever Model You Choose"
+        :items="[
+            ['icon' => 'lock', 'title' => 'Confidentiality', 'text' => 'A signed confidentiality agreement at the outset. Client identities and matters are never disclosed.'],
+            ['icon' => 'users', 'title' => 'Senior-led teams', 'text' => 'A named partner is accountable for every engagement and remains involved from start to finish.'],
+            ['icon' => 'check-circle', 'title' => 'Clear terms', 'text' => 'Scope, fees and responsibilities are agreed in writing before work begins. No surprises.'],
+            ['icon' => 'scan-line', 'title' => 'Transparent reporting', 'text' => 'Regular, plain-language updates on progress, risks and next steps.'],
+            ['icon' => 'shield-check', 'title' => 'Compliance first', 'text' => 'We follow the law and the ethics rules of every jurisdiction, and we will tell you when something should not be done.'],
+            ['icon' => 'handshake', 'title' => 'A relationship, not a file', 'text' => 'We aim to be the firm you call again. Our best work comes from clients who stay.'],
+        ]"
+    />
+
+    <x-cta-band tone="ink" heading="Let us find the right structure." text="Tell us about your situation. We will recommend the model that fits, and be candid if another approach would serve you better." />
 </x-layout>

@@ -33,6 +33,11 @@ final class EngagementModelController extends Controller
 
         return view('engagement-models.show', [
             'engagementModel' => $engagementModel,
+            'content' => config('page_content.engagement_models.'.$engagementModel->slug->value, []),
+            'otherModels' => array_values(array_filter(
+                ($this->engagementModels)(),
+                static fn ($other): bool => $other->slug->value !== $engagementModel->slug->value,
+            )),
         ]);
     }
 }
