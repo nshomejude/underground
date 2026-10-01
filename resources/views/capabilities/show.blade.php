@@ -1,6 +1,6 @@
 <x-layout :title="$capability->title">
     <article class="mx-auto max-w-3xl px-4 py-16 sm:px-6 lg:px-8 lg:py-24">
-        <a href="{{ url('/') }}#capabilities" class="inline-flex items-center gap-2 text-xs font-semibold uppercase tracking-widest text-gold hover:text-gold-bright">
+        <a href="{{ route('capabilities.index') }}" class="inline-flex items-center gap-2 text-xs font-semibold uppercase tracking-widest text-gold hover:text-gold-bright">
             <x-icon name="chevron-right" class="h-3.5 w-3.5 rotate-180" />
             Back to Capabilities
         </a>
@@ -30,7 +30,7 @@
         </div>
 
         <div class="mt-12 flex flex-wrap items-center gap-4">
-            <x-button variant="secondary" href="{{ url('/') }}#capabilities">
+            <x-button variant="secondary" href="{{ route('capabilities.index') }}">
                 Explore All Capabilities
                 <x-icon name="chevron-right" class="h-3.5 w-3.5" />
             </x-button>

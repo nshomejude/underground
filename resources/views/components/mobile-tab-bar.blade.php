@@ -1,8 +1,8 @@
 @php
     $tabs = [
         ['label' => 'Home', 'icon' => 'home', 'href' => url('/')],
-        ['label' => 'Capabilities', 'icon' => 'landmark', 'href' => url('/').'#capabilities'],
-        ['label' => 'Reach', 'icon' => 'globe', 'href' => url('/').'#reach'],
+        ['label' => 'Capabilities', 'icon' => 'landmark', 'href' => route('capabilities.index')],
+        ['label' => 'Reach', 'icon' => 'globe', 'href' => route('global-reach')],
         ['label' => 'Insights', 'icon' => 'newspaper', 'href' => route('insights.index')],
         ['label' => 'Contact', 'icon' => 'mail', 'href' => route('inquiries.create')],
     ];

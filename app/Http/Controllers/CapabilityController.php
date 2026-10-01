@@ -12,6 +12,13 @@ final class CapabilityController extends Controller
 {
     public function __construct(private readonly ListCapabilities $capabilities) {}
 
+    public function index(): View
+    {
+        return view('capabilities.index', [
+            'capabilities' => ($this->capabilities)(),
+        ]);
+    }
+
     public function show(string $slug): View
     {
         try {

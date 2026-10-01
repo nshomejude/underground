@@ -33,6 +33,7 @@ use App\Http\Controllers\CollaborationController;
 use App\Http\Controllers\ContactController;
 use App\Http\Controllers\EngagementModelController;
 use App\Http\Controllers\EventController;
+use App\Http\Controllers\GlobalReachController;
 use App\Http\Controllers\InquiryController;
 use App\Http\Controllers\InquiryTrackController;
 use App\Http\Controllers\InsightController;
@@ -65,7 +66,9 @@ Route::get('/privacy', [LegalController::class, 'privacy'])->name('privacy');
 Route::get('/insights', [InsightController::class, 'index'])->name('insights.index');
 Route::get('/insights/{slug}', [InsightController::class, 'show'])->name('insights.show');
 
-Route::redirect('/capabilities', '/#capabilities');
+Route::get('/capabilities', [CapabilityController::class, 'index'])->name('capabilities.index');
+Route::get('/global-reach', GlobalReachController::class)->name('global-reach');
+Route::permanentRedirect('/expertise', '/sectors');
 Route::redirect('/legal/terms', '/terms');
 Route::redirect('/legal/privacy', '/privacy');
 Route::get('/capabilities/{slug}', [CapabilityController::class, 'show'])->name('capabilities.show');

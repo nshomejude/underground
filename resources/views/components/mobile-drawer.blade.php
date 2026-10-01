@@ -1,9 +1,9 @@
 @php
     $navLinks = [
         'About' => ['href' => route('about'), 'icon' => 'building-2'],
-        'Capabilities' => ['href' => url('/').'#capabilities', 'icon' => 'landmark'],
-        'Expertise' => ['href' => url('/').'#sectors', 'icon' => 'target'],
-        'Global Reach' => ['href' => url('/').'#reach', 'icon' => 'globe'],
+        'Capabilities' => ['href' => route('capabilities.index'), 'icon' => 'landmark'],
+        'Expertise' => ['href' => route('sectors.index'), 'icon' => 'target'],
+        'Global Reach' => ['href' => route('global-reach'), 'icon' => 'globe'],
         'Insights' => ['href' => route('insights.index'), 'icon' => 'newspaper'],
         'Careers' => ['href' => route('careers'), 'icon' => 'briefcase'],
         'Contact' => ['href' => route('contact'), 'icon' => 'mail'],

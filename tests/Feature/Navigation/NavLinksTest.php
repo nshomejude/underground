@@ -36,9 +36,9 @@ final class NavLinksTest extends TestCase
         $response = $this->get('/');
 
         $response->assertOk();
-        $response->assertSee(url('/').'#capabilities', false);
-        $response->assertSee(url('/').'#sectors', false);
-        $response->assertSee(url('/').'#reach', false);
+        $response->assertSee(route('capabilities.index'), false);
+        $response->assertSee(route('sectors.index'), false);
+        $response->assertSee(route('global-reach'), false);
         $response->assertSee(route('insights.index'), false);
         $response->assertSee(route('careers'), false);
     }

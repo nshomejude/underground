@@ -10,9 +10,9 @@
             'Contact' => route('contact'),
         ],
         'What We Do' => [
-            'Capabilities' => url('/').'#capabilities',
-            'Expertise' => url('/').'#sectors',
-            'Global Reach' => url('/').'#reach',
+            'Capabilities' => route('capabilities.index'),
+            'Expertise' => route('sectors.index'),
+            'Global Reach' => route('global-reach'),
             'Portfolio' => route('portfolio'),
             'Projects' => route('projects'),
         ],
@@ -33,6 +33,11 @@
                 <p class="max-w-xs text-sm leading-relaxed text-body">
                     A global network delivering discreet, high-conviction execution across sectors and borders.
                 </p>
+                <ul class="flex flex-col gap-1.5 text-sm text-body">
+                    <li><a href="mailto:under@un-der.com" class="transition-colors hover:text-gold">under@un-der.com</a></li>
+                    <li><a href="tel:+15715089170" class="transition-colors hover:text-gold">+1-571-508-9170</a></li>
+                    <li class="text-muted">Washington, DC &middot; Douala &middot; Abidjan &middot; Lagos &middot; Paris</li>
+                </ul>
             </div>
 
             @foreach ($navGroups as $group => $links)

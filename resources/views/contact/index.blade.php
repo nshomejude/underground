@@ -27,7 +27,7 @@
             &mdash; no account required.
         </p>
 
-        <div class="flex flex-col gap-4 border-t border-border pt-10 sm:flex-row sm:items-center sm:justify-between">
+        <div class="grid grid-cols-1 gap-6 border-t border-border pt-10 sm:grid-cols-2">
             <div class="flex items-center gap-4">
                 <span class="flex h-11 w-11 shrink-0 items-center justify-center border border-gold text-gold">
                     <x-icon name="mail" class="h-5 w-5" />
@@ -38,6 +38,31 @@
                         {{ $generalEmail }}
                     </a>
                 </div>
+            </div>
+
+            <div class="flex items-center gap-4">
+                <span class="flex h-11 w-11 shrink-0 items-center justify-center border border-gold text-gold">
+                    <x-icon name="phone" class="h-5 w-5" />
+                </span>
+                <div class="flex flex-col">
+                    <p class="text-xs font-semibold uppercase tracking-widest text-muted">Telephone</p>
+                    <a href="tel:{{ preg_replace('/[^+\d]/', '', $generalPhone) }}" class="text-sm font-semibold text-cream hover:text-gold">
+                        {{ $generalPhone }}
+                    </a>
+                </div>
+            </div>
+        </div>
+
+        <div>
+            <h2 class="text-xs font-semibold uppercase tracking-[0.2em] text-gold">Departments</h2>
+
+            <div class="mt-6 grid grid-cols-1 gap-px bg-border sm:grid-cols-2 lg:grid-cols-3">
+                @foreach ($departments as $label => $mailbox)
+                    <a href="mailto:{{ $mailbox }}" class="group flex flex-col gap-1 bg-surface p-6 transition-colors hover:bg-surface-raised">
+                        <span class="text-xs font-semibold uppercase tracking-widest text-muted">{{ $label }}</span>
+                        <span class="text-sm font-semibold text-cream group-hover:text-gold">{{ $mailbox }}</span>
+                    </a>
+                @endforeach
             </div>
         </div>
 
@@ -53,7 +78,19 @@
                                 {{ $office['city'] }}, {{ $office['region'] }}
                             </h3>
                         </div>
-                        <p class="text-sm leading-relaxed text-body">{{ $office['address'] }}</p>
+                        @if ($office['address'])
+                            <p class="text-sm leading-relaxed text-body">{!! nl2br(e($office['address'])) !!}</p>
+                        @endif
+                        @if ($office['phone'])
+                            <p class="text-sm text-body">
+                                <a href="tel:{{ preg_replace('/[^+\d]/', '', $office['phone']) }}" class="hover:text-gold">{{ $office['phone'] }}</a>
+                            </p>
+                        @endif
+                        @if ($office['email'])
+                            <p class="text-sm text-body">
+                                <a href="mailto:{{ $office['email'] }}" class="hover:text-gold">{{ $office['email'] }}</a>
+                            </p>
+                        @endif
                         <p class="text-xs uppercase tracking-wide text-muted">{{ $office['note'] }}</p>
                     </div>
                 @endforeach

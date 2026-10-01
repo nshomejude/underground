@@ -23,7 +23,7 @@
                 <x-icon name="arrow-right" class="h-3.5 w-3.5" />
             </x-button>
 
-            <x-button variant="secondary" href="{{ url('/').'#capabilities' }}">
+            <x-button variant="secondary" href="{{ route('capabilities.index') }}">
                 Explore Capabilities
             </x-button>
 

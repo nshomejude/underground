@@ -44,7 +44,7 @@ final class MarketingPagesTest extends TestCase
     {
         $this->get(route('contact'))
             ->assertOk()
-            ->assertSee('office@underground-network.example')
+            ->assertSee('under@un-der.com')
             ->assertSee(route('inquiries.create'), false);
     }
 

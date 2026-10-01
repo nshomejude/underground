@@ -1,9 +1,9 @@
 @php
     $navLinks = [
         'About' => route('about'),
-        'Capabilities' => url('/').'#capabilities',
-        'Expertise' => url('/').'#sectors',
-        'Global Reach' => url('/').'#reach',
+        'Capabilities' => route('capabilities.index'),
+        'Expertise' => route('sectors.index'),
+        'Global Reach' => route('global-reach'),
         'Insights' => route('insights.index'),
         'Careers' => route('careers'),
         'Contact' => route('contact'),
