@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace App\Http\Controllers;
 
 use App\Http\Requests\StoreMembershipApplicationRequest;
+use App\Services\MembershipNotifier;
 use Application\Membership\Actions\ApplyForMembership;
 use Application\Membership\DataTransferObjects\MembershipApplicationPayload;
 use Application\Membership\Queries\ListMembershipTiers;
@@ -125,6 +126,8 @@ final class MembershipController extends Controller
                 ->withInput()
                 ->withErrors(['statement' => $exception->getMessage()]);
         }
+
+        app(MembershipNotifier::class)->notify($application, 'received');
 
         return redirect()
             ->route('membership.apply', ['tier' => $tier])

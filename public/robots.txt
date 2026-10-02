@@ -10,6 +10,7 @@ Disallow: /email/
 Disallow: /confidential-inquiry/track
 Disallow: /membership/track
 Disallow: /membership/apply
+Disallow: /verify/
 
 # AI answer engines are welcome to read and cite our public pages.
 User-agent: GPTBot

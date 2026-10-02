@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
+use App\Services\MembershipNotifier;
 use Application\Membership\Actions\ApproveMembershipApplication;
 use Application\Membership\Actions\DeclineMembershipApplication;
 use Application\Membership\Queries\ListMembershipApplications;
@@ -59,6 +60,8 @@ final class ApplicationReviewController extends Controller
             return back()->with('error', $exception->getMessage());
         }
 
+        app(MembershipNotifier::class)->notify($application, 'approved');
+
         return back()->with('status', sprintf(
             'Application %s approved — member id %s issued.',
             $application->reference->value,
@@ -76,6 +79,8 @@ final class ApplicationReviewController extends Controller
         } catch (DomainException $exception) {
             return back()->with('error', $exception->getMessage());
         }
+
+        app(MembershipNotifier::class)->notify($application, 'declined');
 
         return back()->with('status', sprintf('Application %s declined.', $application->reference->value));
     }

@@ -1,0 +1,317 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Verify Credential | Underground Network</title>
+<meta name="robots" content="noindex">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Instrument+Sans:wght@400;500;600&family=Playfair+Display:wght@500;600;700&display=swap" rel="stylesheet">
+<style>
+:root{--ink:#0B0B0C;--surface:#17161A;--raised:#1F1E22;--border:#2A2825;--gold:#C9A25A;--gold-b:#E0BE7E;--cream:#F3EFE6;--body:#B9B4AC;--ok:#8FCB9B;--warn:#E3A857;--bad:#E57A6E;--st:var(--gold-b)}
+*{box-sizing:border-box}
+html{-webkit-text-size-adjust:100%}
+body{margin:0;background:var(--ink);color:var(--body);font:16px/1.6 "Instrument Sans",system-ui,sans-serif;min-height:100vh;
+background-image:radial-gradient(ellipse at 50% -10%,rgba(201,162,90,.10),transparent 60%)}
+h1,h2,h3{font-family:"Playfair Display",Georgia,serif;color:var(--cream);font-weight:600;margin:0;line-height:1.2}
+a{color:var(--gold-b)}
+.ic{width:1.25em;height:1.25em;fill:none;stroke:currentColor;stroke-width:2;stroke-linecap:round;stroke-linejoin:round;flex:none}
+.eyebrow{font-size:12px;letter-spacing:.18em;text-transform:uppercase;color:var(--gold-b);font-weight:600}
+:focus-visible{outline:3px solid var(--gold-b);outline-offset:3px}
+.sr{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0);white-space:nowrap}
+.skip{position:absolute;left:8px;top:-60px;background:var(--gold-b);color:var(--ink);padding:12px 16px;z-index:9}
+.skip:focus{top:8px}
+header.top{border-bottom:1px solid var(--border);padding:14px 16px}
+.top-in{max-width:760px;margin:0 auto;display:flex;align-items:center;justify-content:space-between;gap:12px;flex-wrap:wrap}
+.brand{font-family:"Playfair Display",serif;color:var(--cream);font-size:18px;letter-spacing:.04em}
+.brand b{color:var(--gold-b);font-weight:600}
+.addr{display:flex;align-items:center;gap:8px;font-size:14px;color:var(--cream);border:1px solid var(--border);background:var(--surface);padding:6px 12px;min-height:44px}
+.addr .ic{color:var(--ok)}
+main{max-width:760px;margin:0 auto;padding:24px 16px 56px}
+.demo{border:1px dashed var(--border);padding:10px 12px;margin-bottom:28px;background:rgba(255,255,255,.015)}
+.demo .eyebrow{display:block;margin-bottom:8px;color:var(--body)}
+.seg{display:grid;grid-template-columns:repeat(4,1fr);gap:0;border:1px solid var(--border)}
+.seg button{min-height:44px;background:var(--surface);color:var(--body);border:0;border-right:1px solid var(--border);font:600 14px "Instrument Sans";cursor:pointer;padding:6px 4px}
+.seg button:last-child{border-right:0}
+.seg button[aria-selected=true]{background:var(--raised);color:var(--gold-b);box-shadow:inset 0 -3px 0 var(--gold-b)}
+.seg button:hover{color:var(--cream)}
+@media(max-width:460px){.seg{grid-template-columns:1fr 1fr}.seg button:nth-child(2){border-right:0}.seg button:nth-child(-n+2){border-bottom:1px solid var(--border)}}
+.intro{text-align:center;margin-bottom:24px}
+.intro h1{font-size:clamp(26px,5vw,38px);margin-top:8px}
+.intro p{margin:10px auto 0;max-width:48ch}
+.tok{display:inline-flex;align-items:center;gap:8px;margin-top:14px;font:500 13px ui-monospace,Consolas,monospace;color:var(--cream);border:1px solid var(--border);background:var(--surface);padding:8px 12px;max-width:100%;overflow-wrap:anywhere}
+/* steps */
+.panel{border:1px solid var(--border);background:var(--surface)}
+.steps{list-style:none;margin:0;padding:8px 0}
+.step{display:grid;grid-template-columns:44px 1fr auto;align-items:center;gap:12px;padding:10px 16px;opacity:.55;transition:opacity .3s}
+.step.active,.step.done,.step.warn,.step.fail,.step.skip{opacity:1}
+.step.skip{opacity:.7}
+.sico{position:relative;width:40px;height:40px;border:1px solid var(--border);display:grid;place-items:center;color:var(--body);background:var(--ink)}
+.sico .ic{position:absolute;transition:transform .35s,opacity .3s}
+.sico .res{opacity:0;transform:scale(.3) rotate(-40deg)}
+.step.active .sico{border-color:var(--gold);color:var(--gold-b)}
+.step.active .sico::after{content:"";position:absolute;inset:-1px;border:2px solid transparent;border-top-color:var(--gold-b);border-radius:50%;animation:spin .8s linear infinite}
+.step.done .sico,.step.warn .sico,.step.fail .sico,.step.skip .sico{border-color:currentColor}
+.step.done .sico{color:var(--ok)}.step.warn .sico{color:var(--warn)}.step.fail .sico{color:var(--bad)}.step.skip .sico{color:var(--body)}
+.step.done .base,.step.warn .base,.step.fail .base,.step.skip .base{opacity:0;transform:scale(.3) rotate(40deg)}
+.step.done .res,.step.warn .res,.step.fail .res,.step.skip .res{opacity:1;transform:none}
+.slabel{color:var(--cream);font-weight:500}
+.sdet{display:block;font-size:13.5px;color:var(--body);overflow-wrap:anywhere;font-family:ui-monospace,Consolas,monospace}
+.stat{font-size:12px;letter-spacing:.14em;text-transform:uppercase;font-weight:600;color:var(--body);text-align:right}
+.step.done .stat{color:var(--ok)}.step.warn .stat{color:var(--warn)}.step.fail .stat{color:var(--bad)}
+.bar{height:2px;background:var(--border)}
+.bar i{display:block;height:100%;width:0;background:var(--gold-b)}
+@keyframes spin{to{transform:rotate(360deg)}}
+@media(max-width:380px){.step{grid-template-columns:40px 1fr;padding:10px 12px}.stat{grid-column:2;text-align:left}}
+/* result */
+#result{display:none;margin-top:24px}
+#result.show{display:block}
+.card{border:1px solid var(--st);background:var(--surface);position:relative;overflow:hidden;animation:rise .7s cubic-bezier(.2,.8,.2,1) both}
+.card::before{content:"";position:absolute;inset:0;background:radial-gradient(circle at 50% 0,color-mix(in srgb,var(--st) 16%,transparent),transparent 60%);pointer-events:none}
+.card.valid::after{content:"";position:absolute;top:0;bottom:0;width:40%;left:-60%;background:linear-gradient(100deg,transparent,rgba(224,190,126,.12),transparent);animation:sheen 1.6s .9s ease-out 1 both;pointer-events:none}
+@keyframes sheen{to{left:130%}}
+@keyframes rise{from{opacity:0;transform:translateY(18px)}to{opacity:1;transform:none}}
+.card-h{position:relative;text-align:center;padding:32px 20px 20px}
+.seal{width:132px;height:132px;margin:0 auto 16px;color:var(--st);display:block;overflow:visible}
+.seal .ring{fill:none;stroke:currentColor;stroke-width:3;stroke-dasharray:352;stroke-dashoffset:352;transform:rotate(-90deg);transform-origin:60px 60px;animation:draw 1s .1s ease-out forwards}
+.seal .ring2{fill:none;stroke:currentColor;stroke-width:1;opacity:.5;stroke-dasharray:4 5;transform-origin:60px 60px;animation:fade .6s .8s both,spin 40s linear infinite}
+.seal .fill{fill:currentColor;opacity:0;animation:fillin .6s .9s forwards}
+.seal .glyph{opacity:0;transform-origin:60px 60px;animation:stamp .5s .85s cubic-bezier(.2,1.6,.4,1) forwards}
+.seal .glyph .ic,.seal .glyph svg{stroke-width:1.6}
+.seal .tick{fill:none;stroke:currentColor;stroke-width:5;stroke-linecap:round;stroke-linejoin:round;stroke-dasharray:60;stroke-dashoffset:60;animation:draw2 .5s .85s ease-out forwards}
+@keyframes draw{to{stroke-dashoffset:0}}
+@keyframes draw2{to{stroke-dashoffset:0}}
+@keyframes fade{from{opacity:0}to{opacity:.5}}
+@keyframes fillin{to{opacity:.1}}
+@keyframes stamp{from{opacity:0;transform:scale(1.8)}to{opacity:1;transform:none}}
+.pill{display:inline-flex;align-items:center;gap:8px;border:1px solid var(--st);color:var(--st);padding:6px 14px;min-height:36px;font-size:13px;letter-spacing:.16em;text-transform:uppercase;font-weight:600}
+.card h2{font-size:clamp(24px,5vw,32px);margin:14px 0 8px}
+.card-h p{margin:0 auto;max-width:52ch}
+.facts{position:relative;margin:0;display:grid;grid-template-columns:1fr 1fr;border-top:1px solid var(--border)}
+.facts div{padding:14px 20px;border-bottom:1px solid var(--border);border-right:1px solid var(--border);min-width:0}
+.facts div:nth-child(2n){border-right:0}
+.facts dt{font-size:12px;letter-spacing:.16em;text-transform:uppercase;color:var(--body);margin-bottom:2px}
+.facts dd{margin:0;color:var(--cream);font-size:17px;overflow-wrap:anywhere}
+.facts .mono{font-family:ui-monospace,Consolas,monospace;font-size:15px}
+.facts .wide{grid-column:1/-1;border-right:0}
+.facts dd .ic{vertical-align:-.2em;margin-right:6px;color:var(--st)}
+@media(max-width:480px){.facts{grid-template-columns:1fr}.facts div{border-right:0}}
+.stamp{position:relative;display:flex;flex-wrap:wrap;gap:10px 18px;align-items:center;padding:14px 20px;font-size:14px;border-bottom:1px solid var(--border);color:var(--body)}
+.stamp .ic{color:var(--st)}
+.copy{display:inline-flex;align-items:center;gap:8px;min-height:44px;min-width:44px;padding:0 12px;background:var(--raised);border:1px solid var(--border);color:var(--cream);font:500 14px "Instrument Sans";cursor:pointer;font-family:ui-monospace,Consolas,monospace}
+.copy:hover{border-color:var(--gold)}
+.guide{position:relative;padding:20px;display:flex;gap:14px;border-bottom:1px solid var(--border);background:var(--raised)}
+.guide .ic{width:24px;height:24px;color:var(--st);margin-top:2px}
+.guide h3{font-size:18px;margin-bottom:4px;font-family:"Instrument Sans";font-weight:600}
+.guide p{margin:0}
+.guide ul{margin:8px 0 0;padding-left:20px}
+.actions{position:relative;display:flex;gap:12px;flex-wrap:wrap;align-items:center;padding:20px}
+.btn{display:inline-flex;align-items:center;justify-content:center;gap:10px;min-height:48px;padding:0 22px;border:1px solid var(--gold);background:var(--gold);color:var(--ink);font:600 15px "Instrument Sans";letter-spacing:.06em;text-transform:uppercase;cursor:pointer;text-decoration:none}
+.btn:hover{background:var(--gold-b)}
+.btn.ghost{background:transparent;color:var(--gold-b)}
+.btn.ghost:hover{background:var(--raised)}
+.link{display:inline-flex;align-items:center;gap:8px;min-height:44px;color:var(--gold-b);text-underline-offset:4px}
+.notes{display:grid;gap:12px;margin-top:20px}
+.note{display:flex;gap:12px;border:1px solid var(--border);background:var(--surface);padding:14px 16px;font-size:15px}
+.note .ic{color:var(--gold-b);margin-top:3px;width:20px;height:20px}
+.note strong{color:var(--cream);font-weight:600}
+.note.phish{border-color:var(--gold)}
+footer{max-width:760px;margin:0 auto;padding:0 16px 40px;font-size:13px;text-align:center}
+.reduced *,.reduced *::before,.reduced *::after{animation-duration:.001s!important;animation-delay:0s!important;transition-duration:.001s!important}
+@media(prefers-reduced-motion:reduce){*,*::before,*::after{animation-duration:.001s!important;animation-delay:0s!important;transition-duration:.001s!important;animation-iteration-count:1!important}}
+</style>
+</head>
+<body>
+<a class="skip" href="#result">Skip to result</a>
+
+<svg width="0" height="0" style="position:absolute" aria-hidden="true" focusable="false">
+<defs>
+<symbol id="i-shield-check" viewBox="0 0 24 24"><path d="M20 13c0 5-3.5 7.5-7.66 8.95a1 1 0 0 1-.67-.01C7.5 20.5 4 18 4 13V6a1 1 0 0 1 1-1c2 0 4.5-1.2 6.24-2.72a1.17 1.17 0 0 1 1.52 0C14.51 3.81 17 5 19 5a1 1 0 0 1 1 1z"/><path d="m9 12 2 2 4-4"/></symbol>
+<symbol id="i-scan-line" viewBox="0 0 24 24"><path d="M3 7V5a2 2 0 0 1 2-2h2"/><path d="M17 3h2a2 2 0 0 1 2 2v2"/><path d="M21 17v2a2 2 0 0 1-2 2h-2"/><path d="M7 21H5a2 2 0 0 1-2-2v-2"/><path d="M7 12h10"/></symbol>
+<symbol id="i-qr-code" viewBox="0 0 24 24"><rect width="5" height="5" x="3" y="3" rx="1"/><rect width="5" height="5" x="16" y="3" rx="1"/><rect width="5" height="5" x="3" y="16" rx="1"/><path d="M21 16h-3a2 2 0 0 0-2 2v3"/><path d="M21 21v.01"/><path d="M12 7v3a2 2 0 0 1-2 2H7"/><path d="M3 12h.01"/><path d="M12 3h.01"/><path d="M12 16v.01"/><path d="M16 12h1"/><path d="M21 12v.01"/><path d="M12 21v-1"/></symbol>
+<symbol id="i-fingerprint" viewBox="0 0 24 24"><path d="M12 10a2 2 0 0 0-2 2c0 1.02-.1 2.51-.26 4"/><path d="M14 13.12c0 2.38 0 6.38-1 8.88"/><path d="M17.29 21.02c.12-.6.43-2.3.5-3.02"/><path d="M2 12a10 10 0 0 1 18-6"/><path d="M2 16h.01"/><path d="M21.8 16c.2-2 .131-5.354 0-6"/><path d="M5 19.5C5.5 18 6 15 6 12a6 6 0 0 1 .34-2"/><path d="M8.65 22c.21-.66.45-1.32.57-2"/><path d="M9 6.8a6 6 0 0 1 9 5.2v2"/></symbol>
+<symbol id="i-badge-check" viewBox="0 0 24 24"><path d="M3.85 8.62a4 4 0 0 1 4.78-4.77 4 4 0 0 1 6.74 0 4 4 0 0 1 4.78 4.78 4 4 0 0 1 0 6.74 4 4 0 0 1-4.77 4.78 4 4 0 0 1-6.75 0 4 4 0 0 1-4.78-4.77 4 4 0 0 1 0-6.76Z" />
+  <path d="m16 9-5.5 5.5L8 12" /></symbol>
+<symbol id="i-file-search" viewBox="0 0 24 24"><path d="M6 22a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h8a2.4 2.4 0 0 1 1.704.706l3.588 3.588A2.4 2.4 0 0 1 20 8v12a2 2 0 0 1-2 2z" />
+  <path d="M14 2v5a1 1 0 0 0 1 1h5" />
+  <circle cx="11.5" cy="14.5" r="2.5" />
+  <path d="M13.3 16.3 15 18" /></symbol>
+<symbol id="i-clock" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10" />
+  <path d="M12 6v6l4 2" /></symbol>
+<symbol id="i-circle-x" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><path d="m15 9-6 6"/><path d="m9 9 6 6"/></symbol>
+<symbol id="i-ban" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10" />
+  <path d="M4.929 4.929 19.07 19.071" /></symbol>
+<symbol id="i-search-x" viewBox="0 0 24 24"><path d="m13.5 8.5-5 5"/><path d="m8.5 8.5 5 5"/><circle cx="11" cy="11" r="8"/><path d="m21 21-4.3-4.3"/></symbol>
+<symbol id="i-lock" viewBox="0 0 24 24"><rect width="18" height="11" x="3" y="11" rx="2" ry="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></symbol>
+<symbol id="i-link" viewBox="0 0 24 24"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"/><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"/></symbol>
+<symbol id="i-globe" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><path d="M12 2a14.5 14.5 0 0 0 0 20 14.5 14.5 0 0 0 0-20"/><path d="M2 12h20"/></symbol>
+<symbol id="i-info" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><path d="M12 16v-4"/><path d="M12 8h.01"/></symbol>
+<symbol id="i-triangle-alert" viewBox="0 0 24 24"><path d="m21.73 18-8-14a2 2 0 0 0-3.48 0l-8 14A2 2 0 0 0 4 21h16a2 2 0 0 0 1.73-3"/><path d="M12 9v4"/><path d="M12 17h.01"/></symbol>
+<symbol id="i-copy" viewBox="0 0 24 24"><rect width="14" height="14" x="8" y="8" rx="2" ry="2"/><path d="M4 16c-1.1 0-2-.9-2-2V4c0-1.1.9-2 2-2h10c1.1 0 2 .9 2 2"/></symbol>
+<symbol id="i-refresh-cw" viewBox="0 0 24 24"><path d="M3 12a9 9 0 0 1 9-9 9.75 9.75 0 0 1 6.74 2.74L21 8"/><path d="M21 3v5h-5"/><path d="M21 12a9 9 0 0 1-9 9 9.75 9.75 0 0 1-6.74-2.74L3 16"/><path d="M8 16H3v5"/></symbol>
+<symbol id="i-check" viewBox="0 0 24 24"><path d="M20 6 9 17l-5-5"/></symbol>
+</defs>
+</svg>
+
+<header class="top">
+  <div class="top-in">
+    <span class="brand"><b>Underground</b> Network</span>
+    <span class="addr"><svg class="ic" aria-hidden="true"><use href="#i-lock"/></svg><span>https://un-der.com/verify/<span style="color:var(--gold-b)">k7Qm...x9</span></span></span>
+  </div>
+</header>
+
+<main id="main">
+  <div class="demo">
+    <span class="eyebrow" id="demo-l">Concept preview only: switch outcome</span>
+    <div class="seg" role="tablist" aria-labelledby="demo-l" id="seg">
+      <button role="tab" aria-selected="true" data-s="valid" id="t-valid">Valid</button>
+      <button role="tab" aria-selected="false" data-s="expired" id="t-expired" tabindex="-1">Expired</button>
+      <button role="tab" aria-selected="false" data-s="revoked" id="t-revoked" tabindex="-1">Revoked</button>
+      <button role="tab" aria-selected="false" data-s="notfound" id="t-notfound" tabindex="-1">Not found</button>
+    </div>
+  </div>
+
+  <section class="intro" aria-labelledby="h1">
+    <div class="eyebrow">Credential verification</div>
+    <h1 id="h1">Verifying credential</h1>
+    <p>Every Underground membership card and certificate carries a seal that can be checked against our registry.</p>
+    <div class="tok"><svg class="ic" aria-hidden="true"><use href="#i-qr-code"/></svg><span>Token k7Qm4ZtR...x9</span></div>
+  </section>
+
+  <section class="panel" aria-label="Verification progress">
+    <ol class="steps" id="steps"></ol>
+    <div class="bar" aria-hidden="true"><i id="bar"></i></div>
+  </section>
+
+  <div class="sr" id="live" role="status" aria-live="polite" aria-atomic="true"></div>
+
+  <section id="result" tabindex="-1" aria-label="Verification result"></section>
+
+  <div class="notes">
+    <div class="note phish"><svg class="ic" aria-hidden="true"><use href="#i-globe"/></svg><p style="margin:0"><strong>Always confirm the address bar reads un-der.com.</strong> We never ask for passwords, payments or personal details on a verification page.</p></div>
+    <div class="note"><svg class="ic" aria-hidden="true"><use href="#i-lock"/></svg><p style="margin:0">We show the minimum needed to verify. No contact details are ever displayed.</p></div>
+  </div>
+</main>
+<footer>Underground Network &middot; Registry-backed credentials &middot; Concept design</footer>
+
+<script>
+(function(){
+var $=function(s){return document.querySelector(s)};
+var ic=function(n,c){return '<svg class="ic'+(c?' '+c:'')+'" aria-hidden="true"><use href="#i-'+n+'"/></svg>'};
+var reduce=window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+var STEPS=[
+ {l:'Reading credential',i:'scan-line',d:'Parsing QR payload'},
+ {l:'Checking issuing registry',i:'file-search',d:'Looking up serial'},
+ {l:'Validating cryptographic seal',i:'fingerprint',d:'Verifying signature'},
+ {l:'Confirming membership status',i:'badge-check',d:'Reading standing'},
+ {l:'Cross-checking revocation list',i:'link',d:'Checking list'}
+];
+var HASH='9f3a1c7e';
+var S={
+ valid:{col:'var(--ok)',h:'Credential verified',pill:'Valid',pi:'badge-check',
+  p:'This credential was issued by Underground Network and is in good standing.',
+  g:'You can rely on this credential',gi:'shield-check',gl:['Compare the name and serial above with the card or certificate you were shown.','If they match, no further action is needed.'],
+  out:['done','done','done','done','done'],res:['Token parsed','Serial found','Seal intact','Active','Not listed'],stat:['Done','Found','Valid','Active','Clear'],
+  status:'Active',gl2:'Verified'},
+ expired:{col:'var(--warn)',h:'Credential expired',pill:'Expired',pi:'clock',
+  p:'This credential is genuine, but its validity period has ended.',
+  g:'Do not treat it as current',gi:'triangle-alert',gl:['Ask the holder for their renewed card or certificate.','You may confirm renewal with Underground Network using the Report link below.'],
+  out:['done','done','done','warn','done'],res:['Token parsed','Serial found','Seal intact','Past valid-through date','Not listed'],stat:['Done','Found','Valid','Expired','Clear'],
+  status:'Expired',gl2:'Expired'},
+ revoked:{col:'var(--bad)',h:'Credential revoked',pill:'Revoked',pi:'ban',
+  p:'Underground Network has withdrawn this credential. It must not be accepted.',
+  g:'Do not accept this credential',gi:'ban',gl:['Decline any benefit, access or recognition tied to it.','Do not confront the holder. Tell us through Report a problem so we can follow up.'],
+  out:['done','done','done','done','fail'],res:['Token parsed','Serial found','Seal intact','Record found','Listed as revoked'],stat:['Done','Found','Valid','Found','Revoked'],
+  status:'Revoked',gl2:'Revoked'},
+ notfound:{col:'var(--bad)',h:'No matching credential',pill:'Not found',pi:'search-x',
+  p:'We could not find this credential in the Underground registry. It may be mistyped, damaged or not genuine.',
+  g:'Treat it as unverified',gi:'circle-x',gl:['Check the address bar reads un-der.com, then scan the code again.','If it still fails, do not accept the credential and report it.'],
+  out:['done','fail','skip','skip','skip'],res:['Token parsed','No record for token','Not checked','Not checked','Not checked'],stat:['Done','Not found','Skipped','Skipped','Skipped'],
+  status:'Not found',gl2:'Unverified'}
+};
+var cur='valid',timers=[],run=0;
+var ol=$('#steps');
+function clearT(){timers.forEach(clearTimeout);timers=[]}
+function T(f,ms){timers.push(setTimeout(f,ms))}
+function build(){
+ ol.innerHTML=STEPS.map(function(s,i){return '<li class="step" id="s'+i+'"><span class="sico">'+ic(s.i,'base')+'<span class="res"></span></span><span><span class="slabel">'+s.l+'</span><span class="sdet" id="d'+i+'">Waiting</span></span><span class="stat" id="st'+i+'">Pending</span></li>'}).join('');
+ STEPS.forEach(function(s,i){var r=$('#s'+i+' .res');r.outerHTML=''; });
+ STEPS.forEach(function(s,i){var el=$('#s'+i+' .sico');el.insertAdjacentHTML('beforeend',ic('check','res'))});
+}
+function scramble(el,final,ms,done){
+ var t0=performance.now();
+ (function f(){var p=(performance.now()-t0)/ms;
+  if(p>=1){el.textContent='sha256:'+final+'...';done&&done();return}
+  var s='';for(var i=0;i<8;i++)s+='0123456789abcdef'[Math.random()*16|0];
+  el.textContent='sha256:'+s+'...';requestAnimationFrame(f)})();
+}
+function setStep(i,kind,txt,stat){
+ var el=$('#s'+i);el.className='step '+kind;
+ var res=el.querySelector('.res');
+ var name=kind==='fail'?'circle-x':kind==='warn'?'triangle-alert':kind==='skip'?'info':'check';
+ if(res){res.outerHTML=ic(name,'res')}
+ $('#d'+i).textContent=txt;$('#st'+i).textContent=stat;
+}
+function reveal(){
+ var d=S[cur];
+ $('#bar').style.width='100%';
+ var tick=cur==='valid'?'<path class="tick" d="M38 62l14 14 30-32"/>':'<g class="glyph" transform="translate(30 30)"><svg width="60" height="60" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><use href="#i-'+(cur==='expired'?'clock':cur==='revoked'?'ban':'search-x')+'"/></svg></g>';
+ var through=cur==='expired'?'14 Sep 2026':'14 Sep 2027';
+ var facts='<div><dt>Holder</dt><dd>Amara D.</dd></div><div><dt>Tier</dt><dd>Principal Circle</dd></div>'+
+ '<div><dt>Credential serial</dt><dd class="mono">UGC-2026-000417</dd></div>'+
+ '<div><dt>Status</dt><dd>'+ic(d.pi)+d.status+'</dd></div>'+
+ '<div><dt>'+(cur==='expired'?'Expired on':'Valid through')+'</dt><dd>'+through+'</dd></div><div><dt>Issued</dt><dd>14 Sep 2026</dd></div>';
+ if(cur==='notfound')facts='<div class="wide"><dt>Submitted token</dt><dd class="mono">k7Qm4ZtR...x9</dd></div><div class="wide"><dt>Result</dt><dd>'+ic('search-x')+'No holder, tier or serial is shown because no record matched.</dd></div>';
+ if(cur==='expired')facts=facts.replace('14 Sep 2026</dd></div><div><dt>Issued','14 Sep 2026</dd></div><div><dt>Issued').replace('Valid through','Expired on');
+ var now=new Date().toLocaleTimeString([], {hour:'2-digit',minute:'2-digit',second:'2-digit'});
+ var stampRow=cur==='notfound'?'<div class="stamp">'+ic('clock')+'<span>Checked just now at '+now+'</span></div>':
+ '<div class="stamp">'+ic('clock')+'<span>Verified just now at '+now+'</span>'+ic('fingerprint')+'<button class="copy" id="copy" type="button" aria-label="Copy registry hash fragment">'+ic('copy')+'<span id="hash">sha256:'+HASH+'...</span></button><span id="copied" class="sr" role="status"></span></div>';
+ var guide='<div class="guide">'+ic(d.gi)+'<div><h3>'+d.g+'</h3><ul>'+d.gl.map(function(x){return '<li>'+x+'</li>'}).join('')+'</ul></div></div>';
+ var r=$('#result');
+ r.innerHTML='<article class="card '+cur+'" style="--st:'+d.col+'"><div class="card-h">'+
+ '<svg class="seal" viewBox="0 0 120 120" aria-hidden="true"><circle class="ring2" cx="60" cy="60" r="58"/><circle class="fill" cx="60" cy="60" r="56"/><circle class="ring" cx="60" cy="60" r="56"/>'+tick+'</svg>'+
+ '<span class="pill">'+ic(d.pi)+d.pill+'</span><h2>'+d.h+'</h2><p>'+d.p+'</p></div>'+
+ '<dl class="facts">'+facts+'</dl>'+stampRow+guide+
+ '<div class="actions"><button class="btn" id="again" type="button">'+ic('refresh-cw')+'Verify another credential</button><a class="link" href="#report">'+ic('triangle-alert')+'Report a problem</a></div></article>';
+ r.classList.add('show');
+ $('#h1').textContent=d.h;
+ $('#live').textContent=d.h+'. '+d.p+' '+d.g+'.';
+ var c=$('#copy');
+ if(c)c.onclick=function(){try{navigator.clipboard.writeText('sha256:'+HASH)}catch(e){}$('#copied').textContent='Hash fragment copied'};
+ $('#again').onclick=function(){start(cur)};
+ var a=$('#report');
+}
+function start(s){
+ clearT();cur=s;run++;
+ var d=S[s];
+ $('#result').classList.remove('show');$('#result').innerHTML='';
+ $('#h1').textContent='Verifying credential';
+ $('#live').textContent='Verification started';
+ $('#bar').style.transition='none';$('#bar').style.width='0';
+ build();
+ if(reduce){STEPS.forEach(function(x,i){setStep(i,d.out[i],i===2&&d.out[i]==='done'?'sha256:'+HASH+'...':d.res[i],d.stat[i])});reveal();return}
+ var per=760;
+ STEPS.forEach(function(x,i){
+  T(function(){
+   var el=$('#s'+i);el.className='step active';$('#st'+i).textContent='Working';$('#d'+i).textContent=x.d;
+   var bar=$('#bar');bar.style.transition='width '+per+'ms linear';bar.style.width=((i+1)/STEPS.length*100)+'%';
+   if(i===2)scramble($('#d2'),HASH,per-120);
+  },i*per);
+  T(function(){setStep(i,d.out[i],i===2&&d.out[i]==='done'?'sha256:'+HASH+'...':d.res[i],d.stat[i])},i*per+per-80);
+ });
+ T(reveal,STEPS.length*per+250);
+}
+var tabs=[].slice.call(document.querySelectorAll('#seg button'));
+function sel(b,focus){tabs.forEach(function(x){x.setAttribute('aria-selected',x===b);x.tabIndex=x===b?0:-1});if(focus)b.focus();start(b.dataset.s)}
+tabs.forEach(function(b,i){
+ b.addEventListener('click',function(){sel(b)});
+ b.addEventListener('keydown',function(e){var k=e.key,n=null;
+  if(k==='ArrowRight')n=tabs[(i+1)%4];else if(k==='ArrowLeft')n=tabs[(i+3)%4];else if(k==='Home')n=tabs[0];else if(k==='End')n=tabs[3];
+  if(n){e.preventDefault();sel(n,true)}});
+});
+start('valid');
+})();
+</script>
+</body>
+</html>

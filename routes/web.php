@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\AboutController;
+use App\Http\Controllers\AccountCertificateController;
 use App\Http\Controllers\AccountController;
 use App\Http\Controllers\AccountSettingsController;
 use App\Http\Controllers\Admin\AdminDashboardController;
@@ -47,10 +48,16 @@ use App\Http\Controllers\ProjectController;
 use App\Http\Controllers\SectorController;
 use App\Http\Controllers\SitemapController;
 use App\Http\Controllers\TeamController;
+use App\Http\Controllers\VerifyController;
 use Illuminate\Support\Facades\Route;
 
 Route::get('/', [LandingPageController::class, 'index'])->name('home');
 Route::get('/sitemap.xml', SitemapController::class)->name('sitemap');
+
+Route::get('/verify/{token}', [VerifyController::class, 'show'])
+    ->middleware('throttle:30,1')
+    ->where('token', '[A-Za-z0-9]{1,64}')
+    ->name('verify.show');
 
 Route::get('/about', [AboutController::class, 'index'])->name('about');
 Route::get('/team', [TeamController::class, 'index'])->name('team');
@@ -181,6 +188,7 @@ Route::prefix('admin')->middleware(['auth', 'admin'])->name('admin.')->group(fun
 });
 
 Route::middleware('auth')->group(function (): void {
+    Route::get('/account/certificate', [AccountCertificateController::class, 'show'])->name('account.certificate');
     Route::get('/account/settings', [AccountSettingsController::class, 'edit'])->name('account.settings');
     Route::post('/account/settings', [AccountSettingsController::class, 'update'])->name('account.settings.update');
     Route::post('/account/settings/password', [AccountSettingsController::class, 'updatePassword'])->name('account.settings.password');
