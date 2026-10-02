@@ -53,7 +53,7 @@
         <section class="border-b border-border bg-ink">
             <div class="mx-auto max-w-5xl px-4 py-14 sm:px-6 lg:px-8 lg:py-20">
                 <x-section-heading eyebrow="Who We Serve">Our Clients in This Sector</x-section-heading>
-                <div class="mt-10 grid grid-cols-1 gap-px bg-border sm:grid-cols-2 lg:grid-cols-4">
+                <div class="mt-10 grid grid-cols-1 tile-grid sm:grid-cols-2 lg:grid-cols-4">
                     @foreach ($content['clients'] as $client)
                         <div class="flex items-center gap-3 bg-surface p-6">
                             <x-icon name="users" class="h-5 w-5 shrink-0 text-gold" />
@@ -69,7 +69,7 @@
         <section class="border-b border-border bg-surface">
             <div class="mx-auto max-w-5xl px-4 py-14 sm:px-6 lg:px-8 lg:py-20">
                 <x-section-heading eyebrow="Capabilities">What We Bring</x-section-heading>
-                <div class="mt-10 grid grid-cols-1 gap-px bg-border md:grid-cols-3">
+                <div class="mt-10 grid grid-cols-1 tile-grid md:grid-cols-3">
                     @foreach ($relatedCapabilities as $capability)
                         <a href="{{ route('capabilities.show', $capability->slug->value) }}" class="group flex flex-col gap-4 bg-surface p-6 transition-colors hover:bg-surface-raised">
                             <span class="flex h-11 w-11 items-center justify-center border border-gold text-gold">

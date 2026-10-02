@@ -2,7 +2,7 @@
     <section class="mx-auto max-w-7xl px-4 py-16 sm:px-6 lg:px-8 lg:py-24">
         <div class="grid grid-cols-1 gap-12 lg:grid-cols-2 lg:gap-16">
             <div class="flex flex-col gap-6">
-                <x-section-heading eyebrow="Global Reach">{{ $narrative->reachHeading }}</x-section-heading>
+                <x-section-heading tag="h1" eyebrow="Global Reach">{{ $narrative->reachHeading }}</x-section-heading>
 
                 <p class="max-w-md text-base leading-relaxed text-body">
                     {{ $narrative->reachBody }}
@@ -41,7 +41,7 @@
 
         <div class="mt-16 border-t border-border pt-12">
             <h2 class="text-xs font-semibold uppercase tracking-[0.2em] text-gold">Our Offices</h2>
-            <div class="mt-6 grid grid-cols-1 gap-px bg-border sm:grid-cols-2 lg:grid-cols-5">
+            <div class="mt-6 grid grid-cols-1 tile-grid sm:grid-cols-2 lg:grid-cols-5">
                 @foreach ($offices as $office)
                     <div class="flex flex-col gap-2 bg-surface p-6">
                         <x-icon name="map-pin" class="h-4 w-4 text-gold" />

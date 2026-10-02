@@ -1,6 +1,6 @@
 <x-layout title="Insights">
     <section class="mx-auto max-w-7xl px-4 py-16 sm:px-6 lg:px-8 lg:py-24">
-        <x-section-heading eyebrow="Insights">
+        <x-section-heading tag="h1" eyebrow="Insights">
             Thinking From the Underground
         </x-section-heading>
 

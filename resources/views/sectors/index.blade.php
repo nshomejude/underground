@@ -1,6 +1,6 @@
 <x-layout title="Sectors">
     <section class="mx-auto max-w-7xl px-4 py-16 sm:px-6 lg:px-8 lg:py-24">
-        <x-section-heading eyebrow="Where We Operate">
+        <x-section-heading tag="h1" eyebrow="Where We Operate">
             Sectors We Serve
         </x-section-heading>
 
@@ -12,33 +12,37 @@
         @if ($sectors === [])
             <p class="mt-12 text-sm text-muted">No sectors have been published yet.</p>
         @else
-            <div class="mt-12 grid grid-cols-2 gap-px bg-border sm:grid-cols-3 lg:grid-cols-6">
+            <div class="mt-12 grid grid-cols-1 tile-grid md:grid-cols-2 lg:grid-cols-3">
                 @foreach ($sectors as $sector)
+                    @php($focus = array_slice(config('page_content.sectors.'.$sector->slug->value.'.focus', []), 0, 3))
                     <a
                         href="{{ route('sectors.show', $sector->slug->value) }}"
-                        class="group flex aspect-square flex-col justify-between bg-gradient-to-b from-surface to-ink p-4 transition-colors hover:from-surface-raised"
+                        class="group flex flex-col gap-5 bg-surface p-7 transition-colors hover:bg-surface-raised"
                     >
                         <span class="flex h-14 w-14 items-center justify-center border border-gold text-gold">
                             <x-icon name="{{ $sector->motif }}" class="h-7 w-7" />
                         </span>
-                        <p class="text-xs font-semibold uppercase leading-snug tracking-wide text-cream group-hover:text-gold">
-                            @foreach ($sector->nameLines() as $line)
-                                {{ $line }}@if (!$loop->last)<br>@endif
-                            @endforeach
-                        </p>
-                    </a>
-                @endforeach
-            </div>
 
-            <div class="mt-12 grid grid-cols-1 gap-px bg-border md:grid-cols-2">
-                @foreach ($sectors as $sector)
-                    <a href="{{ route('sectors.show', $sector->slug->value) }}" class="group flex items-start gap-4 bg-surface p-6 transition-colors hover:bg-surface-raised">
-                        <x-icon name="{{ $sector->motif }}" class="mt-1 h-5 w-5 shrink-0 text-gold" />
-                        <span class="flex flex-1 flex-col gap-1">
-                            <span class="font-serif text-lg font-semibold text-cream group-hover:text-gold">{{ $sector->name }}</span>
-                            <span class="text-sm leading-relaxed text-body">{{ $sector->summary }}</span>
+                        <div class="flex flex-col gap-2">
+                            <h2 class="font-serif text-xl font-semibold leading-snug text-cream group-hover:text-gold">{{ $sector->name }}</h2>
+                            <p class="text-sm leading-relaxed text-body">{{ $sector->summary }}</p>
+                        </div>
+
+                        @if ($focus !== [])
+                            <ul class="flex flex-col gap-2 border-t border-border pt-4">
+                                @foreach ($focus as $item)
+                                    <li class="flex items-start gap-2 text-xs leading-relaxed text-muted">
+                                        <x-icon name="check-circle" class="mt-0.5 h-3.5 w-3.5 shrink-0 text-gold" />
+                                        {{ $item }}
+                                    </li>
+                                @endforeach
+                            </ul>
+                        @endif
+
+                        <span class="mt-auto inline-flex items-center gap-2 text-xs font-semibold uppercase tracking-widest text-gold">
+                            Explore sector
+                            <x-icon name="chevron-right" class="h-3.5 w-3.5 transition-transform group-hover:translate-x-1" />
                         </span>
-                        <x-icon name="chevron-right" class="mt-1 h-4 w-4 shrink-0 text-gold" />
                     </a>
                 @endforeach
             </div>

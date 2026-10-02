@@ -4,7 +4,7 @@
             <x-brand-mark />
         </a>
 
-        <x-section-heading eyebrow="Member Account">
+        <x-section-heading tag="h1" eyebrow="Member Account">
             Log In
         </x-section-heading>
 

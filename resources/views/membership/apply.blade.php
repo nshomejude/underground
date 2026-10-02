@@ -7,7 +7,7 @@
             <span class="text-xs font-semibold uppercase tracking-widest text-gold">{{ $tier->name }}</span>
         </div>
 
-        <x-section-heading eyebrow="Membership Application">
+        <x-section-heading tag="h1" eyebrow="Membership Application">
             Apply for {{ $tier->name }}
         </x-section-heading>
 
@@ -47,7 +47,7 @@
             <form method="POST" action="{{ route('membership.store', ['tier' => $tier->slug->value]) }}" novalidate class="flex flex-col gap-6">
                 @csrf
 
-                <div class="grid gap-6 sm:grid-cols-2">
+                <div class="grid grid-cols-1 gap-6 sm:grid-cols-2">
                     <div class="flex flex-col gap-2">
                         <label for="applicant_name" class="text-xs font-semibold uppercase tracking-widest text-body">
                             Full Name <span class="text-gold" aria-hidden="true">*</span>

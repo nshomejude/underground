@@ -8,7 +8,7 @@
 <x-layout title="My Account">
     <section class="mx-auto flex max-w-3xl flex-col gap-10 px-4 py-16 sm:px-6 lg:px-8 lg:py-24">
         <div class="flex flex-wrap items-start justify-between gap-4">
-            <x-section-heading eyebrow="Member Account">
+            <x-section-heading tag="h1" eyebrow="Member Account">
                 @if ($state === 'approved')
                     Your Membership Card
                 @elseif ($state === 'pending')
@@ -146,7 +146,7 @@
             </div>
         @endif
 
-        <div class="grid grid-cols-1 gap-px bg-border sm:grid-cols-3">
+        <div class="grid grid-cols-1 tile-grid sm:grid-cols-3">
             <a href="{{ route('inquiries.create') }}" class="group flex flex-col gap-2 bg-surface p-5 transition-colors hover:bg-surface-raised">
                 <x-icon name="lock" class="h-5 w-5 text-gold" />
                 <span class="text-sm font-semibold text-cream group-hover:text-gold">Confidential inquiry</span>

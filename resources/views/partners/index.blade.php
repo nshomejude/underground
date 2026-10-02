@@ -1,6 +1,6 @@
 <x-layout title="Partners">
     <section class="mx-auto flex max-w-6xl flex-col gap-12 px-4 py-16 sm:px-6 lg:px-8 lg:py-24">
-        <x-section-heading eyebrow="Who We Work Alongside">
+        <x-section-heading tag="h1" eyebrow="Who We Work Alongside">
             Partners
         </x-section-heading>
 
@@ -10,7 +10,7 @@
             we extend to our clients.
         </p>
 
-        <div class="grid grid-cols-1 gap-px bg-border sm:grid-cols-2">
+        <div class="grid grid-cols-1 tile-grid sm:grid-cols-2">
             @foreach ($categories as $category)
                 <div class="flex flex-col items-start gap-4 bg-surface p-8">
                     <span class="flex h-12 w-12 items-center justify-center border border-gold text-gold">

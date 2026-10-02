@@ -1,6 +1,6 @@
 <x-layout title="Events">
     <section class="mx-auto flex max-w-6xl flex-col gap-12 px-4 py-16 sm:px-6 lg:px-8 lg:py-24">
-        <x-section-heading eyebrow="Invitation Only">
+        <x-section-heading tag="h1" eyebrow="Invitation Only">
             Events
         </x-section-heading>
 

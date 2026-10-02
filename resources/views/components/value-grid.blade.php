@@ -20,7 +20,7 @@
             <x-section-heading :eyebrow="$eyebrow">{{ $heading }}</x-section-heading>
         @endif
 
-        <div class="{{ $heading ? 'mt-10' : '' }} grid grid-cols-1 gap-px bg-border {{ $colClass }}">
+        <div class="{{ $heading ? 'mt-10' : '' }} grid grid-cols-1 tile-grid {{ $colClass }}">
             @foreach ($items as $item)
                 <div class="flex flex-col gap-3 {{ $tone === 'surface' ? 'bg-surface' : 'bg-ink' }} p-6 lg:p-8">
                     @if (! empty($item['icon']))

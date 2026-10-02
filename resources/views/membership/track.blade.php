@@ -9,7 +9,7 @@
 
 <x-layout title="Track Your Application">
     <section class="mx-auto flex max-w-3xl flex-col gap-10 px-4 py-16 sm:px-6 lg:px-8 lg:py-24">
-        <x-section-heading eyebrow="Membership Application">
+        <x-section-heading tag="h1" eyebrow="Membership Application">
             Track Your Application
         </x-section-heading>
 

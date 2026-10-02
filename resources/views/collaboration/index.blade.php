@@ -1,6 +1,6 @@
 <x-layout title="Collaboration">
     <section class="mx-auto flex max-w-6xl flex-col gap-12 px-4 py-16 sm:px-6 lg:px-8 lg:py-24">
-        <x-section-heading eyebrow="How We Work Together">
+        <x-section-heading tag="h1" eyebrow="How We Work Together">
             Collaboration
         </x-section-heading>
 
@@ -9,7 +9,7 @@
             room &mdash; day to day, not just at the milestones.
         </p>
 
-        <div class="grid grid-cols-1 gap-px bg-border sm:grid-cols-2">
+        <div class="grid grid-cols-1 tile-grid sm:grid-cols-2">
             @foreach ($modes as $mode)
                 <div class="flex flex-col items-start gap-4 bg-surface p-8">
                     <span class="flex h-12 w-12 items-center justify-center border border-gold text-gold">

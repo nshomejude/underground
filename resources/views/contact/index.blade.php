@@ -1,6 +1,6 @@
 <x-layout title="Contact">
     <section class="mx-auto flex max-w-6xl flex-col gap-12 px-4 py-16 sm:px-6 lg:px-8 lg:py-24">
-        <x-section-heading eyebrow="Reach Us">
+        <x-section-heading tag="h1" eyebrow="Reach Us">
             Contact
         </x-section-heading>
 
@@ -56,7 +56,7 @@
         <div>
             <h2 class="text-xs font-semibold uppercase tracking-[0.2em] text-gold">Departments</h2>
 
-            <div class="mt-6 grid grid-cols-1 gap-px bg-border sm:grid-cols-2 lg:grid-cols-3">
+            <div class="mt-6 grid grid-cols-1 tile-grid sm:grid-cols-2 lg:grid-cols-3">
                 @foreach ($departments as $label => $mailbox)
                     <a href="mailto:{{ $mailbox }}" class="group flex flex-col gap-1 bg-surface p-6 transition-colors hover:bg-surface-raised">
                         <span class="text-xs font-semibold uppercase tracking-widest text-muted">{{ $label }}</span>
@@ -69,7 +69,7 @@
         <div>
             <h2 class="text-xs font-semibold uppercase tracking-[0.2em] text-gold">Our Offices</h2>
 
-            <div class="mt-6 grid grid-cols-1 gap-px bg-border sm:grid-cols-2">
+            <div class="mt-6 grid grid-cols-1 tile-grid sm:grid-cols-2">
                 @foreach ($offices as $office)
                     <div class="flex flex-col gap-3 bg-surface p-6">
                         <div class="flex items-center gap-3">

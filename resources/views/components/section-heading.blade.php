@@ -1,6 +1,7 @@
 @props([
     'eyebrow' => null,
     'align' => 'left',
+    'tag' => 'h2',
 ])
 
 @php
@@ -17,7 +18,7 @@
         </span>
     @endif
 
-    <h2 class="font-serif text-3xl font-semibold leading-tight text-cream sm:text-4xl lg:text-5xl">
+    <{{ $tag }} class="font-serif text-3xl font-semibold leading-tight text-cream sm:text-4xl lg:text-5xl">
         {{ $slot }}
-    </h2>
+    </{{ $tag }}>
 </div>

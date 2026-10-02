@@ -132,7 +132,7 @@
             </div>
 
             {{-- Desktop: grid up to four columns --}}
-            <div class="mt-12 hidden grid-cols-2 gap-px bg-border lg:grid lg:grid-cols-4">
+            <div class="mt-12 hidden grid-cols-2 tile-grid lg:grid lg:grid-cols-4">
                 @foreach ($capabilities as $capability)
                     <a
                         href="{{ route('capabilities.show', $capability->slug->value) }}"
@@ -160,7 +160,7 @@
                 {{ $narrative->sectorsHeading }}
             </x-section-heading>
 
-            <div class="mt-10 grid grid-cols-2 gap-px bg-border sm:grid-cols-3 lg:grid-cols-6">
+            <div class="mt-10 grid grid-cols-2 tile-grid sm:grid-cols-3 lg:grid-cols-6">
                 @foreach ($sectors as $sector)
                     <a
                         href="{{ route('sectors.show', $sector->slug->value) }}"

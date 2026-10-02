@@ -1,6 +1,6 @@
 <x-layout title="Engagement Models">
     <section class="mx-auto max-w-3xl px-4 py-16 sm:px-6 lg:px-8 lg:py-24">
-        <x-section-heading eyebrow="Engagement Models">
+        <x-section-heading tag="h1" eyebrow="Engagement Models">
             How Clients Retain the Firm
         </x-section-heading>
 

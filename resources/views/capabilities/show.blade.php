@@ -57,7 +57,7 @@
             <div class="mx-auto max-w-5xl px-4 py-14 sm:px-6 lg:px-8 lg:py-20">
                 <x-section-heading eyebrow="What We Do">How We Help</x-section-heading>
 
-                <div class="mt-10 grid grid-cols-1 gap-px bg-border sm:grid-cols-2 lg:grid-cols-3">
+                <div class="mt-10 grid grid-cols-1 tile-grid sm:grid-cols-2 lg:grid-cols-3">
                     @foreach ($content['services'] as $title => $text)
                         <div class="flex flex-col gap-3 bg-surface p-6">
                             <span class="font-serif text-sm font-semibold text-gold">{{ str_pad((string) $loop->iteration, 2, '0', STR_PAD_LEFT) }}</span>

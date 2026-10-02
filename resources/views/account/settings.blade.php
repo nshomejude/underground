@@ -1,6 +1,6 @@
 <x-layout title="Account Settings">
     <section class="mx-auto flex max-w-2xl flex-col gap-10 px-4 py-16 sm:px-6 lg:px-8 lg:py-24">
-        <x-section-heading eyebrow="Member Account">
+        <x-section-heading tag="h1" eyebrow="Member Account">
             Settings
         </x-section-heading>
 

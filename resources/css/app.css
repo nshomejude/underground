@@ -108,3 +108,16 @@
         filter: brightness(1.4) drop-shadow(0 0 9px currentcolor);
     }
 }
+
+/*
+ * Hairline tile grids. Each child draws its own 1px border via a shadow, so
+ * an incomplete last row never reveals a filled container background (the
+ * old `bg-border` + `gap-px` trick left grey blocks in empty cells).
+ */
+.tile-grid {
+    gap: 1px;
+}
+
+.tile-grid > * {
+    box-shadow: 0 0 0 1px var(--color-border);
+}

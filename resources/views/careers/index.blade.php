@@ -1,7 +1,7 @@
 <x-layout title="Careers">
     <section class="border-b border-border bg-ink">
         <div class="mx-auto flex max-w-4xl flex-col gap-6 px-4 py-16 sm:px-6 lg:px-8 lg:py-24">
-            <x-section-heading eyebrow="Careers">
+            <x-section-heading tag="h1" eyebrow="Careers">
                 Work That Never Makes the Headlines.
             </x-section-heading>
 
@@ -26,7 +26,7 @@
                 of traits more than any particular resume.
             </p>
 
-            <div class="mt-12 grid grid-cols-1 gap-px bg-border sm:grid-cols-2 lg:grid-cols-4">
+            <div class="mt-12 grid grid-cols-1 tile-grid sm:grid-cols-2 lg:grid-cols-4">
                 @foreach ($traits as $trait)
                     <div class="flex flex-col items-start gap-4 bg-ink p-8">
                         <span class="flex h-12 w-12 items-center justify-center border border-gold text-gold">

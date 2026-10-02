@@ -1,6 +1,6 @@
 <x-layout title="Capabilities">
     <section class="mx-auto max-w-7xl px-4 py-16 sm:px-6 lg:px-8 lg:py-24">
-        <x-section-heading eyebrow="What We Do">
+        <x-section-heading tag="h1" eyebrow="What We Do">
             Our Capabilities
         </x-section-heading>
 
@@ -12,7 +12,7 @@
         @if ($capabilities === [])
             <p class="mt-12 text-sm text-muted">No capabilities have been published yet.</p>
         @else
-            <div class="mt-12 grid grid-cols-1 gap-px bg-border sm:grid-cols-2 lg:grid-cols-4">
+            <div class="mt-12 grid grid-cols-1 tile-grid sm:grid-cols-2 lg:grid-cols-4">
                 @foreach ($capabilities as $capability)
                     <a
                         href="{{ route('capabilities.show', $capability->slug->value) }}"

@@ -1,6 +1,6 @@
 <x-layout title="Membership">
     <section class="mx-auto flex max-w-6xl flex-col gap-12 px-4 py-16 sm:px-6 lg:px-8 lg:py-24">
-        <x-section-heading eyebrow="By Invitation and Application">
+        <x-section-heading tag="h1" eyebrow="By Invitation and Application">
             Membership
         </x-section-heading>
 
@@ -10,7 +10,7 @@
             before a tier is granted.
         </p>
 
-        <div class="grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
+        <div class="grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-3">
             @foreach ($tiers as $tier)
                 <div class="flex flex-col gap-6 border border-border bg-surface p-8">
                     <span class="flex h-12 w-12 items-center justify-center border border-gold/40 text-gold">
