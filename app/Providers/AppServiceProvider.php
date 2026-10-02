@@ -26,6 +26,6 @@ class AppServiceProvider extends ServiceProvider
         // refused. Guests never reach the Gate check at all — the `auth`
         // middleware, applied alongside `admin` on every /admin route,
         // redirects them to /login first.
-        Gate::define('admin', fn (User $user): bool => $user->is_admin);
+        Gate::define('admin', fn (User $user): bool => (bool) $user->is_admin);
     }
 }

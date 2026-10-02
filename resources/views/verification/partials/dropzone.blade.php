@@ -1,4 +1,6 @@
-@props(['name', 'label', 'hint' => null, 'file' => null, 'kind', 'rowId', 'allowPdf' => true, 'required' => false, 'optionalTag' => null, 'maxMb' => 8, 'camera' => 'environment'])
+@php
+    $hint ??= null; $file ??= null; $allowPdf ??= true; $required ??= false; $optionalTag ??= null; $maxMb ??= 8; $camera ??= 'environment';
+@endphp
 @php
     $accept = $allowPdf ? 'image/jpeg,image/png,image/webp,application/pdf' : 'image/jpeg,image/png,image/webp';
     $fileUrl = $file ? route('verification.file', [$kind, $rowId, $name]) : null;
