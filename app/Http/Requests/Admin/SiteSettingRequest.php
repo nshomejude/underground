@@ -34,6 +34,7 @@ final class SiteSettingRequest extends FormRequest
             'public_registration_enabled' => ['sometimes', 'boolean'],
             'gear_animation_enabled' => ['sometimes', 'boolean'],
             'network_animation_enabled' => ['sometimes', 'boolean'],
+            'blocks_animation_enabled' => ['sometimes', 'boolean'],
         ];
     }
 }

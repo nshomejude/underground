@@ -39,4 +39,15 @@ final class MotionBackgroundsTest extends TestCase
         $this->get('/global-reach')->assertOk()->assertDontSee('net-bg', false);
         $this->get('/partners')->assertOk()->assertDontSee('net-bg', false);
     }
+
+    public function test_building_blocks_section_renders_and_can_be_switched_off(): void
+    {
+        $this->seed();
+
+        $this->get('/')->assertOk()->assertSee('data-power-blocks', false)->assertSee('Power is built, block by block.');
+
+        SiteSettingRecord::query()->update(['blocks_animation_enabled' => false]);
+
+        $this->get('/')->assertOk()->assertDontSee('data-power-blocks', false);
+    }
 }

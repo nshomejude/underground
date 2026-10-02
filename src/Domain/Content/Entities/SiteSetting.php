@@ -29,6 +29,7 @@ final readonly class SiteSetting
         public bool $publicRegistrationEnabled,
         public bool $gearAnimationEnabled = true,
         public bool $networkAnimationEnabled = true,
+        public bool $blocksAnimationEnabled = true,
     ) {}
 
     public function toArray(): array
@@ -49,6 +50,7 @@ final readonly class SiteSetting
             'public_registration_enabled' => $this->publicRegistrationEnabled,
             'gear_animation_enabled' => $this->gearAnimationEnabled,
             'network_animation_enabled' => $this->networkAnimationEnabled,
+            'blocks_animation_enabled' => $this->blocksAnimationEnabled,
         ];
     }
 }

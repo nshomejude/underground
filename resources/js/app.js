@@ -105,3 +105,29 @@ document.addEventListener('DOMContentLoaded', () => {
         syncIcon();
     });
 });
+
+// Building-blocks animation: armed (blocks hidden) only when motion is allowed
+// and the screen is tablet-sized or larger, then played once when scrolled into view.
+document.addEventListener('DOMContentLoaded', () => {
+    document.querySelectorAll('[data-power-blocks]').forEach((root) => {
+        const reduce = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+        const small = window.matchMedia('(max-width: 639px)').matches;
+
+        if (reduce || small || !('IntersectionObserver' in window)) {
+            return;
+        }
+
+        root.classList.add('is-armed');
+
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach((entry) => {
+                if (entry.isIntersecting) {
+                    root.classList.add('is-playing');
+                    observer.disconnect();
+                }
+            });
+        }, { threshold: 0.35 });
+
+        observer.observe(root);
+    });
+});

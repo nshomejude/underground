@@ -183,3 +183,108 @@
     -webkit-mask-image: linear-gradient(to bottom, #000 0, #000 82%, transparent 100%);
     mask-image: linear-gradient(to bottom, #000 0, #000 82%, transparent 100%);
 }
+
+/*
+ * "Power is built, block by block" building-blocks animation (home page).
+ * Everything is visible by default; JS arms it (hides) only when motion is
+ * allowed and the viewport is tablet-sized or larger, then plays it once the
+ * section scrolls into view. Toggle: Admin -> Configuration -> Visual Effects.
+ */
+@keyframes pb-drop {
+    0% {
+        opacity: 0;
+        transform: translateY(-340px);
+    }
+
+    55% {
+        opacity: 1;
+    }
+
+    100% {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+@keyframes pb-tier {
+    to {
+        opacity: 1;
+        transform: none;
+    }
+}
+
+@keyframes pb-glow {
+    0%,
+    100% {
+        opacity: 0.25;
+    }
+
+    50% {
+        opacity: 0.85;
+    }
+}
+
+@keyframes pb-float {
+    0%,
+    100% {
+        transform: translateY(0);
+    }
+
+    50% {
+        transform: translateY(-4px);
+    }
+}
+
+.pb-scene {
+    animation: pb-float 6s ease-in-out infinite;
+}
+
+.pb-glow {
+    opacity: 0.45;
+    animation: pb-glow 2.6s ease-in-out infinite;
+}
+
+.is-armed .pb-block {
+    opacity: 0;
+    transform: translateY(-340px);
+}
+
+.is-armed .pb-tier {
+    opacity: 0.28;
+    transform: translateX(-6px);
+}
+
+.is-armed .pb-glow {
+    opacity: 0;
+    animation: none;
+}
+
+.is-playing .pb-block {
+    animation: pb-drop 0.75s cubic-bezier(0.2, 0.9, 0.25, 1.05) forwards;
+    animation-delay: var(--delay, 0s);
+}
+
+.is-playing .pb-tier {
+    animation: pb-tier 0.6s ease forwards;
+    animation-delay: var(--delay, 0s);
+}
+
+.is-playing .pb-glow {
+    animation: pb-glow 2.6s ease-in-out infinite;
+    animation-delay: 2.9s;
+}
+
+@media (prefers-reduced-motion: reduce) {
+    .pb-scene,
+    .pb-glow,
+    .is-playing .pb-block,
+    .is-playing .pb-tier {
+        animation: none;
+    }
+
+    .is-armed .pb-block,
+    .is-armed .pb-tier {
+        opacity: 1;
+        transform: none;
+    }
+}

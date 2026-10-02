@@ -56,6 +56,7 @@ final class SiteSettingAdminController extends Controller
             publicRegistrationEnabled: (bool) ($data['public_registration_enabled'] ?? false),
             gearAnimationEnabled: (bool) ($data['gear_animation_enabled'] ?? false),
             networkAnimationEnabled: (bool) ($data['network_animation_enabled'] ?? false),
+            blocksAnimationEnabled: (bool) ($data['blocks_animation_enabled'] ?? false),
         ));
 
         return redirect()->route('admin.settings.edit')->with('status', 'Site configuration updated.');

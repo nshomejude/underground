@@ -73,6 +73,7 @@ final class EloquentSiteSettingRepository implements SiteSettingRepository
             'public_registration_enabled' => $setting->publicRegistrationEnabled,
             'gear_animation_enabled' => $setting->gearAnimationEnabled,
             'network_animation_enabled' => $setting->networkAnimationEnabled,
+            'blocks_animation_enabled' => $setting->blocksAnimationEnabled,
         ])->save();
     }
 
@@ -94,6 +95,7 @@ final class EloquentSiteSettingRepository implements SiteSettingRepository
             publicRegistrationEnabled: (bool) $record->public_registration_enabled,
             gearAnimationEnabled: (bool) ($record->gear_animation_enabled ?? true),
             networkAnimationEnabled: (bool) ($record->network_animation_enabled ?? true),
+            blocksAnimationEnabled: (bool) ($record->blocks_animation_enabled ?? true),
         );
     }
 }

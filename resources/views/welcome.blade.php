@@ -111,6 +111,8 @@
         </div>
     </section>
 
+    <x-power-blocks />
+
     {{-- Capabilities --}}
     <section id="capabilities" class="scroll-mt-20 border-b border-border bg-surface">
         <div class="mx-auto max-w-7xl px-4 py-16 sm:px-6 lg:px-8 lg:py-24">

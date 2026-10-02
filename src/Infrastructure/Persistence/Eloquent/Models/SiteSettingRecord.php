@@ -18,5 +18,6 @@ final class SiteSettingRecord extends Model
         'public_registration_enabled' => 'boolean',
         'gear_animation_enabled' => 'boolean',
         'network_animation_enabled' => 'boolean',
+        'blocks_animation_enabled' => 'boolean',
     ];
 }
