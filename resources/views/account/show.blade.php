@@ -66,7 +66,22 @@
 
     <div class="ac-grid">
         @if ($state === 'approved')
-            <section class="ac-panel ac-wm ac-span" style="--i:0" id="card" aria-labelledby="h-card">
+            <section class="ac-panel ac-ben" style="--i:0" aria-labelledby="h-ben">
+                <p class="ac-eyebrow">{{ $tier->name }}</p>
+                <h2 id="h-ben">Your benefits</h2>
+                <ul class="ac-benefits">
+                    @foreach ($benefits as [$icon, $label, $copy])
+                        <li>
+                            <x-icon :name="['key' => 'key-round'][$icon] ?? $icon" />
+                            <div><b>{{ $label }}</b><small>{{ $copy }}</small></div>
+                        </li>
+                    @endforeach
+                </ul>
+            </section>
+        @endif
+
+        @if ($state === 'approved')
+            <section class="ac-panel ac-wm ac-span ac-hero" style="--i:0" id="card" aria-labelledby="h-card">
                 <p class="ac-eyebrow">Credential</p>
                 <h2 id="h-card">Membership credential</h2>
                 <p class="ac-lead">Your permanent Underground membership card &mdash; carried, never advertised. Select "View Back" to see its verification face.</p>
@@ -163,21 +178,6 @@
                 </ol>
             </section>
         @endisset
-
-        @if ($state === 'approved')
-            <section class="ac-panel" style="--i:3" aria-labelledby="h-ben">
-                <p class="ac-eyebrow">{{ $tier->name }}</p>
-                <h2 id="h-ben">Your benefits</h2>
-                <ul class="ac-benefits">
-                    @foreach ($benefits as [$icon, $label, $copy])
-                        <li>
-                            <x-icon :name="['key' => 'key-round'][$icon] ?? $icon" />
-                            <div><b>{{ $label }}</b><small>{{ $copy }}</small></div>
-                        </li>
-                    @endforeach
-                </ul>
-            </section>
-        @endif
 
         <section class="ac-panel" style="--i:4" aria-labelledby="h-qa">
             <p class="ac-eyebrow">Quick actions</p>

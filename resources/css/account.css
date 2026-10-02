@@ -1560,3 +1560,64 @@
         align-items: stretch;
     }
 }
+
+/* ---------- approved dashboard: benefits (left) + card (right) hero row ---------- */
+.ac-ben .ac-benefits {
+    grid-template-columns: 1fr;
+}
+
+.ac-ben .ac-benefits li {
+    align-items: flex-start;
+    padding: 18px 20px;
+}
+
+.ac-ben .ac-benefits svg {
+    flex: none;
+    margin-top: 2px;
+}
+
+.ac-ben .ac-benefits small {
+    margin-top: 4px;
+    font-size: 14px;
+}
+
+@media (max-width: 1099.98px) {
+    .ac-grid > #card {
+        order: -1;
+    }
+}
+
+@media (min-width: 1100px) {
+    .ac-grid:has(> .ac-ben) {
+        grid-template-columns: minmax(300px, 4fr) minmax(400px, 7fr);
+    }
+
+    .ac-grid > .ac-ben {
+        grid-column: 1;
+        grid-row: 1;
+        align-self: stretch;
+        display: flex;
+        flex-direction: column;
+    }
+
+    .ac-ben .ac-benefits {
+        flex: 1;
+        grid-auto-rows: 1fr;
+    }
+
+    .ac-ben .ac-benefits li {
+        align-items: center;
+    }
+
+    .ac-grid > #card.ac-hero {
+        grid-column: 2;
+        grid-row: 1;
+        align-self: stretch;
+    }
+}
+
+@media (max-width: 899px) {
+    .ac-grid > .ac-panel[aria-labelledby='h-start'] {
+        order: 4;
+    }
+}
