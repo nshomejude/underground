@@ -7,6 +7,7 @@ use App\Http\Controllers\AccountController;
 use App\Http\Controllers\AccountDocumentsController;
 use App\Http\Controllers\AccountSecurityController;
 use App\Http\Controllers\AccountSettingsController;
+use App\Http\Controllers\AccountWelcomeLetterController;
 use App\Http\Controllers\Admin\AdminDashboardController;
 use App\Http\Controllers\Admin\ApplicationReviewController;
 use App\Http\Controllers\Admin\CapabilityAdminController;
@@ -209,6 +210,7 @@ Route::prefix('admin')->middleware(['auth', 'admin', 'two-factor.admin'])->name(
 
 Route::middleware('auth')->group(function (): void {
     Route::get('/account/certificate', [AccountCertificateController::class, 'show'])->name('account.certificate');
+    Route::get('/account/welcome-letter', AccountWelcomeLetterController::class)->name('account.welcome-letter');
     Route::get('/account/applications', AccountApplicationsController::class)->name('account.applications');
     Route::get('/account/documents', AccountDocumentsController::class)->name('account.documents');
     Route::get('/account/security', AccountSecurityController::class)->name('account.security');

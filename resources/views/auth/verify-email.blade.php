@@ -1,5 +1,8 @@
 <x-layout title="Verify Email">
     <section class="mx-auto flex max-w-md flex-col gap-10 px-4 py-16 sm:px-6 lg:py-24">
+        <a href="{{ url('/') }}" class="mx-auto inline-flex" aria-label="Underground Network home">
+            <x-seal :size="112" />
+        </a>
         <x-section-heading tag="h1" eyebrow="Member Account">
             Verify Your Email
         </x-section-heading>

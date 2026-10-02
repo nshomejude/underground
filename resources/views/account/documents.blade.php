@@ -15,6 +15,10 @@
                         <a href="{{ route('account.certificate') }}" class="ac-btn ac-fit">Open <x-icon name="award" class="ac-bi" /></a>
                     </li>
                     <li class="ac-row">
+                        <span><b>Welcome letter</b><br>Your personal letter from the Founder</span>
+                        <a href="{{ route('account.welcome-letter') }}" class="ac-btn ac-fit">Open <x-icon name="file-text" class="ac-bi" /></a>
+                    </li>
+                    <li class="ac-row">
                         <span><b>Membership card</b><br>Front, back and UV view</span>
                         <a href="{{ route('account.show') }}#card" class="ac-btn ac-fit">View <x-icon name="credit-card" class="ac-bi" /></a>
                     </li>

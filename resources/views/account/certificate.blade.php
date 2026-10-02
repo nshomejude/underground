@@ -109,8 +109,8 @@
         .sig .hand { font:italic 500 21pt/1 'Playfair Display',serif; color:var(--ink); height:12mm; display:block; }
         .sig .line { border-top:.3mm solid var(--rule); padding-top:1.4mm; }
         .sig .n { font:600 10pt 'Instrument Sans'; display:block; color:var(--ink); } .sig .r { font:500 9pt 'Instrument Sans'; letter-spacing:.12em; text-transform:uppercase; color:var(--label); }
-        .sealwrap { position:absolute; left:50%; bottom:17mm; width:40mm; height:58mm; transform:translateX(-50%); }
-        .sealwrap svg { width:100%; height:100%; overflow:visible; }
+        .sealwrap { position:absolute; left:50%; bottom:15mm; width:42mm; height:42mm; transform:translateX(-50%); }
+        .sealwrap img { width:100%; height:100%; display:block; filter:drop-shadow(0 1mm 1.4mm rgba(0,0,0,.28)); }
         .qrbox { position:absolute; right:21mm; bottom:19mm; width:62mm; text-align:center; }
         .qrbg { background:#F7F3EA; padding:1.6mm; display:inline-block; outline:.25mm solid var(--rule); }
         .qr { width:24mm; height:24mm; display:block; } .qr svg { width:100%; height:100%; display:block; }
@@ -200,15 +200,7 @@
                 </div>
 
                 <div class="sealwrap">
-                    <svg viewBox="-26 -26 52 76" aria-hidden="true">
-                        <path d="M-14 18 L-22 62 L-12 55 L-6 66 L2 24Z" fill="#8a6a2a"/>
-                        <path d="M14 18 L22 62 L12 55 L6 66 L-2 24Z" fill="#a9822f"/>
-                        <polygon points="{{ $scallop(22, 1, 30) }}" fill="url(#foil2)" stroke="#8a6a1f" stroke-width=".3"/>
-                        <circle r="18" fill="none" stroke="#5C430F" stroke-width=".4"/>
-                        <g fill="none" stroke="#5C430F" stroke-width=".25" stroke-opacity=".8"><polyline points="{{ $scallop(15.5, 1.2, 24, 240) }}"/></g>
-                        <circle r="12" fill="#C9A25A" stroke="#5C430F" stroke-width=".3"/>
-                        <text y="5.2" text-anchor="middle" font-family="'Playfair Display',serif" font-weight="700" font-size="15" fill="#0B0B0C">U</text>
-                    </svg>
+                    <img src="{{ asset('images/seal/seal-gold@2x.png') }}" width="480" height="480" alt="Underground Network seal">
                 </div>
 
                 <div class="qrbox">

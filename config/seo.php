@@ -71,7 +71,7 @@ return [
     'noindex' => [
         'register', 'login', 'password.request', 'password.reset', 'password.email', 'password.update',
         'verification.notice', 'verification.verify', 'verification.send',
-        'account.show', 'account.settings', 'account.security', 'account.applications', 'account.documents', 'account.certificate', 'two-factor.challenge', 'two-factor.login', 'account.two-factor.start', 'account.two-factor.confirm', 'account.two-factor.cancel', 'account.two-factor.acknowledge', 'account.two-factor.regenerate', 'account.two-factor.disable', 'verify.show', 'inquiries.track', 'membership.track', 'membership.apply',
+        'account.show', 'account.settings', 'account.welcome-letter', 'account.security', 'account.applications', 'account.documents', 'account.certificate', 'two-factor.challenge', 'two-factor.login', 'account.two-factor.start', 'account.two-factor.confirm', 'account.two-factor.cancel', 'account.two-factor.acknowledge', 'account.two-factor.regenerate', 'account.two-factor.disable', 'verify.show', 'inquiries.track', 'membership.track', 'membership.apply',
     ],
 
     // Human labels for breadcrumb trails, keyed by URL segment.
