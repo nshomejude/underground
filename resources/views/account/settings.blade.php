@@ -169,5 +169,33 @@
             <x-icon name="chevron-right" class="h-3.5 w-3.5 rotate-180" />
             Back to My Account
         </a>
+
+        <div class="flex flex-col gap-6 border border-danger/40 bg-surface px-6 py-8 sm:px-10 sm:py-10">
+            <div class="flex items-center gap-3">
+                <x-icon name="x" class="h-6 w-6 shrink-0 text-danger" />
+                <h3 class="font-serif text-2xl font-semibold text-cream">Delete account</h3>
+            </div>
+
+            <p class="text-sm leading-relaxed text-body">
+                This permanently removes your account and signs you out. Any membership application you submitted is kept on file by the firm for its own records. This cannot be undone.
+            </p>
+
+            <form method="POST" action="{{ route('account.destroy') }}" novalidate class="flex flex-col gap-4" onsubmit="return confirm('Delete your account permanently?');">
+                @csrf
+                @method('DELETE')
+
+                <div class="flex flex-col gap-2">
+                    <label for="delete_current_password" class="text-xs font-semibold uppercase tracking-widest text-body">Confirm with your password</label>
+                    <input type="password" id="delete_current_password" name="current_password" required autocomplete="current-password" class="border border-border bg-surface px-4 py-3 text-sm text-cream focus:border-danger focus:outline-none focus:ring-1 focus:ring-danger">
+                    @error('current_password', 'deleteAccount')
+                        <p class="text-xs text-danger">{{ $message }}</p>
+                    @enderror
+                </div>
+
+                <button type="submit" class="w-fit border border-danger px-6 py-3 text-xs font-semibold uppercase tracking-widest text-danger transition-colors hover:bg-danger hover:text-cream">
+                    Delete My Account
+                </button>
+            </form>
+        </div>
     </section>
 </x-layout>

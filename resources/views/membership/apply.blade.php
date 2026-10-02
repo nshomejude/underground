@@ -57,7 +57,7 @@
                             type="text"
                             id="applicant_name"
                             name="applicant_name"
-                            value="{{ old('applicant_name') }}"
+                            value="{{ old('applicant_name', auth()->user()?->name) }}"
                             required
                             aria-required="true"
                             @if ($errors->has('applicant_name')) aria-invalid="true" aria-describedby="applicant_name-error" @endif
@@ -94,7 +94,7 @@
                             type="email"
                             id="email"
                             name="email"
-                            value="{{ old('email') }}"
+                            value="{{ old('email', auth()->user()?->email) }}"
                             required
                             aria-required="true"
                             @if ($errors->has('email')) aria-invalid="true" aria-describedby="email-error" @endif

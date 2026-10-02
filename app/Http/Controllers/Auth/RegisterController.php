@@ -55,22 +55,27 @@ final class RegisterController extends Controller
             'password' => Hash::make($validated['password']),
         ]);
 
-        $user->sendEmailVerificationNotification();
-
-        $this->sendWelcomeEmail($user);
+        $this->sendOnboardingEmails($user);
 
         Auth::login($user);
 
         $request->session()->regenerate();
 
-        return redirect()->route('account.show');
+        return redirect()->route('account.show')->with('status', 'Welcome to Underground. We have sent a link to '.$user->email.' so you can verify your address.');
     }
 
     /**
-     * A mail transport failure must never block or undo a registration.
+     * A mail transport failure must never block or undo a registration, so
+     * each message is attempted and reported independently.
      */
-    private function sendWelcomeEmail(User $user): void
+    private function sendOnboardingEmails(User $user): void
     {
+        try {
+            $user->sendEmailVerificationNotification();
+        } catch (Throwable $e) {
+            report($e);
+        }
+
         try {
             Mail::to($user->email)->send(new WelcomeMail($user));
         } catch (Throwable $e) {

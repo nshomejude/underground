@@ -33,6 +33,7 @@ final class EmailVerificationTest extends TestCase
             'email' => 'amara@example.com',
             'password' => 'correct-horse-battery-staple',
             'password_confirmation' => 'correct-horse-battery-staple',
+            'terms' => '1',
         ]);
 
         $user = User::query()->where('email', 'amara@example.com')->firstOrFail();

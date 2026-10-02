@@ -23,6 +23,7 @@ final class WelcomeEmailTest extends TestCase
             'email' => 'ada@example.com',
             'password' => 'a-strong-passphrase-1',
             'password_confirmation' => 'a-strong-passphrase-1',
+            'terms' => '1',
         ])->assertRedirect();
 
         Mail::assertSent(WelcomeMail::class, function (WelcomeMail $mail): bool {

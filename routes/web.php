@@ -104,7 +104,7 @@ Route::get('/membership/track', [MembershipTrackController::class, 'show'])->nam
 // Jetstream. See App\Http\Controllers\Auth and App\Http\Controllers\AccountController.
 Route::middleware('guest')->group(function (): void {
     Route::get('/register', [RegisterController::class, 'create'])->name('register');
-    Route::post('/register', [RegisterController::class, 'store']);
+    Route::post('/register', [RegisterController::class, 'store'])->middleware('throttle:10,1');
 
     Route::get('/login', [LoginController::class, 'create'])->name('login');
     Route::post('/login', [LoginController::class, 'store']);
@@ -184,6 +184,7 @@ Route::middleware('auth')->group(function (): void {
     Route::get('/account/settings', [AccountSettingsController::class, 'edit'])->name('account.settings');
     Route::post('/account/settings', [AccountSettingsController::class, 'update'])->name('account.settings.update');
     Route::post('/account/settings/password', [AccountSettingsController::class, 'updatePassword'])->name('account.settings.password');
+    Route::delete('/account', [AccountSettingsController::class, 'destroy'])->name('account.destroy');
 });
 
 // Email verification: standard Laravel MustVerifyEmail machinery (signed

@@ -25,6 +25,7 @@ final class AuthenticationTest extends TestCase
             'email' => 'amara@example.com',
             'password' => 'correct-horse-battery-staple',
             'password_confirmation' => 'correct-horse-battery-staple',
+            'terms' => '1',
         ]);
 
         $response->assertRedirect(route('account.show'));
@@ -45,6 +46,7 @@ final class AuthenticationTest extends TestCase
             'email' => 'taken@example.com',
             'password' => 'correct-horse-battery-staple',
             'password_confirmation' => 'correct-horse-battery-staple',
+            'terms' => '1',
         ]);
 
         $response->assertRedirect('/register');

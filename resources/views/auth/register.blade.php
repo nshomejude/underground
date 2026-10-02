@@ -28,6 +28,7 @@
                     id="name"
                     name="name"
                     value="{{ old('name') }}"
+                    autocomplete="name"
                     required
                     aria-required="true"
                     autofocus
@@ -49,6 +50,7 @@
                     id="email"
                     name="email"
                     value="{{ old('email') }}"
+                    autocomplete="email"
                     required
                     aria-required="true"
                     @if ($errors->has('email')) aria-invalid="true" aria-describedby="email-error" @endif
@@ -68,11 +70,14 @@
                     type="password"
                     id="password"
                     name="password"
+                    autocomplete="new-password"
+                    aria-describedby="password-hint"
                     required
                     aria-required="true"
                     @if ($errors->has('password')) aria-invalid="true" aria-describedby="password-error" @endif
                     class="border border-border bg-surface px-4 py-3 text-sm text-cream placeholder:text-muted focus:border-gold focus:outline-none focus:ring-1 focus:ring-gold"
                 >
+                <p id="password-hint" class="text-xs text-muted">At least 8 characters. A longer passphrase is stronger than a short, complicated one.</p>
                 @error('password')
                     <p id="password-error" class="text-xs text-danger">{{ $message }}</p>
                 @enderror
@@ -87,10 +92,26 @@
                     type="password"
                     id="password_confirmation"
                     name="password_confirmation"
+                    autocomplete="new-password"
                     required
                     aria-required="true"
                     class="border border-border bg-surface px-4 py-3 text-sm text-cream placeholder:text-muted focus:border-gold focus:outline-none focus:ring-1 focus:ring-gold"
                 >
+            </div>
+
+            <div class="flex flex-col gap-2">
+                <label class="flex items-start gap-3 text-sm leading-relaxed text-body">
+                    <input type="checkbox" name="terms" value="1" required aria-required="true" class="mt-1 h-4 w-4 shrink-0 border-border bg-surface text-gold focus:ring-gold" @checked(old('terms'))>
+                    <span>
+                        I agree to the
+                        <a href="{{ route('terms') }}" target="_blank" rel="noopener" class="text-gold underline decoration-gold/40 underline-offset-4 hover:text-gold-bright">Terms of Service</a>
+                        and have read the
+                        <a href="{{ route('privacy') }}" target="_blank" rel="noopener" class="text-gold underline decoration-gold/40 underline-offset-4 hover:text-gold-bright">Privacy Policy</a>.
+                    </span>
+                </label>
+                @error('terms')
+                    <p class="text-xs text-danger">You must accept the Terms of Service and Privacy Policy to create an account.</p>
+                @enderror
             </div>
 
             <x-button variant="primary" type="submit">

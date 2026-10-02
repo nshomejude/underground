@@ -8,6 +8,13 @@
             Log In
         </x-section-heading>
 
+        @if (session('status'))
+            <p class="flex items-center gap-2 border border-success/40 bg-success/10 px-4 py-3 text-sm text-success" role="status">
+                <x-icon name="check-circle" class="h-4 w-4 shrink-0" />
+                {{ session('status') }}
+            </p>
+        @endif
+
         @if ($errors->has('email'))
             <p class="border border-danger/40 bg-danger/10 px-4 py-3 text-sm text-danger" role="alert">
                 {{ $errors->first('email') }}
@@ -33,6 +40,7 @@
                     id="email"
                     name="email"
                     value="{{ old('email') }}"
+                    autocomplete="username"
                     required
                     aria-required="true"
                     autofocus
@@ -49,10 +57,19 @@
                     type="password"
                     id="password"
                     name="password"
+                    autocomplete="current-password"
                     required
                     aria-required="true"
                     class="border border-border bg-surface px-4 py-3 text-sm text-cream placeholder:text-muted focus:border-gold focus:outline-none focus:ring-1 focus:ring-gold"
                 >
+            </div>
+
+            <div class="flex items-center justify-between gap-4">
+                <label class="inline-flex items-center gap-2 text-sm text-body">
+                    <input type="checkbox" name="remember" value="1" class="h-4 w-4 border-border bg-surface text-gold focus:ring-gold" @checked(old('remember'))>
+                    Keep me signed in
+                </label>
+                <a href="{{ route('password.request') }}" class="text-sm text-gold underline decoration-gold/40 underline-offset-4 hover:text-gold-bright">Forgot password?</a>
             </div>
 
             <x-button variant="primary" type="submit">
