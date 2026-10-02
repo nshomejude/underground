@@ -1,35 +1,8 @@
-<x-layout title="Page Not Found">
-    <section class="mx-auto flex min-h-[60vh] max-w-3xl flex-col items-center justify-center gap-8 px-4 py-16 text-center sm:px-6 lg:px-8 lg:py-24">
-        <span class="flex h-16 w-16 items-center justify-center border border-gold text-gold">
-            <x-icon name="radar" class="h-8 w-8" />
-        </span>
-
-        <div class="flex flex-col items-center gap-4">
-            <x-status-badge label="404 — Not Found" tone="neutral" />
-
-            <h1 class="font-serif text-3xl font-semibold leading-tight text-cream sm:text-4xl">
-                This Page Has Moved in the Shadows
-            </h1>
-
-            <p class="max-w-xl text-base leading-relaxed text-body">
-                The page you're looking for isn't here anymore &mdash; or never was. Let's get you
-                back on solid ground.
-            </p>
-        </div>
-
-        <div class="flex flex-wrap items-center justify-center gap-4">
-            <x-button href="{{ route('home') }}">
-                Return Home
-                <x-icon name="arrow-right" class="h-3.5 w-3.5" />
-            </x-button>
-
-            <x-button variant="secondary" href="{{ route('capabilities.index') }}">
-                Explore Capabilities
-            </x-button>
-
-            <x-button variant="secondary" href="{{ route('contact') }}">
-                Contact Us
-            </x-button>
-        </div>
-    </section>
-</x-layout>
+@include('errors._shell', [
+    'code' => 404,
+    'title' => 'Page not found',
+    'headline' => 'This page has moved in the shadows',
+    'message' => 'The page you are looking for is not here any more, or never was. Let us get you back on solid ground.',
+    'actions' => [['Go home', '/', true], ['Contact us', '/contact']],
+    'withAccount' => true,
+])

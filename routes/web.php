@@ -236,3 +236,11 @@ Route::middleware('auth')->group(function (): void {
         ->middleware('throttle:6,1')
         ->name('verification.send');
 });
+
+// Member network workstreams (each file owns its own routes).
+require __DIR__.'/profile.php';
+require __DIR__.'/network.php';
+require __DIR__.'/messaging.php';
+require __DIR__.'/voting.php';
+require __DIR__.'/verification.php';
+require __DIR__.'/plans.php';

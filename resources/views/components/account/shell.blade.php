@@ -6,16 +6,33 @@
     $initials = collect(preg_split('/\s+/', trim((string) $user?->name)))->filter()->take(2)->map(fn ($p) => mb_strtoupper(mb_substr($p, 0, 1)))->implode('') ?: 'U';
 
     // The full member menu, identical on desktop (sidebar) and mobile (drawer).
+    // Network items appear as their routes are registered.
+    $has = static fn (string $name): bool => \Illuminate\Support\Facades\Route::has($name);
     $nav = [
         ['key' => 'overview', 'label' => 'Overview', 'icon' => 'home', 'href' => route('account.show')],
         ['key' => 'card', 'label' => 'Membership Card', 'icon' => 'credit-card', 'href' => route('account.show').'#card'],
         ['key' => 'certificate', 'label' => 'Certificate', 'icon' => 'award', 'href' => route('account.certificate')],
+    ];
+    $optional = [
+        ['key' => 'profile', 'label' => 'My Profile', 'icon' => 'user', 'route' => 'account.profile'],
+        ['key' => 'network', 'label' => 'Network', 'icon' => 'users', 'route' => 'network.index'],
+        ['key' => 'messages', 'label' => 'Messages', 'icon' => 'message-square', 'route' => 'messages.index'],
+        ['key' => 'votes', 'label' => 'Votes', 'icon' => 'check-circle', 'route' => 'votes.index'],
+        ['key' => 'verification', 'label' => 'Verification', 'icon' => 'fingerprint', 'route' => 'verification.index'],
+        ['key' => 'plans', 'label' => 'Plans & Upgrade', 'icon' => 'gem', 'route' => 'plans.index'],
+    ];
+    foreach ($optional as $item) {
+        if ($has($item['route'])) {
+            $nav[] = ['key' => $item['key'], 'label' => $item['label'], 'icon' => $item['icon'], 'href' => route($item['route'])];
+        }
+    }
+    $nav = array_merge($nav, [
         ['key' => 'applications', 'label' => 'Applications', 'icon' => 'file-text', 'href' => route('account.applications')],
         ['key' => 'inquiries', 'label' => 'Inquiries', 'icon' => 'message-square', 'href' => route('inquiries.track')],
         ['key' => 'documents', 'label' => 'Documents', 'icon' => 'folder-open', 'href' => route('account.documents')],
         ['key' => 'security', 'label' => 'Security', 'icon' => 'shield-check', 'href' => route('account.security')],
         ['key' => 'settings', 'label' => 'Settings', 'icon' => 'settings', 'href' => route('account.settings')],
-    ];
+    ]);
 
     // Quick links for the mobile bottom bar (the drawer holds everything).
     $tabs = collect($nav)->whereIn('key', ['overview', 'card', 'certificate', 'inquiries'])->values();

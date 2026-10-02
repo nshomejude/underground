@@ -10,6 +10,8 @@ use Illuminate\Database\Eloquent\Attributes\Fillable;
 use Illuminate\Database\Eloquent\Attributes\Hidden;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
+use Illuminate\Database\Eloquent\Relations\HasMany;
+use Illuminate\Database\Eloquent\Relations\HasOne;
 use Illuminate\Notifications\Notifiable;
 
 #[Fillable(['name', 'email', 'password'])]
@@ -91,5 +93,38 @@ class User extends Authenticatable implements MustVerifyEmail
     public function recoveryCodesRemaining(): int
     {
         return count($this->recoveryCodeHashes());
+    }
+
+    public function profile(): HasOne
+    {
+        return $this->hasOne(MemberProfile::class);
+    }
+
+    public function identityVerifications(): HasMany
+    {
+        return $this->hasMany(IdentityVerification::class);
+    }
+
+    public function companyVerifications(): HasMany
+    {
+        return $this->hasMany(CompanyVerification::class);
+    }
+
+    /** True when the member holds an approved, unexpired identity verification. */
+    public function isIdentityVerified(): bool
+    {
+        return $this->identityVerifications()
+            ->where('status', 'approved')
+            ->where(fn ($q) => $q->whereNull('expires_at')->orWhere('expires_at', '>', now()))
+            ->exists();
+    }
+
+    /** True when the member holds an approved, unexpired company verification. */
+    public function isCompanyVerified(): bool
+    {
+        return $this->companyVerifications()
+            ->where('status', 'approved')
+            ->where(fn ($q) => $q->whereNull('expires_at')->orWhere('expires_at', '>', now()))
+            ->exists();
     }
 }

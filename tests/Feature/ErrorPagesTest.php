@@ -33,7 +33,7 @@ final class ErrorPagesTest extends TestCase
     {
         $this->get('/this-page-does-not-exist-anywhere')
             ->assertNotFound()
-            ->assertSee('This Page Has Moved in the Shadows')
+            ->assertSee('This page has moved in the shadows')
             ->assertDontSee('Symfony\\', false);
     }
 
@@ -43,7 +43,7 @@ final class ErrorPagesTest extends TestCase
 
         $this->actingAs($user)->get(route('admin.applications.index'))
             ->assertForbidden()
-            ->assertSee("This Area Isn't Open to You", false)
+            ->assertSee("This room is private", false)
             ->assertDontSee('admin.applications');
     }
 
@@ -53,7 +53,7 @@ final class ErrorPagesTest extends TestCase
 
         $this->get('/__test/419')
             ->assertStatus(419)
-            ->assertSee('Your Session Expired');
+            ->assertSee('Your session expired');
     }
 
     public function test_throttling_the_inquiry_endpoint_shows_the_branded_429_page(): void
@@ -74,7 +74,7 @@ final class ErrorPagesTest extends TestCase
 
         $this->post(route('inquiries.store'), $payload)
             ->assertStatus(429)
-            ->assertSee('Slow Down a Moment');
+            ->assertSee('Too many requests');
     }
 
     public function test_an_unhandled_exception_shows_the_branded_500_page(): void
@@ -83,7 +83,7 @@ final class ErrorPagesTest extends TestCase
 
         $this->get('/__test/500')
             ->assertStatus(500)
-            ->assertSee('Something Went Wrong on Our End')
+            ->assertSee('Something went wrong on our side')
             ->assertDontSee('boom');
     }
 
@@ -93,6 +93,6 @@ final class ErrorPagesTest extends TestCase
 
         $this->get('/__test/503')
             ->assertStatus(503)
-            ->assertSee('Briefly Unavailable');
+            ->assertSee('Briefly unavailable');
     }
 }

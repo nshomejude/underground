@@ -22,11 +22,23 @@
             ['label' => 'Projects', 'route' => 'admin.projects.index', 'pattern' => 'admin.projects.*', 'icon' => 'rotate-cw'],
             ['label' => 'Events', 'route' => 'admin.events.index', 'pattern' => 'admin.events.*', 'icon' => 'clock'],
         ],
+        'Network' => [
+            ['label' => 'Verifications', 'route' => 'admin.verifications.index', 'pattern' => 'admin.verifications.*', 'icon' => 'fingerprint'],
+            ['label' => 'Motions', 'route' => 'admin.motions.index', 'pattern' => 'admin.motions.*', 'icon' => 'check-circle'],
+            ['label' => 'Membership Plans', 'route' => 'admin.plans.index', 'pattern' => 'admin.plans.*', 'icon' => 'gem'],
+            ['label' => 'Plan Requests', 'route' => 'admin.plan-requests.index', 'pattern' => 'admin.plan-requests.*', 'icon' => 'credit-card'],
+            ['label' => 'Connections', 'route' => 'admin.network.index', 'pattern' => 'admin.network.*', 'icon' => 'users'],
+        ],
         'Settings' => [
             ['label' => 'Configuration', 'route' => 'admin.settings.edit', 'pattern' => 'admin.settings.*', 'icon' => 'sliders-horizontal'],
             ['label' => 'Narrative', 'route' => 'admin.narrative.edit', 'pattern' => 'admin.narrative.*', 'icon' => 'library'],
         ],
     ];
+    // Hide items whose workstream has not registered its route yet.
+    $groups = array_filter(array_map(
+        fn (array $items) => array_values(array_filter($items, fn (array $i) => \Illuminate\Support\Facades\Route::has($i['route']))),
+        $groups,
+    ));
 @endphp
 
 <nav class="flex flex-col gap-4" aria-label="Admin">
