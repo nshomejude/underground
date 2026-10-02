@@ -44,6 +44,10 @@ final class MembershipStatusNotification extends Notification
             outro: $copy['outro'],
             eyebrow: $copy['eyebrow'],
             preheader: $copy['preheader'],
+            headingEm: $copy['headingEm'] ?? null,
+            summary: $copy['summary'] ?? [],
+            signedBy: $copy['signedBy'] ?? null,
+            signedTitle: $copy['signedTitle'] ?? null,
         );
     }
 
@@ -61,7 +65,7 @@ final class MembershipStatusNotification extends Notification
         ];
     }
 
-    /** @return array{subject: string, title: string, eyebrow: string, preheader: string, intro: list<string>, outro: list<string>, actionText: string, actionUrl: string} */
+    /** @return array<string, mixed> */
     private function copy(): array
     {
         $tier = $this->context['tier'];
@@ -71,15 +75,21 @@ final class MembershipStatusNotification extends Notification
         return match ($this->stage) {
             'approved' => [
                 'subject' => 'Your '.config('app.name').' membership is approved',
-                'title' => 'Welcome, your membership is approved',
+                'title' => 'Welcome, your membership is',
+                'headingEm' => 'approved.',
                 'eyebrow' => 'Membership approved',
                 'preheader' => "Your {$tier} card and certificate are ready.",
-                'intro' => array_values(array_filter([
+                'intro' => [
                     "We are pleased to confirm your {$tier} membership of ".config('app.name').'.',
-                    'Your membership card and certificate of membership have been issued. Sign in to view and present them.',
-                    isset($this->context['memberId']) ? 'Member ID: '.$this->context['memberId'] : null,
-                    isset($this->context['serial']) ? 'Certificate serial: '.$this->context['serial'] : null,
+                    'Your membership card and certificate of membership have been issued and are waiting in your member area.',
+                ],
+                'summary' => array_values(array_filter([
+                    ['Tier', $tier],
+                    isset($this->context['memberId']) ? ['Member ID', $this->context['memberId'], true] : null,
+                    isset($this->context['serial']) ? ['Certificate serial', $this->context['serial'], true] : null,
                 ])),
+                'signedBy' => 'Tony Smith',
+                'signedTitle' => 'Founder & Managing Partner',
                 'outro' => ['Anyone can confirm the authenticity of your credential by scanning the QR code on your card or certificate.'],
                 'actionText' => 'View My Membership Card',
                 'actionUrl' => route('account.show'),

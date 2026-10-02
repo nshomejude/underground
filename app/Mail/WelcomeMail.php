@@ -12,8 +12,8 @@ use Illuminate\Mail\Mailables\Envelope;
 
 /**
  * Welcome message sent from welcome@un-der.com when a new account registers.
- * HTML and plain-text bodies are both provided so clients that block or
- * strip HTML still render something readable.
+ * Rendered through the shared on-brand email layout, with a plain-text
+ * alternative for clients that block or strip HTML.
  */
 final class WelcomeMail extends Mailable
 {
@@ -33,15 +33,29 @@ final class WelcomeMail extends Mailable
         $firstName = trim(explode(' ', trim($this->user->name))[0]) ?: 'there';
 
         return new Content(
-            view: 'emails.welcome',
-            text: 'emails.welcome-text',
+            view: 'emails.notification',
+            text: 'emails.notification-text',
             with: [
-                'firstName' => $firstName,
+                'heading' => $firstName.', you are',
+                'headingEm' => 'in.',
+                'eyebrow' => 'Welcome',
+                'preheader' => 'Your account is ready. Power, calm and connection: begin below.',
+                'intro' => [
+                    'Thank you for creating your '.config('app.name').' account. We are a global network built on quiet influence and trusted connections, and we are glad to have you with us.',
+                ],
+                'actionText' => 'Open Your Account',
+                'actionUrl' => route('account.show'),
+                'steps' => [
+                    ['Verify your email', 'A separate message carries your confirmation link.'],
+                    ['Explore membership', 'Our tiers are extended to a vetted few. Apply when you are ready.'],
+                    ['Write to us in confidence', 'Every inquiry is handled with discretion by a partner.'],
+                ],
+                'outro' => [],
+                'summary' => [],
+                'signedBy' => 'Tony Smith',
+                'signedTitle' => 'Founder & Managing Partner',
                 'appName' => config('app.name'),
-                'siteUrl' => url('/'),
-                'accountUrl' => route('account.show'),
-                'membershipUrl' => route('membership.index'),
-                'contactUrl' => route('contact'),
+                'footerNote' => 'You received this because an account was created on our website with this email address. If it was not you, you can ignore this message.',
             ],
         );
     }

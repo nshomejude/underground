@@ -99,7 +99,7 @@ final class MembershipNotificationsTest extends TestCase
         $mail = $n->toMail(new User);
         $html = (string) view($mail->view[0], $mail->viewData)->render();
 
-        $this->assertStringContainsString('membership is approved', $html);
+        $this->assertStringContainsString('your membership is', $html);
         $this->assertStringContainsString('UGC-2026-000001', $html);
     }
 }

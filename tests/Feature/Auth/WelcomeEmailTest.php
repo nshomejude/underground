@@ -37,6 +37,6 @@ final class WelcomeEmailTest extends TestCase
         $mail = new WelcomeMail($user);
 
         $mail->assertSeeInHtml('Ada, you');
-        $mail->assertSeeInText('WELCOME, ADA');
+        $mail->assertSeeInText('ADA, YOU ARE IN.');
     }
 }
