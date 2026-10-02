@@ -97,4 +97,29 @@
             </div>
         </div>
     </section>
+
+    <x-value-grid
+        tone="surface"
+        eyebrow="Choosing a Channel"
+        heading="Who to Contact"
+        :items="[
+            ['icon' => 'lock', 'title' => 'A new mandate', 'text' => 'Use the confidential inquiry form. It reaches a partner directly and is the most secure way to describe a matter.'],
+            ['icon' => 'mail', 'title' => 'General questions', 'text' => 'Write to info@un-der.com for anything that is not a new engagement, and the right person will reply.'],
+            ['icon' => 'handshake', 'title' => 'Partnerships and proposals', 'text' => 'Use the departmental mailboxes above so your message reaches the team that handles it.'],
+            ['icon' => 'newspaper', 'title' => 'Media and press', 'text' => 'Contact media@un-der.com for interview, comment and publication requests.'],
+        ]"
+        :columns="4"
+    />
+
+    <x-faq
+        tone="ink"
+        eyebrow="Before You Write"
+        heading="Contact Questions"
+        :items="[
+            ['q' => 'How quickly will I receive a reply?', 'a' => 'We read every message personally. Time-sensitive matters are prioritized, but we do not promise a fixed response time.'],
+            ['q' => 'Is email secure enough for sensitive matters?', 'a' => 'Ordinary email is not. For anything sensitive, please start with the confidential inquiry form and we will agree a secure way to continue.'],
+            ['q' => 'Can I visit an office?', 'a' => 'Our offices are not open to walk-in visitors. Please write first and a partner will arrange a meeting where appropriate.'],
+            ['q' => 'Do you accept unsolicited proposals?', 'a' => 'Yes. Send a short summary to proposals@un-der.com. We review each one and reply where there is a fit.'],
+        ]"
+    />
 </x-layout>
