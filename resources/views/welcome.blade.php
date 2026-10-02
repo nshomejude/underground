@@ -43,14 +43,18 @@
             </div>
 
             <div class="flex flex-col gap-6">
-                <div class="overflow-hidden border border-border">
+                {{-- Transparent cut-out portrait: no frame, soft glow behind, faded into the section at the base --}}
+                <div class="relative mx-auto flex w-full max-w-[22rem] justify-center sm:max-w-sm lg:max-w-md">
+                    <div class="pointer-events-none absolute inset-x-6 bottom-0 top-10 rounded-full bg-gold/15 blur-3xl" aria-hidden="true"></div>
                     <img
                         src="{{ $founderPortraitSrc }}"
-                        alt="Portrait of the Underground founder, with a government seat of power in the background"
-                        class="h-full w-full object-cover"
-                        width="1551"
-                        height="2048"
+                        alt="Portrait of the Underground founder"
+                        class="portrait-fade relative z-10 h-auto max-h-[28rem] w-auto max-w-full object-contain object-bottom drop-shadow-[0_24px_40px_rgba(0,0,0,0.55)] sm:max-h-[34rem] lg:max-h-[40rem]"
+                        width="1000"
+                        height="1402"
                         loading="eager"
+                        fetchpriority="high"
+                        decoding="async"
                     >
                 </div>
 

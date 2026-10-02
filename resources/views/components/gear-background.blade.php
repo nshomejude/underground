@@ -9,7 +9,7 @@
     $enabled = app(\Domain\Content\Repositories\SiteSettingRepository::class)->current()->gearAnimationEnabled;
 
     if ($enabled) {
-        $module = 6.2;
+        $module = 3.5;
 
         // Closed path for a spur gear with $n teeth about the origin.
         $gearPath = static function (int $n, float $module): string {
@@ -37,12 +37,12 @@
         };
 
         // Front chain: teeth counts and the bearing (degrees, y-down) from each gear to the next.
-        $teeth = [36, 24, 48, 28, 40, 22, 52, 30, 44, 26, 38, 32];
-        $bearings = [-33, -19, -40, -23, -36, -17, -38, -21, -35, -26, -31];
+        $teeth = [50, 34, 58, 38, 52, 30, 60, 36, 54, 32, 46, 40, 64, 42];
+        $bearings = [-33, -19, -40, -23, -36, -17, -38, -21, -35, -26, -31, -24, -37];
 
         $front = [];
-        $x = -140.0;
-        $y = 930.0;
+        $x = -90.0;
+        $y = 940.0;
         $rot = 0.0; // degrees
         foreach ($teeth as $i => $n) {
             $pitch = $module * $n / 2;
@@ -65,7 +65,7 @@
                 'pitch' => $pitch,
                 'rot' => $rot,
                 'dir' => $i % 2 === 0 ? 1 : -1,
-                'spokes' => [6, 5, 8, 6, 7, 5, 8, 6, 7, 5, 6, 7][$i],
+                'spokes' => [6, 5, 8, 6, 7, 5, 8, 6, 7, 5, 6, 7, 8, 6][$i],
                 'path' => $gearPath($n, $module),
                 // Seconds per revolution: small gears turn faster, meshed pairs stay in ratio.
                 'dur' => round($n * 1.35, 1),
@@ -73,11 +73,11 @@
         }
 
         // Back layer: bigger module, dim and slow, overlapping the front chain for depth.
-        $backModule = 11.0;
+        $backModule = 6.5;
         $back = [
-            ['n' => 58, 'x' => 420, 'y' => 520, 'dir' => 1, 'dur' => 190],
-            ['n' => 46, 'x' => 1120, 'y' => 130, 'dir' => -1, 'dur' => 150],
-            ['n' => 52, 'x' => 1390, 'y' => 700, 'dir' => 1, 'dur' => 170],
+            ['n' => 44, 'x' => 470, 'y' => 520, 'dir' => 1, 'dur' => 150],
+            ['n' => 36, 'x' => 1180, 'y' => 150, 'dir' => -1, 'dur' => 120],
+            ['n' => 40, 'x' => 1400, 'y' => 700, 'dir' => 1, 'dur' => 135],
         ];
         foreach ($back as $i => $b) {
             $back[$i]['pitch'] = $backModule * $b['n'] / 2;
@@ -85,13 +85,13 @@
         }
 
         // Clock dial (time) behind everything.
-        $dial = ['x' => 1060, 'y' => 330, 'r' => 300];
+        $dial = ['x' => 1010, 'y' => 380, 'r' => 210];
     }
 @endphp
 
 @if ($enabled)
     <div {{ $attributes->merge(['class' => 'gear-bg pointer-events-none absolute inset-0 -z-0 overflow-hidden']) }} aria-hidden="true">
-        <svg class="h-full w-full" viewBox="0 0 1600 860" preserveAspectRatio="xMidYMid slice" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <svg class="absolute left-1/2 top-1/2 h-[860px] w-[1600px] max-w-none -translate-x-1/2 -translate-y-1/2 lg:static lg:h-full lg:w-full lg:translate-x-0 lg:translate-y-0" viewBox="0 0 1600 860" preserveAspectRatio="xMidYMid slice" fill="none" xmlns="http://www.w3.org/2000/svg">
             {{-- Time: dial with tick marks and slow hands --}}
             <g opacity=".5" stroke="currentColor" class="text-gold">
                 <circle cx="{{ $dial['x'] }}" cy="{{ $dial['y'] }}" r="{{ $dial['r'] }}" stroke-width="1.6" />
@@ -142,7 +142,7 @@
                     <g transform="translate({{ round($g['x'], 1) }} {{ round($g['y'], 1) }})">
                         <g class="gear-spin" style="--d:{{ $g['dur'] }}s;--dir:{{ $g['dir'] === 1 ? 'normal' : 'reverse' }}">
                             <g transform="rotate({{ round($g['rot'], 2) }})">
-                                <path d="{{ $g['path'] }}" stroke-width="2.6" stroke-linejoin="round" fill="rgba(201,162,90,.07)" />
+                                <path d="{{ $g['path'] }}" stroke-width="2" stroke-linejoin="round" fill="rgba(201,162,90,.07)" />
                                 <circle r="{{ round($g['pitch'] * 0.72, 1) }}" stroke-width="1.4" opacity=".6" />
                                 @for ($s = 0; $s < $g['spokes']; $s++)
                                     @php $sa = deg2rad($s * 360 / $g['spokes']); @endphp

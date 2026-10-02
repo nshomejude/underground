@@ -177,3 +177,9 @@
         display: none;
     }
 }
+
+/* Fade the base of the cut-out hero portrait into the section background. */
+.portrait-fade {
+    -webkit-mask-image: linear-gradient(to bottom, #000 0, #000 82%, transparent 100%);
+    mask-image: linear-gradient(to bottom, #000 0, #000 82%, transparent 100%);
+}

@@ -22,7 +22,7 @@ final class LandingPageController extends Controller
         return view('welcome', [
             'landingPage' => ($this->composeLandingPage)(),
             'aboutHref' => Route::has('about') ? route('about') : '#',
-            'founderPortraitSrc' => asset('images/founder-portrait.jpg'),
+            'founderPortraitSrc' => asset('images/founder-cutout.webp'),
         ]);
     }
 }
