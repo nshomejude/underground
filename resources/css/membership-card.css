@@ -492,6 +492,30 @@
     color: var(--color-gold-bright);
 }
 
+.mc-l-back,
+.mc-l-uv {
+    display: inline-flex;
+}
+
+.mc-l-front,
+.mc-l-uvon {
+    display: none;
+}
+
+.mc-l-uvon {
+    color: var(--color-info) !important;
+}
+
+.mc:has(.mc-flip-input:checked) .mc-l-back,
+.mc:has(.mc-uv-input:checked) .mc-l-uv {
+    display: none;
+}
+
+.mc:has(.mc-flip-input:checked) .mc-l-front,
+.mc:has(.mc-uv-input:checked) .mc-l-uvon {
+    display: inline-flex;
+}
+
 .mc-controls svg {
     width: 14px;
     height: 14px;

@@ -88,8 +88,8 @@
     role="group"
     aria-label="{{ $tier->name }} membership card for {{ $holder }}"
 >
-    <input type="checkbox" id="{{ $flipId }}" class="peer/flip sr-only" aria-label="Flip the membership card to view the back">
-    <input type="checkbox" id="{{ $uvId }}" class="peer/uv sr-only" aria-label="Inspect the card under UV light">
+    <input type="checkbox" id="{{ $flipId }}" class="peer/flip mc-flip-input sr-only" aria-label="Flip the membership card to view the back">
+    <input type="checkbox" id="{{ $uvId }}" class="peer/uv mc-uv-input sr-only" aria-label="Inspect the card under UV light">
 
     <div class="relative aspect-[1.586/1] w-full transition-transform duration-700 ease-[cubic-bezier(0.22,1,0.36,1)] [transform-style:preserve-3d] peer-checked/flip:[transform:rotateY(180deg)] peer-checked/uv:[--uv:1] peer-focus-visible/flip:outline peer-focus-visible/flip:outline-2 peer-focus-visible/flip:outline-offset-4 peer-focus-visible/flip:outline-gold">
 
@@ -212,9 +212,9 @@
     </div>
 
     <div class="mc-controls">
-        <label for="{{ $flipId }}" class="inline-flex peer-checked/flip:hidden"><x-icon name="rotate-cw" /> View Back</label>
-        <label for="{{ $flipId }}" class="hidden peer-checked/flip:inline-flex"><x-icon name="rotate-cw" /> View Front</label>
-        <label for="{{ $uvId }}" class="inline-flex peer-checked/uv:hidden"><x-icon name="flashlight" /> Inspect Under UV</label>
-        <label for="{{ $uvId }}" class="hidden !text-info peer-checked/uv:inline-flex"><x-icon name="flashlight" /> UV Light On</label>
+        <label for="{{ $flipId }}" class="mc-l-back"><x-icon name="rotate-cw" /> View Back</label>
+        <label for="{{ $flipId }}" class="mc-l-front"><x-icon name="rotate-cw" /> View Front</label>
+        <label for="{{ $uvId }}" class="mc-l-uv"><x-icon name="flashlight" /> Inspect Under UV</label>
+        <label for="{{ $uvId }}" class="mc-l-uvon"><x-icon name="flashlight" /> UV Light On</label>
     </div>
 </div>

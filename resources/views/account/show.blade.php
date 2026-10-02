@@ -37,16 +37,16 @@
                     My Account
                 @endif
             </h1>
-            <p class="ac-sub">Signed in as {{ $user->name }}</p>
+            <p class="ac-sub" data-greeting data-name="{{ strtok(trim($user->name), " ") }}">Signed in as {{ $user->name }}</p>
         </div>
         @if ($verified)
-            <span class="ac-badge"><svg aria-hidden="true"><use href="#ai-chk"/></svg>Email verified</span>
+            <span class="ac-badge"><x-icon name="check" />Email verified</span>
         @endif
     </header>
 
     @if (session('status'))
         <p class="ac-flash ac-flash-ok" role="status">
-            <svg aria-hidden="true"><use href="#ai-chk"/></svg>
+            <x-icon name="check" />
             <span>{{ session('status') === 'verification-link-sent' ? 'A new verification link has been sent to '.$user->email.'.' : session('status') }}</span>
         </p>
     @endif
@@ -99,7 +99,7 @@
                     <x-status-badge :label="$application->status()->label()" :tone="$statusTones[$application->status()->value] ?? 'neutral'" />
                     <span class="ac-ref">{{ $application->reference->value }}</span>
                 </div>
-                <a href="{{ route('membership.track') }}" class="ac-btn ac-btn-solid ac-fit">Track application <svg aria-hidden="true"><use href="#ai-chk"/></svg></a>
+                <a href="{{ route('membership.track') }}" class="ac-btn ac-btn-solid ac-fit">Track application <x-icon name="check" /></a>
             </section>
         @else
             <section class="ac-panel ac-span" style="--i:0" id="card" aria-labelledby="h-card">
@@ -111,7 +111,7 @@
                     partner before a tier is granted. Once approved, your permanent membership card will
                     appear here.
                 </p>
-                <a href="{{ route('membership.index') }}" class="ac-btn ac-btn-solid ac-fit">Explore Membership <svg aria-hidden="true"><use href="#ai-plus"/></svg></a>
+                <a href="{{ route('membership.index') }}" class="ac-btn ac-btn-solid ac-fit">Explore Membership <x-icon name="plus" /></a>
             </section>
         @endif
 
@@ -133,7 +133,7 @@
                     @foreach ($steps as $step)
                         <li>
                             @if ($step['done'])
-                                <svg class="ac-ok" aria-hidden="true"><use href="#ai-chk"/></svg>
+                                <x-icon name="check" class="ac-ok" />
                                 <span class="ac-done">{{ $step['label'] }}</span>
                             @else
                                 <span class="ac-num">{{ $loop->iteration }}</span>
@@ -171,7 +171,7 @@
                 <ul class="ac-benefits">
                     @foreach ($benefits as [$icon, $label, $copy])
                         <li>
-                            <svg aria-hidden="true"><use href="#ai-{{ $icon }}"/></svg>
+                            <x-icon :name="['key' => 'key-round'][$icon] ?? $icon" />
                             <div><b>{{ $label }}</b><small>{{ $copy }}</small></div>
                         </li>
                     @endforeach
@@ -185,16 +185,16 @@
             <div class="ac-qa">
                 @if ($state === 'approved')
                     @if ($hasCertificateRoute)
-                        <a href="{{ route('account.certificate') }}" class="ac-btn ac-btn-solid"><svg aria-hidden="true"><use href="#ai-dl"/></svg>Download certificate</a>
+                        <a href="{{ route('account.certificate') }}" class="ac-btn ac-btn-solid"><x-icon name="download" />Download certificate</a>
                     @endif
                     @if (! empty($verifyUrl))
-                        <button type="button" class="ac-btn" data-copy="{{ $verifyUrl }}" data-toast="Verification link copied"><svg aria-hidden="true"><use href="#ai-share"/></svg>Share verification link</button>
+                        <button type="button" class="ac-btn" data-copy="{{ $verifyUrl }}" data-toast="Verification link copied"><x-icon name="share-2" />Share verification link</button>
                     @endif
                 @elseif ($state === 'pending')
-                    <a href="{{ route('membership.track') }}" class="ac-btn ac-btn-solid"><svg aria-hidden="true"><use href="#ai-chk"/></svg>Track application</a>
+                    <a href="{{ route('membership.track') }}" class="ac-btn ac-btn-solid"><x-icon name="check" />Track application</a>
                 @endif
-                <a href="{{ route('inquiries.create') }}" class="ac-btn @if ($state === 'none') ac-btn-solid @endif"><svg aria-hidden="true"><use href="#ai-plus"/></svg>Start confidential inquiry</a>
-                <a href="{{ route('inquiries.track') }}" class="ac-btn"><svg aria-hidden="true"><use href="#ai-msg"/></svg>Track an inquiry</a>
+                <a href="{{ route('inquiries.create') }}" class="ac-btn @if ($state === 'none') ac-btn-solid @endif"><x-icon name="plus" />Start confidential inquiry</a>
+                <a href="{{ route('inquiries.track') }}" class="ac-btn"><x-icon name="message-square" />Track an inquiry</a>
             </div>
         </section>
 
@@ -230,12 +230,12 @@
                 <div class="ac-row">
                     <span>Email verification</span>
                     @if ($verified)
-                        <span class="ac-sw"><svg aria-hidden="true"><use href="#ai-chk"/></svg>Verified</span>
+                        <span class="ac-sw"><x-icon name="check" />Verified</span>
                     @else
                         <a class="ac-link" href="{{ route('verification.notice') }}">Not verified &mdash; verify now</a>
                     @endif
                 </div>
-                <a href="{{ route('account.settings') }}#security" class="ac-btn ac-fit"><svg aria-hidden="true"><use href="#ai-lock"/></svg>Review security</a>
+                <a href="{{ route('account.security') }}" class="ac-btn ac-fit"><x-icon name="lock" />Review security</a>
             </div>
         </section>
     </div>
@@ -268,6 +268,15 @@
                 });
             });
         })();
+        </script>
+        <script>
+            (function () {
+                var g = document.querySelector('[data-greeting]');
+                if (!g) return;
+                var h = new Date().getHours();
+                var part = h < 12 ? 'Good morning' : (h < 18 ? 'Good afternoon' : 'Good evening');
+                g.textContent = part + ', ' + g.dataset.name;
+            })();
         </script>
     </x-slot:scripts>
 </x-account.shell>

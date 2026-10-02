@@ -29,6 +29,14 @@
 
         <x-seo-head :title="$title" :site-setting="$siteSetting" />
 
+        <link rel="manifest" href="{{ asset('manifest.webmanifest') }}">
+        <link rel="apple-touch-icon" href="{{ asset('images/apple-touch-icon.png') }}">
+        <meta name="mobile-web-app-capable" content="yes">
+        <meta name="apple-mobile-web-app-capable" content="yes">
+        <meta name="apple-mobile-web-app-title" content="Underground">
+        <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+        <style>@view-transition { navigation: auto; }</style>
+
         @if (file_exists(public_path('build/manifest.json')) || file_exists(public_path('hot')))
             @fonts
             @vite(['resources/css/app.css', 'resources/js/app.js'])
@@ -41,12 +49,18 @@
             <div class="ac-backdrop" data-ac-close hidden></div>
 
             <aside class="ac-side" id="ac-side" aria-label="Member menu">
+                <span class="ac-grab" aria-hidden="true"></span>
                 <div class="ac-side-head">
                     <a href="{{ route('account.show') }}" class="ac-brand" aria-label="Underground member area">
                         <span class="ac-mono" aria-hidden="true">U</span>
                         <span><b>Underground</b><small>Member Network</small></span>
                     </a>
                     <button type="button" class="ac-iconbtn ac-close" data-ac-close aria-label="Close menu"><x-icon name="x" /></button>
+                </div>
+
+                <div class="ac-sheet-user">
+                    <span class="ac-avatar" aria-hidden="true">{{ $initials }}</span>
+                    <span class="ac-sheet-who"><b>{{ $user?->name }}</b><small>{{ $user?->email }}</small></span>
                 </div>
 
                 <nav aria-label="Member area" class="ac-nav-wrap">
@@ -75,9 +89,9 @@
 
             <div class="ac-main">
                 <header class="ac-mbar">
-                    <button type="button" class="ac-iconbtn" data-ac-open aria-controls="ac-side" aria-expanded="false" aria-label="Open menu"><x-icon name="menu" /></button>
+                    <a href="{{ route('account.show') }}" class="ac-mono ac-mono-sm" aria-label="Underground member area">U</a>
                     <span class="ac-mbar-title">{{ $title }}</span>
-                    <span class="ac-avatar" role="img" aria-label="{{ $user?->name }}">{{ $initials }}</span>
+                    <button type="button" class="ac-avatar ac-avatar-btn" data-ac-open aria-controls="ac-side" aria-expanded="false" aria-label="Open account menu">{{ $initials }}</button>
                 </header>
 
                 <main id="main" tabindex="-1" class="ac-content">
@@ -106,17 +120,45 @@
                 var side = document.getElementById('ac-side');
                 var back = document.querySelector('.ac-backdrop');
                 var openers = document.querySelectorAll('[data-ac-open]');
+                var buzz = function () { if (navigator.vibrate) { try { navigator.vibrate(8); } catch (e) {} } };
+
                 function setOpen(on) {
                     side.classList.toggle('is-open', on);
+                    side.style.transform = '';
                     back.hidden = !on;
                     document.body.classList.toggle('ac-lock', on);
                     openers.forEach(function (b) { b.setAttribute('aria-expanded', on ? 'true' : 'false'); });
-                    if (on) { var first = side.querySelector('a, button'); if (first) first.focus(); }
+                    if (on) { var first = side.querySelector('.ac-nav a'); if (first) first.focus({ preventScroll: true }); }
                 }
-                openers.forEach(function (b) { b.addEventListener('click', function () { setOpen(true); }); });
+
+                openers.forEach(function (b) { b.addEventListener('click', function () { buzz(); setOpen(true); }); });
                 document.querySelectorAll('[data-ac-close]').forEach(function (b) { b.addEventListener('click', function () { setOpen(false); }); });
-                side.querySelectorAll('a').forEach(function (a) { a.addEventListener('click', function () { setOpen(false); }); });
+                side.querySelectorAll('a').forEach(function (a) { a.addEventListener('click', function () { buzz(); setOpen(false); }); });
+                document.querySelectorAll('.ac-tabbar a').forEach(function (a) { a.addEventListener('click', buzz); });
                 document.addEventListener('keydown', function (e) { if (e.key === 'Escape') setOpen(false); });
+
+                // swipe the sheet down to dismiss (mobile)
+                var startY = null, dy = 0;
+                var handle = side.querySelector('.ac-grab');
+                [handle, side.querySelector('.ac-side-head'), side.querySelector('.ac-sheet-user')].forEach(function (el) {
+                    if (!el) return;
+                    el.addEventListener('touchstart', function (e) { startY = e.touches[0].clientY; dy = 0; side.style.transition = 'none'; }, { passive: true });
+                    el.addEventListener('touchmove', function (e) {
+                        if (startY === null) return;
+                        dy = Math.max(0, e.touches[0].clientY - startY);
+                        side.style.transform = 'translateY(' + dy + 'px)';
+                    }, { passive: true });
+                    el.addEventListener('touchend', function () {
+                        if (startY === null) return;
+                        side.style.transition = '';
+                        if (dy > 90) { setOpen(false); } else { side.style.transform = ''; }
+                        startY = null;
+                    });
+                });
+
+                if ('serviceWorker' in navigator && location.protocol === 'https:') {
+                    window.addEventListener('load', function () { navigator.serviceWorker.register('/sw.js').catch(function () {}); });
+                }
             })();
         </script>
 

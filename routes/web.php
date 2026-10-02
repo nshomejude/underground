@@ -31,6 +31,7 @@ use App\Http\Controllers\Auth\LoginController;
 use App\Http\Controllers\Auth\LogoutController;
 use App\Http\Controllers\Auth\RegisterController;
 use App\Http\Controllers\Auth\ResetPasswordController;
+use App\Http\Controllers\Auth\TwoFactorChallengeController;
 use App\Http\Controllers\CapabilityController;
 use App\Http\Controllers\CareersController;
 use App\Http\Controllers\CollaborationController;
@@ -51,6 +52,7 @@ use App\Http\Controllers\ProjectController;
 use App\Http\Controllers\SectorController;
 use App\Http\Controllers\SitemapController;
 use App\Http\Controllers\TeamController;
+use App\Http\Controllers\TwoFactorController;
 use App\Http\Controllers\VerifyController;
 use Illuminate\Support\Facades\Route;
 
@@ -128,6 +130,21 @@ Route::middleware('guest')->group(function (): void {
     Route::post('/reset-password', [ResetPasswordController::class, 'store'])->name('password.update');
 });
 
+// --- Two-factor authentication (TOTP) -------------------------------------
+Route::middleware('guest')->group(function (): void {
+    Route::get('/two-factor-challenge', [TwoFactorChallengeController::class, 'create'])->name('two-factor.challenge');
+    Route::post('/two-factor-challenge', [TwoFactorChallengeController::class, 'store'])->name('two-factor.login');
+});
+Route::middleware('auth')->prefix('account/two-factor')->name('account.two-factor.')->group(function (): void {
+    Route::post('/start', [TwoFactorController::class, 'start'])->middleware('throttle:10,1')->name('start');
+    Route::post('/confirm', [TwoFactorController::class, 'confirm'])->middleware('throttle:5,1')->name('confirm');
+    Route::post('/cancel', [TwoFactorController::class, 'cancel'])->middleware('throttle:10,1')->name('cancel');
+    Route::post('/acknowledge', [TwoFactorController::class, 'acknowledge'])->middleware('throttle:10,1')->name('acknowledge');
+    Route::post('/recovery-codes', [TwoFactorController::class, 'regenerate'])->middleware('throttle:5,1')->name('regenerate');
+    Route::post('/disable', [TwoFactorController::class, 'disable'])->middleware('throttle:5,1')->name('disable');
+});
+// --- end two-factor -------------------------------------------------------
+
 Route::post('/logout', LogoutController::class)
     ->middleware('auth')
     ->name('logout');
@@ -143,7 +160,7 @@ Route::get('/account', [AccountController::class, 'show'])
 // `admin` implies a logged-in user (see EnsureUserIsAdmin's doc block);
 // `auth` is still applied explicitly so a guest is redirected to /login
 // rather than refused outright.
-Route::prefix('admin')->middleware(['auth', 'admin'])->name('admin.')->group(function (): void {
+Route::prefix('admin')->middleware(['auth', 'admin', 'two-factor.admin'])->name('admin.')->group(function (): void {
     Route::get('/', [AdminDashboardController::class, 'index'])->name('index');
 
     Route::get('/applications', [ApplicationReviewController::class, 'index'])->name('applications.index');

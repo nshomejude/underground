@@ -114,4 +114,17 @@ return [
 
     'password_timeout' => env('AUTH_PASSWORD_TIMEOUT', 10800),
 
+    /*
+    |--------------------------------------------------------------------------
+    | Mandatory two-factor for staff administrators
+    |--------------------------------------------------------------------------
+    |
+    | When true (the default) administrators without confirmed two-factor
+    | authentication are redirected to enrolment before reaching /admin.
+    | phpunit.xml turns this off for the legacy admin tests.
+    |
+    */
+
+    'require_admin_two_factor' => env('AUTH_REQUIRE_ADMIN_TWO_FACTOR', true),
+
 ];

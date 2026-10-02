@@ -6,6 +6,7 @@ namespace App\Http\Controllers\Auth;
 
 use App\Http\Controllers\Controller;
 use App\Http\Requests\LoginRequest;
+use App\Models\User;
 use Illuminate\Auth\Events\Lockout;
 use Illuminate\Contracts\View\View;
 use Illuminate\Http\RedirectResponse;
@@ -36,6 +37,25 @@ final class LoginController extends Controller
         }
 
         $credentials = $request->only('email', 'password');
+
+        // Two-factor accounts: verify the password WITHOUT logging in, then hand
+        // off to the challenge. Only the user id, remember flag and a timestamp
+        // are kept in the (regenerated) session.
+        $provider = Auth::guard()->getProvider();
+        $candidate = $provider->retrieveByCredentials($credentials);
+
+        if ($candidate instanceof User && $candidate->hasTwoFactorEnabled() && $provider->validateCredentials($candidate, $credentials)) {
+            RateLimiter::clear($throttleKey);
+
+            $request->session()->regenerate();
+            $request->session()->put(TwoFactorChallengeController::SESSION_KEY, [
+                'id' => $candidate->getKey(),
+                'remember' => $request->boolean('remember'),
+                'at' => now()->getTimestamp(),
+            ]);
+
+            return redirect()->route('two-factor.challenge');
+        }
 
         if (! Auth::attempt($credentials, $request->boolean('remember'))) {
             RateLimiter::hit($throttleKey, 60);

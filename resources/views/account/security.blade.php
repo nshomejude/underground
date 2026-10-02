@@ -42,6 +42,8 @@
             <p class="ac-hint">We email you whenever your password changes, so you can act at once if it was not you.</p>
         </div>
 
+        @include('account.two-factor-panel')
+
         <div class="ac-panel ac-stack">
             <div class="ac-ph">
                 <x-icon name="lock" class="ac-pi" />

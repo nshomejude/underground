@@ -1,0 +1,23 @@
+{
+  "name": "Underground Network — Member Area",
+  "short_name": "Underground",
+  "description": "Your Underground membership card, certificate and member services.",
+  "id": "/account",
+  "start_url": "/account?source=pwa",
+  "scope": "/",
+  "display": "standalone",
+  "orientation": "portrait",
+  "background_color": "#0B0B0C",
+  "theme_color": "#0B0B0C",
+  "categories": ["business", "productivity"],
+  "icons": [
+    { "src": "/images/app-icon-192.png", "sizes": "192x192", "type": "image/png", "purpose": "any" },
+    { "src": "/images/app-icon-512.png", "sizes": "512x512", "type": "image/png", "purpose": "any" },
+    { "src": "/images/app-icon-maskable-512.png", "sizes": "512x512", "type": "image/png", "purpose": "maskable" }
+  ],
+  "shortcuts": [
+    { "name": "Membership card", "url": "/account#card" },
+    { "name": "Certificate", "url": "/account/certificate" },
+    { "name": "Documents", "url": "/account/documents" }
+  ]
+}
