@@ -30,3 +30,4 @@ Thumbs.db
 /design/*.html
 /database/*.sqlite
 .claude/
+storage/framework/views_w*/
