@@ -29,9 +29,9 @@
         <div style="padding-top:34px;">
             @include('emails.partials.button', ['url' => $actionUrl, 'label' => $actionText])
         </div>
-        <p style="margin:22px 0 0 0;font-family:Helvetica,Arial,sans-serif;font-size:13px;line-height:21px;color:#A39E94;text-align:center;word-break:break-all;">
+        <p style="margin:22px 0 0 0;font-family:Helvetica,Arial,sans-serif;font-size:13px;line-height:21px;color:#A39E94;text-align:center;">
             If the button does not work, paste this link into your browser:<br>
-            <a href="{{ $actionUrl }}" style="color:#D9D3C7;">{{ $actionUrl }}</a>
+            <a href="{{ $actionUrl }}" style="color:#D9D3C7;word-break:break-all;">{{ $actionUrl }}</a>
         </p>
     @endif
 
