@@ -40,6 +40,7 @@
             $n = $perLayer[$blk['layer']]++;
             $blocks[$idx] += [
                 'delay' => round($blk['layer'] * 0.9 + $n * 0.09, 2),
+                'out' => round((13 - $idx) * 0.08, 2),
                 'top' => $fmt([[$cx, $cy - $s], [$cx + $w, $cy - $s + $h], [$cx, $cy - $s + 2 * $h], [$cx - $w, $cy - $s + $h]]),
                 'left' => $fmt([[$cx - $w, $cy - $s + $h], [$cx, $cy - $s + 2 * $h], [$cx, $cy + 2 * $h], [$cx - $w, $cy + $h]]),
                 'right' => $fmt([[$cx + $w, $cy - $s + $h], [$cx, $cy - $s + 2 * $h], [$cx, $cy + 2 * $h], [$cx + $w, $cy + $h]]),
@@ -71,7 +72,7 @@
 
                 <ol class="flex flex-col gap-5">
                     @foreach ($tiers as $t => [$label, $text])
-                        <li class="pb-tier flex items-start gap-4 border-l-2 border-gold/60 pl-4" style="--delay: {{ round($t * 0.9 + 1.0, 2) }}s">
+                        <li class="pb-tier flex items-start gap-4 border-l-2 border-gold/60 pl-4" style="--delay: {{ round($t * 0.9 + 1.0, 2) }}s; --out: {{ round((2 - $t) * 0.25, 2) }}s">
                             <span class="min-w-[5.5rem] pt-0.5 text-[11px] font-semibold uppercase tracking-[0.2em] text-gold">{{ $label }}</span>
                             <span class="text-sm leading-relaxed text-body">{{ $text }}</span>
                         </li>
@@ -91,7 +92,7 @@
                     <g class="pb-scene">
                         @foreach ($blocks as $blk)
                             @php $c = $palette[$blk['layer']]; @endphp
-                            <g class="pb-block" style="--delay: {{ $blk['delay'] }}s">
+                            <g class="pb-block" style="--delay: {{ $blk['delay'] }}s; --out: {{ $blk['out'] }}s">
                                 @if ($blk['layer'] === 2)
                                     <ellipse class="pb-glow" cx="{{ round($blk['cx'], 1) }}" cy="{{ round($blk['capY'], 1) }}" rx="130" ry="70" fill="url(#pb-halo)" />
                                 @endif

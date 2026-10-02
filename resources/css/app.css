@@ -274,6 +274,45 @@
     animation-delay: 2.9s;
 }
 
+@keyframes pb-lift {
+    0% {
+        opacity: 1;
+        transform: translateY(0);
+    }
+
+    100% {
+        opacity: 0;
+        transform: translateY(-260px);
+    }
+}
+
+@keyframes pb-tier-out {
+    from {
+        opacity: 1;
+        transform: none;
+    }
+
+    to {
+        opacity: 0.28;
+        transform: translateX(-6px);
+    }
+}
+
+.is-leaving .pb-block {
+    animation: pb-lift 0.55s cubic-bezier(0.5, 0, 0.9, 0.4) forwards;
+    animation-delay: var(--out, 0s);
+}
+
+.is-leaving .pb-tier {
+    animation: pb-tier-out 0.5s ease forwards;
+    animation-delay: var(--out, 0s);
+}
+
+.is-leaving .pb-glow {
+    opacity: 0;
+    animation: none;
+}
+
 @media (prefers-reduced-motion: reduce) {
     .pb-scene,
     .pb-glow,

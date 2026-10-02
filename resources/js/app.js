@@ -106,28 +106,52 @@ document.addEventListener('DOMContentLoaded', () => {
     });
 });
 
-// Building-blocks animation: armed (blocks hidden) only when motion is allowed
-// and the screen is tablet-sized or larger, then played once when scrolled into view.
+// Building-blocks animation: builds, holds, dismantles and rebuilds in a loop
+// while the section is on screen. Static for visitors who prefer reduced motion.
 document.addEventListener('DOMContentLoaded', () => {
     document.querySelectorAll('[data-power-blocks]').forEach((root) => {
-        const reduce = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
-        const small = window.matchMedia('(max-width: 639px)').matches;
-
-        if (reduce || small || !('IntersectionObserver' in window)) {
+        if (window.matchMedia('(prefers-reduced-motion: reduce)').matches || !('IntersectionObserver' in window)) {
             return;
         }
 
+        const BUILD_MS = 4200; // blocks drop in and the glow starts
+        const HOLD_MS = 4200; // finished pyramid on display
+        const LEAVE_MS = 2200; // blocks lift away, capstone first
+        let timers = [];
+        let running = false;
+
+        const later = (fn, ms) => timers.push(setTimeout(fn, ms));
+        const clear = () => {
+            timers.forEach(clearTimeout);
+            timers = [];
+        };
+
+        const cycle = () => {
+            root.classList.remove('is-leaving', 'is-playing');
+            root.classList.add('is-armed');
+            void root.offsetWidth; // restart the CSS animations from the hidden state
+            root.classList.add('is-playing');
+
+            later(() => {
+                root.classList.remove('is-playing');
+                root.classList.add('is-leaving');
+            }, BUILD_MS + HOLD_MS);
+
+            later(cycle, BUILD_MS + HOLD_MS + LEAVE_MS);
+        };
+
         root.classList.add('is-armed');
 
-        const observer = new IntersectionObserver((entries) => {
+        new IntersectionObserver((entries) => {
             entries.forEach((entry) => {
-                if (entry.isIntersecting) {
-                    root.classList.add('is-playing');
-                    observer.disconnect();
+                if (entry.isIntersecting && !running) {
+                    running = true;
+                    cycle();
+                } else if (!entry.isIntersecting && running) {
+                    running = false;
+                    clear();
                 }
             });
-        }, { threshold: 0.35 });
-
-        observer.observe(root);
+        }, { threshold: 0.25 }).observe(root);
     });
 });
