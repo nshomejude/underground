@@ -79,6 +79,10 @@
             </div>
 
             <div class="border-t border-hairline pt-4">
+                <x-admin.checkbox-field name="globe_atlas_enabled" label="Interactive globe atlas on the Global Reach page" :checked="$setting->globeAtlasEnabled" />
+            </div>
+
+            <div class="border-t border-hairline pt-4">
                 <x-admin.checkbox-field name="blocks_animation_enabled" label="&quot;Power is built, block by block&quot; building-blocks animation on the home page" :checked="$setting->blocksAnimationEnabled" />
             </div>
         </fieldset>

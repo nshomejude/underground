@@ -11,7 +11,9 @@
                     {{ $narrative->reachBody }}
                 </p>
 
-                <x-reach-map />
+                @unless (app(\Domain\Content\Repositories\SiteSettingRepository::class)->current()->globeAtlasEnabled)
+                    <x-reach-map />
+                @endunless
             </div>
 
             <div class="flex flex-col gap-px self-start border border-border bg-border">
@@ -63,6 +65,8 @@
         </div>
     </section>
     </div>
+
+    <x-globe-atlas :offices="$offices" />
 
     <x-value-grid
         tone="surface"

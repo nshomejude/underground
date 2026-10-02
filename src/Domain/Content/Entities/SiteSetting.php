@@ -30,6 +30,7 @@ final readonly class SiteSetting
         public bool $gearAnimationEnabled = true,
         public bool $networkAnimationEnabled = true,
         public bool $blocksAnimationEnabled = true,
+        public bool $globeAtlasEnabled = true,
     ) {}
 
     public function toArray(): array
@@ -51,6 +52,7 @@ final readonly class SiteSetting
             'gear_animation_enabled' => $this->gearAnimationEnabled,
             'network_animation_enabled' => $this->networkAnimationEnabled,
             'blocks_animation_enabled' => $this->blocksAnimationEnabled,
+            'globe_atlas_enabled' => $this->globeAtlasEnabled,
         ];
     }
 }

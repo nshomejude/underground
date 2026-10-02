@@ -155,3 +155,12 @@ document.addEventListener('DOMContentLoaded', () => {
         }, { threshold: 0.25 }).observe(root);
     });
 });
+
+// Global Reach globe atlas: loaded on demand, only where the section exists.
+document.addEventListener('DOMContentLoaded', () => {
+    const root = document.querySelector('[data-globe]');
+
+    if (root) {
+        import('./globe.js').then((m) => m.initGlobe(root)).catch(() => {});
+    }
+});

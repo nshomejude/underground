@@ -74,6 +74,7 @@ final class EloquentSiteSettingRepository implements SiteSettingRepository
             'gear_animation_enabled' => $setting->gearAnimationEnabled,
             'network_animation_enabled' => $setting->networkAnimationEnabled,
             'blocks_animation_enabled' => $setting->blocksAnimationEnabled,
+            'globe_atlas_enabled' => $setting->globeAtlasEnabled,
         ])->save();
     }
 
@@ -96,6 +97,7 @@ final class EloquentSiteSettingRepository implements SiteSettingRepository
             gearAnimationEnabled: (bool) ($record->gear_animation_enabled ?? true),
             networkAnimationEnabled: (bool) ($record->network_animation_enabled ?? true),
             blocksAnimationEnabled: (bool) ($record->blocks_animation_enabled ?? true),
+            globeAtlasEnabled: (bool) ($record->globe_atlas_enabled ?? true),
         );
     }
 }

@@ -50,4 +50,18 @@ final class MotionBackgroundsTest extends TestCase
 
         $this->get('/')->assertOk()->assertDontSee('data-power-blocks', false);
     }
+
+    public function test_the_globe_atlas_renders_on_global_reach_and_can_be_switched_off(): void
+    {
+        $this->seed();
+
+        $this->get('/global-reach')->assertOk()
+            ->assertSee('data-globe', false)
+            ->assertSee('Washington, D.C.')
+            ->assertSee('-77.0369', false);
+
+        SiteSettingRecord::query()->update(['globe_atlas_enabled' => false]);
+
+        $this->get('/global-reach')->assertOk()->assertDontSee('data-globe-canvas', false);
+    }
 }

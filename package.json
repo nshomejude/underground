@@ -15,5 +15,10 @@
     },
     "optionalDependencies": {
         "@laravel/multiplex": "^0.4.1"
+    },
+    "dependencies": {
+        "d3-geo": "^3.1.1",
+        "topojson-client": "^3.1.0",
+        "world-atlas": "^2.0.2"
     }
 }

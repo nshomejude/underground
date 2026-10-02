@@ -35,6 +35,7 @@ final class SiteSettingRequest extends FormRequest
             'gear_animation_enabled' => ['sometimes', 'boolean'],
             'network_animation_enabled' => ['sometimes', 'boolean'],
             'blocks_animation_enabled' => ['sometimes', 'boolean'],
+            'globe_atlas_enabled' => ['sometimes', 'boolean'],
         ];
     }
 }

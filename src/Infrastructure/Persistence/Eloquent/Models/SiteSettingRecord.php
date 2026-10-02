@@ -19,5 +19,6 @@ final class SiteSettingRecord extends Model
         'gear_animation_enabled' => 'boolean',
         'network_animation_enabled' => 'boolean',
         'blocks_animation_enabled' => 'boolean',
+        'globe_atlas_enabled' => 'boolean',
     ];
 }
