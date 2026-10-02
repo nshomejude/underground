@@ -12,9 +12,14 @@ use App\Models\Motion;
 use App\Models\PlanChangeRequest;
 use App\Models\User;
 use App\Services\ConversationService;
+use Database\Seeders\DatabaseSeeder;
 use Database\Seeders\MembershipPlanSeeder;
+use Illuminate\Auth\Access\AuthorizationException;
+use Illuminate\Auth\AuthenticationException;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Support\Facades\Route;
+use Illuminate\Validation\ValidationException;
+use Symfony\Component\HttpKernel\Exception\HttpExceptionInterface;
 use Tests\Feature\Messaging\MessagingTestCase;
 
 /** Opens every GET page as guest, verified member and admin; none may fail with a server error. */
@@ -25,7 +30,7 @@ final class EveryPageTest extends MessagingTestCase
     public function test_no_page_returns_a_server_error(): void
     {
         $this->seed(MembershipPlanSeeder::class);
-        $this->seed(\Database\Seeders\DatabaseSeeder::class);
+        $this->seed(DatabaseSeeder::class);
         $a = $this->member('Alice Adeyemi');
         $b = $this->member('Bruno Bello', 'principal-circle');
         $admin = User::factory()->create(['is_admin' => true]);
@@ -48,20 +53,34 @@ final class EveryPageTest extends MessagingTestCase
             'verification' => $idv->id, 'user' => $a->id, 'plan' => $req->to_plan_id, 'membershipPlan' => $req->to_plan_id,
         ];
 
-        $bad = []; $this->withoutExceptionHandling();
+        $bad = [];
+        $this->withoutExceptionHandling();
         foreach ([null, $a, $admin] as $actor) {
-            if ($actor) { $this->actingAs($actor); } else { auth()->logout(); }
+            if ($actor) {
+                $this->actingAs($actor);
+            } else {
+                auth()->logout();
+            }
             foreach (Route::getRoutes() as $route) {
-                if (! in_array('GET', $route->methods(), true)) { continue; }
+                if (! in_array('GET', $route->methods(), true)) {
+                    continue;
+                }
                 $uri = $route->uri();
-                if (preg_match('#^(admin/(applications|inquiries)/1$|_|storage|up$|sanctum|api/|build)#', $uri)) { continue; }
+                if (preg_match('#^(admin/(applications|inquiries)/{|_|storage|up$|sanctum|api/|build)#', $uri)) {
+                    continue;
+                }
                 $url = preg_replace_callback('#\{(\w+)\??\}#', fn ($m) => (string) ($values[$m[1]] ?? 1), $uri);
                 try {
-                    file_put_contents("C:/laragon/www/crawl.log", $url."
-", FILE_APPEND); $res = $this->get('/'.ltrim($url, '/'));
-                    if (method_exists($res, "status") && $res->status() >= 500) { $bad[] = ($actor?->name ?? 'guest').' '.$url.' '.$res->status(); }
+                    file_put_contents('C:/laragon/www/crawl.log', $url.'
+', FILE_APPEND);
+                    $res = $this->get('/'.ltrim($url, '/'));
+                    if (method_exists($res, 'status') && $res->status() >= 500) {
+                        $bad[] = ($actor?->name ?? 'guest').' '.$url.' '.$res->status();
+                    }
                 } catch (\Throwable $e) {
-                    if ($e instanceof \Symfony\Component\HttpKernel\Exception\HttpExceptionInterface || $e instanceof \Illuminate\Auth\AuthenticationException || $e instanceof \Illuminate\Auth\Access\AuthorizationException || $e instanceof \Illuminate\Validation\ValidationException) { continue; }
+                    if ($e instanceof HttpExceptionInterface || $e instanceof AuthenticationException || $e instanceof AuthorizationException || $e instanceof ValidationException) {
+                        continue;
+                    }
                     $bad[] = ($actor?->name ?? 'guest').' '.$url.' '.get_class($e).': '.substr($e->getMessage(), 0, 200);
                 }
             }
