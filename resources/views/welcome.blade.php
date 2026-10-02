@@ -156,33 +156,45 @@
     {{-- Sectors --}}
     <section id="sectors" class="scroll-mt-20 border-b border-border bg-ink">
         <div class="mx-auto max-w-7xl px-4 py-16 sm:px-6 lg:px-8 lg:py-24">
-            <x-section-heading eyebrow="Where We Operate">
-                {{ $narrative->sectorsHeading }}
-            </x-section-heading>
+            <div class="flex flex-col gap-6 sm:flex-row sm:items-end sm:justify-between">
+                <x-section-heading eyebrow="Where We Operate" class="max-w-2xl">
+                    {{ $narrative->sectorsHeading }}
+                </x-section-heading>
 
-            <div class="mt-10 grid grid-cols-2 tile-grid sm:grid-cols-3 lg:grid-cols-6">
-                @foreach ($sectors as $sector)
-                    <a
-                        href="{{ route('sectors.show', $sector->slug->value) }}"
-                        class="group flex aspect-square flex-col justify-between bg-gradient-to-b from-surface to-ink p-4 transition-colors hover:from-surface-raised"
-                    >
-                        <span class="flex h-14 w-14 items-center justify-center border border-gold text-gold">
-                            <x-icon name="{{ $sector->motif }}" class="h-7 w-7" />
-                        </span>
-                        <p class="text-xs font-semibold uppercase leading-snug tracking-wide text-cream group-hover:text-gold">
-                            @foreach ($sector->nameLines() as $line)
-                                {{ $line }}@if (!$loop->last)<br>@endif
-                            @endforeach
-                        </p>
-                    </a>
-                @endforeach
-            </div>
-
-            <div class="mt-8">
-                <a href="{{ route('sectors.index') }}" class="inline-flex items-center gap-2 text-xs font-semibold uppercase tracking-widest text-gold hover:text-gold-bright">
+                <a href="{{ route('sectors.index') }}" class="inline-flex shrink-0 items-center gap-2 text-xs font-semibold uppercase tracking-widest text-gold hover:text-gold-bright">
                     View All Sectors
                     <x-icon name="chevron-right" class="h-3.5 w-3.5" />
                 </a>
+            </div>
+
+            <div class="mt-12 grid grid-cols-1 tile-grid sm:grid-cols-2 lg:grid-cols-3">
+                @foreach ($sectors as $sector)
+                    <a
+                        href="{{ route('sectors.show', $sector->slug->value) }}"
+                        class="group relative flex flex-col gap-6 overflow-hidden bg-surface p-7 transition-colors duration-200 hover:bg-surface-raised lg:p-8"
+                    >
+                        <span class="absolute inset-x-0 top-0 h-0.5 origin-left scale-x-0 bg-gold transition-transform duration-300 group-hover:scale-x-100" aria-hidden="true"></span>
+
+                        <div class="flex items-start justify-between">
+                            <span class="flex h-14 w-14 items-center justify-center border border-gold text-gold transition-colors duration-200 group-hover:bg-gold group-hover:text-onlight">
+                                <x-icon name="{{ $sector->motif }}" class="h-7 w-7" />
+                            </span>
+                            <span class="font-serif text-sm font-semibold text-muted">{{ str_pad((string) $loop->iteration, 2, '0', STR_PAD_LEFT) }}</span>
+                        </div>
+
+                        <div class="flex flex-col gap-2">
+                            <h3 class="font-serif text-xl font-semibold leading-snug text-cream transition-colors group-hover:text-gold">
+                                {{ $sector->name }}
+                            </h3>
+                            <p class="text-sm leading-relaxed text-body">{{ $sector->summary }}</p>
+                        </div>
+
+                        <span class="mt-auto inline-flex items-center gap-2 text-xs font-semibold uppercase tracking-widest text-gold">
+                            Explore
+                            <x-icon name="arrow-right" class="h-3.5 w-3.5 transition-transform duration-200 group-hover:translate-x-1" />
+                        </span>
+                    </a>
+                @endforeach
             </div>
         </div>
     </section>
