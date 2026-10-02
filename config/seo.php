@@ -71,7 +71,7 @@ return [
     'noindex' => [
         'register', 'login', 'password.request', 'password.reset', 'password.email', 'password.update',
         'verification.notice', 'verification.verify', 'verification.send',
-        'account.show', 'account.settings', 'account.certificate', 'verify.show', 'inquiries.track', 'membership.track', 'membership.apply',
+        'account.show', 'account.settings', 'account.security', 'account.applications', 'account.documents', 'account.certificate', 'verify.show', 'inquiries.track', 'membership.track', 'membership.apply',
     ],
 
     // Human labels for breadcrumb trails, keyed by URL segment.

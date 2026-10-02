@@ -87,7 +87,7 @@ final class AccountSettingsController extends Controller
             report($e);
         }
 
-        return redirect()->route('account.settings')->with('status', 'Your password has been changed.');
+        return redirect()->route('account.security')->with('status', 'Your password has been changed.');
     }
 
     public function destroy(Request $request): RedirectResponse

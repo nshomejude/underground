@@ -79,7 +79,7 @@ final class OnboardingGapsTest extends TestCase
             'current_password' => 'old-password-123',
             'password' => 'brand-new-password-456',
             'password_confirmation' => 'brand-new-password-456',
-        ])->assertRedirect(route('account.settings'));
+        ])->assertRedirect(route('account.security'));
 
         Notification::assertSentTo($user, PasswordChangedNotification::class);
     }

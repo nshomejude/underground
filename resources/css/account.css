@@ -177,12 +177,79 @@
 }
 
 .ac-nav svg,
-.ac-foot-link svg {
-    width: 18px;
-    height: 18px;
-    stroke: currentColor;
-    fill: none;
-    stroke-width: 1.5;
+.ac-foot-link svg,
+.ac-signout svg {
+    width: 19px;
+    height: 19px;
+    flex: none;
+    stroke-width: 1.75;
+}
+
+.ac-nav form {
+    display: block;
+}
+
+.ac-signout {
+    display: flex;
+    align-items: center;
+    gap: 14px;
+    width: 100%;
+    min-height: 44px;
+    padding: 0 14px;
+    background: none;
+    border: 0;
+    border-left: 2px solid transparent;
+    color: var(--ac-body);
+    font: 500 15px var(--font-sans, system-ui, sans-serif);
+    cursor: pointer;
+    text-align: left;
+    transition: background 0.2s, color 0.2s;
+}
+
+.ac-signout:hover {
+    background: var(--ac-raised);
+    color: var(--ac-cream);
+}
+
+.ac-side-head {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    border-bottom: 1px solid var(--ac-border);
+}
+
+.ac-side-head .ac-brand {
+    border-bottom: 0;
+    flex: 1;
+    min-width: 0;
+}
+
+.ac-close,
+.ac-backdrop,
+.ac-tabbar {
+    display: none;
+}
+
+.ac-iconbtn {
+    display: grid;
+    width: 44px;
+    height: 44px;
+    place-items: center;
+    flex: none;
+    background: none;
+    border: 0;
+    color: var(--ac-body);
+    cursor: pointer;
+}
+
+.ac-iconbtn svg {
+    width: 22px;
+    height: 22px;
+    stroke-width: 1.75;
+}
+
+.ac-iconbtn:hover {
+    color: var(--ac-gold-b);
 }
 
 .ac-foot {
@@ -904,53 +971,55 @@
         display: block;
     }
 
-    .ac-brand,
-    .ac-foot,
-    .ac-hide-m {
+    /* the same full menu, as an off-canvas drawer */
+    .ac-side {
+        position: fixed;
+        inset: 0 auto 0 0;
+        z-index: 70;
+        width: min(86vw, 340px);
+        height: 100dvh;
+        padding: 0 0 env(safe-area-inset-bottom);
+        border-right: 1px solid var(--ac-border);
+        transform: translateX(-102%);
+        visibility: hidden;
+        transition: transform 0.3s cubic-bezier(0.2, 0.7, 0.2, 1), visibility 0s linear 0.3s;
+        box-shadow: 0 0 60px rgb(0 0 0 / 0.6);
+    }
+
+    .ac-side.is-open {
+        transform: none;
+        visibility: visible;
+        transition: transform 0.3s cubic-bezier(0.2, 0.7, 0.2, 1), visibility 0s;
+    }
+
+    .ac-side-head {
+        padding-top: max(20px, env(safe-area-inset-top));
+        padding-right: 8px;
+    }
+
+    .ac-side-head .ac-brand {
+        padding: 0 0 20px 20px;
+    }
+
+    .ac-close {
+        display: grid;
+        margin-bottom: 14px;
+    }
+
+    .ac-backdrop {
+        position: fixed;
+        inset: 0;
+        z-index: 65;
+        display: block;
+        background: rgb(0 0 0 / 0.66);
+    }
+
+    .ac-backdrop[hidden] {
         display: none;
     }
 
-    .ac-side {
-        position: fixed;
-        inset: auto 0 0 0;
-        z-index: 50;
-        height: auto;
-        padding: 0 0 env(safe-area-inset-bottom);
-        border-right: 0;
-        border-top: 1px solid var(--ac-border);
-        overflow: visible;
-    }
-
-    .ac-nav-wrap {
-        padding: 0;
-    }
-
-    .ac-nav {
-        flex-direction: row;
-        gap: 0;
-    }
-
-    .ac-nav li {
-        flex: 1 1 0;
-        min-width: 0;
-    }
-
-    .ac-nav a {
-        flex-direction: column;
-        justify-content: center;
-        gap: 3px;
-        min-height: 60px;
-        padding: 6px 2px;
-        border-left: 0;
-        border-top: 2px solid transparent;
-        font-size: 12px;
-        letter-spacing: 0;
-        text-align: center;
-    }
-
-    .ac-nav a[aria-current='page'] {
-        border-top-color: var(--ac-gold);
-        background: var(--ac-raised);
+    body.ac-lock {
+        overflow: hidden;
     }
 
     .ac-mbar {
@@ -959,10 +1028,10 @@
         z-index: 40;
         display: flex;
         align-items: center;
-        gap: 12px;
+        gap: 8px;
         min-height: 56px;
-        padding: 8px 16px;
-        padding-top: max(8px, env(safe-area-inset-top));
+        padding: 6px 16px 6px 6px;
+        padding-top: max(6px, env(safe-area-inset-top));
         background: rgba(23, 22, 26, 0.96);
         border-bottom: 1px solid var(--ac-border);
         backdrop-filter: blur(8px);
@@ -989,27 +1058,46 @@
         color: var(--ac-gold-b);
     }
 
-    .ac-mbar-out {
-        display: block;
+    /* quick-link bottom bar */
+    .ac-tabbar {
+        position: fixed;
+        inset: auto 0 0 0;
+        z-index: 50;
+        display: flex;
+        padding-bottom: env(safe-area-inset-bottom);
+        background: var(--ac-surface);
+        border-top: 1px solid var(--ac-border);
     }
 
-    .ac-mbar-out button {
-        width: 44px;
-        height: 44px;
-        display: grid;
-        place-items: center;
+    .ac-tabbar a,
+    .ac-tabbar button {
+        flex: 1 1 0;
+        min-width: 0;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        gap: 3px;
+        min-height: 60px;
+        padding: 6px 2px;
         background: none;
         border: 0;
+        border-top: 2px solid transparent;
         color: var(--ac-body);
+        font: 500 12px var(--font-sans, system-ui, sans-serif);
         cursor: pointer;
     }
 
-    .ac-mbar-out svg {
-        width: 20px;
-        height: 20px;
-        stroke: currentColor;
-        fill: none;
-        stroke-width: 1.5;
+    .ac-tabbar svg {
+        width: 21px;
+        height: 21px;
+        stroke-width: 1.75;
+    }
+
+    .ac-tabbar a[aria-current='page'] {
+        border-top-color: var(--ac-gold);
+        background: var(--ac-raised);
+        color: var(--ac-gold-b);
     }
 
     .ac-content {

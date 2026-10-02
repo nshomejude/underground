@@ -1,8 +1,11 @@
 <?php
 
 use App\Http\Controllers\AboutController;
+use App\Http\Controllers\AccountApplicationsController;
 use App\Http\Controllers\AccountCertificateController;
 use App\Http\Controllers\AccountController;
+use App\Http\Controllers\AccountDocumentsController;
+use App\Http\Controllers\AccountSecurityController;
 use App\Http\Controllers\AccountSettingsController;
 use App\Http\Controllers\Admin\AdminDashboardController;
 use App\Http\Controllers\Admin\ApplicationReviewController;
@@ -189,6 +192,9 @@ Route::prefix('admin')->middleware(['auth', 'admin'])->name('admin.')->group(fun
 
 Route::middleware('auth')->group(function (): void {
     Route::get('/account/certificate', [AccountCertificateController::class, 'show'])->name('account.certificate');
+    Route::get('/account/applications', AccountApplicationsController::class)->name('account.applications');
+    Route::get('/account/documents', AccountDocumentsController::class)->name('account.documents');
+    Route::get('/account/security', AccountSecurityController::class)->name('account.security');
     Route::get('/account/settings', [AccountSettingsController::class, 'edit'])->name('account.settings');
     Route::post('/account/settings', [AccountSettingsController::class, 'update'])->name('account.settings.update');
     Route::post('/account/settings/password', [AccountSettingsController::class, 'updatePassword'])->name('account.settings.password');

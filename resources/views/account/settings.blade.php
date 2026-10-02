@@ -87,80 +87,16 @@
             </form>
         </div>
 
-        <div class="ac-panel ac-stack" id="security">
+        <div class="ac-panel ac-stack">
             <div class="ac-ph">
-                <x-icon name="lock" class="ac-pi" />
-                <h3 class="ac-h3">Password</h3>
+                <x-icon name="shield-check" class="ac-pi" />
+                <h3 class="ac-h3">Password &amp; security</h3>
             </div>
-
-            <p class="ac-lead">
-                You will stay signed in on this device after changing your password.
-            </p>
-
-            <form method="POST" action="{{ route('account.settings.password') }}" novalidate class="ac-stack">
-                @csrf
-
-                <div class="ac-field">
-                    <label for="password_current_password" class="ac-label">
-                        Current Password <span class="text-gold" aria-hidden="true">*</span>
-                        <span class="sr-only">required</span>
-                    </label>
-                    <input
-                        type="password"
-                        id="password_current_password"
-                        name="current_password"
-                        required
-                        aria-required="true"
-                        autocomplete="current-password"
-                        @if ($errors->updatePassword->has('current_password')) aria-invalid="true" aria-describedby="password_current_password-error" @endif
-                        class="ac-input"
-                    >
-                    @error('current_password', 'updatePassword')
-                        <p id="password_current_password-error" class="ac-err">{{ $message }}</p>
-                    @enderror
-                </div>
-
-                <div class="ac-field">
-                    <label for="password" class="ac-label">
-                        New Password <span class="text-gold" aria-hidden="true">*</span>
-                        <span class="sr-only">required</span>
-                    </label>
-                    <input
-                        type="password"
-                        id="password"
-                        name="password"
-                        required
-                        aria-required="true"
-                        autocomplete="new-password"
-                        @if ($errors->updatePassword->has('password')) aria-invalid="true" aria-describedby="password-error" @endif
-                        class="ac-input"
-                    >
-                    @error('password', 'updatePassword')
-                        <p id="password-error" class="ac-err">{{ $message }}</p>
-                    @enderror
-                </div>
-
-                <div class="ac-field">
-                    <label for="password_confirmation" class="ac-label">
-                        Confirm New Password <span class="text-gold" aria-hidden="true">*</span>
-                        <span class="sr-only">required</span>
-                    </label>
-                    <input
-                        type="password"
-                        id="password_confirmation"
-                        name="password_confirmation"
-                        required
-                        aria-required="true"
-                        autocomplete="new-password"
-                        class="ac-input"
-                    >
-                </div>
-
-                <button type="submit" class="ac-btn ac-fit">
-                    Change Password
-                    <x-icon name="lock" class="ac-bi" />
-                </button>
-            </form>
+            <p class="ac-lead">Change your password, check your email verification and manage your account on the Security page.</p>
+            <a href="{{ route('account.security') }}" class="ac-btn ac-fit">
+                Open Security
+                <x-icon name="chevron-right" class="ac-bi" />
+            </a>
         </div>
 
         <a href="{{ route('account.show') }}" class="ac-link ac-back">
@@ -168,32 +104,5 @@
             Back to My Account
         </a>
 
-        <div class="ac-panel ac-stack ac-danger">
-            <div class="ac-ph">
-                <x-icon name="x" class="ac-pi ac-pi-danger" />
-                <h3 class="ac-h3">Delete account</h3>
-            </div>
-
-            <p class="ac-lead">
-                This permanently removes your account and signs you out. Any membership application you submitted is kept on file by the firm for its own records. This cannot be undone.
-            </p>
-
-            <form method="POST" action="{{ route('account.destroy') }}" novalidate class="ac-stack" onsubmit="return confirm('Delete your account permanently?');">
-                @csrf
-                @method('DELETE')
-
-                <div class="ac-field">
-                    <label for="delete_current_password" class="ac-label">Confirm with your password</label>
-                    <input type="password" id="delete_current_password" name="current_password" required autocomplete="current-password" class="ac-input">
-                    @error('current_password', 'deleteAccount')
-                        <p class="ac-err">{{ $message }}</p>
-                    @enderror
-                </div>
-
-                <button type="submit" class="ac-btn ac-btn-danger ac-fit">
-                    Delete My Account
-                </button>
-            </form>
-        </div>
     </div>
 </x-account.shell>

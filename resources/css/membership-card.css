@@ -1,0 +1,515 @@
+/*
+ * Underground membership card.
+ *
+ * An ID-1 (85.6 x 54 mm, 1.586:1) credential rendered as a physical object.
+ * Everything is sized in container-query units (cqw = 1% of the card's own
+ * width) so the card scales as one piece at any width, with a floor on text
+ * so it stays legible on a phone. Three tiers share one chassis and differ
+ * by finish: Sovereign (platinum), Principal (gold), Corporate (bronze).
+ */
+
+.mc {
+    container-type: inline-size;
+}
+
+/* -- finishes -------------------------------------------------------------- */
+
+.mc-tier-sovereign {
+    --mc-foil-a: #7d7a73;
+    --mc-foil-b: #fbf8f1;
+    --mc-foil-c: #c9c4b8;
+    --mc-accent: #f3efe6;
+    --mc-edge: 201 196 184;
+    --mc-base-1: #24222a;
+    --mc-base-2: #0c0b0e;
+}
+
+.mc-tier-principal {
+    --mc-foil-a: #6b5427;
+    --mc-foil-b: #fff1c9;
+    --mc-foil-c: #c9a25a;
+    --mc-accent: #e0be7e;
+    --mc-edge: 201 162 90;
+    --mc-base-1: #232126;
+    --mc-base-2: #101012;
+}
+
+.mc-tier-corporate {
+    --mc-foil-a: #5d4630;
+    --mc-foil-b: #f0d9b8;
+    --mc-foil-c: #b98d5a;
+    --mc-accent: #dcb27c;
+    --mc-edge: 185 141 90;
+    --mc-base-1: #211f1f;
+    --mc-base-2: #0f0e0e;
+}
+
+/* -- faces ----------------------------------------------------------------- */
+
+.mc-face {
+    position: absolute;
+    inset: 0;
+    overflow: hidden;
+    border-radius: 3.4cqw;
+    background:
+        radial-gradient(120% 100% at 10% 0%, rgb(var(--mc-edge) / 0.16), transparent 52%),
+        linear-gradient(135deg, var(--mc-base-1) 0%, var(--mc-base-2) 62%, #181613 100%);
+    box-shadow:
+        0 3.5cqw 7cqw -2cqw rgb(0 0 0 / 0.85),
+        0 1cqw 2.4cqw -1cqw rgb(0 0 0 / 0.7);
+    backface-visibility: hidden;
+    -webkit-backface-visibility: hidden;
+}
+
+.mc-face.is-back {
+    transform: rotateY(180deg);
+}
+
+/* animated foil edge: a 1px moving gradient ring */
+.mc-face::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    padding: 1.5px;
+    border-radius: inherit;
+    background: linear-gradient(110deg, var(--mc-foil-a), var(--mc-foil-c), var(--mc-foil-b), var(--mc-foil-c), var(--mc-foil-a));
+    background-size: 260% 100%;
+    animation: mc-foil 7s linear infinite;
+    -webkit-mask: linear-gradient(#000 0 0) content-box, linear-gradient(#000 0 0);
+    -webkit-mask-composite: xor;
+    mask-composite: exclude;
+    pointer-events: none;
+    z-index: 5;
+}
+
+/* slow glossy sweep */
+.mc-face::after {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(105deg, transparent 40%, rgb(255 240 205 / 0.13) 50%, transparent 60%);
+    background-size: 260% 100%;
+    animation: mc-sheen 6s ease-in-out infinite;
+    pointer-events: none;
+    z-index: 4;
+}
+
+@keyframes mc-foil {
+    to {
+        background-position: -260% 0;
+    }
+}
+
+@keyframes mc-sheen {
+    0% {
+        background-position: 150% 0;
+    }
+
+    60%,
+    100% {
+        background-position: -110% 0;
+    }
+}
+
+.mc-guilloche {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    color: var(--mc-accent);
+    opacity: 0.1;
+    pointer-events: none;
+}
+
+.mc-motif {
+    position: absolute;
+    right: -6cqw;
+    top: -6cqw;
+    width: 34cqw;
+    height: 34cqw;
+    color: var(--mc-accent);
+    opacity: 0.12;
+    pointer-events: none;
+}
+
+/* -- front layout ---------------------------------------------------------- */
+
+.mc-front,
+.mc-back {
+    position: relative;
+    z-index: 3;
+    display: grid;
+    height: 100%;
+    filter: brightness(calc(1 - (var(--uv, 0) * 0.5))) saturate(calc(1 - (var(--uv, 0) * 0.6)));
+    transition: filter 0.7s;
+}
+
+.mc-front {
+    grid-template-rows: auto 1fr auto;
+    padding: 5.2cqw 6cqw 5.6cqw;
+    row-gap: 2cqw;
+}
+
+.mc-row {
+    display: flex;
+    align-items: flex-start;
+    justify-content: space-between;
+    gap: 3cqw;
+}
+
+.mc-chip {
+    display: inline-flex;
+    align-items: center;
+    gap: 1.6cqw;
+    min-width: 0;
+    border: 1px solid rgb(var(--mc-edge) / 0.75);
+    padding: 1.1cqw 2.4cqw;
+    color: var(--mc-accent);
+    font-size: clamp(9.5px, 2.15cqw, 12px);
+    font-weight: 600;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    white-space: nowrap;
+}
+
+.mc-chip svg {
+    flex: none;
+    width: clamp(11px, 2.7cqw, 15px);
+    height: clamp(11px, 2.7cqw, 15px);
+}
+
+.mc-mono {
+    display: grid;
+    flex: none;
+    place-items: center;
+    width: 8cqw;
+    height: 8cqw;
+    border: 1px solid rgb(var(--mc-edge) / 0.8);
+    color: var(--mc-accent);
+    font: 600 4.4cqw/1 var(--font-serif);
+}
+
+.mc-id {
+    display: block;
+    margin-bottom: 1.4cqw;
+    color: var(--mc-accent);
+    font: 500 clamp(11px, 3.1cqw, 16px) / 1 ui-monospace, 'Cascadia Mono', Consolas, monospace;
+    letter-spacing: 0.14em;
+    white-space: nowrap;
+}
+
+.mc-name {
+    display: block;
+    overflow: hidden;
+    color: #f3efe6;
+    font: 500 clamp(17px, 5.2cqw, 27px) / 1.15 var(--font-serif);
+    letter-spacing: 0.02em;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
+
+.mc-sub {
+    display: block;
+    margin-top: 1cqw;
+    overflow: hidden;
+    color: #b9b4ac;
+    font-size: clamp(9.5px, 2.2cqw, 12px);
+    letter-spacing: 0.1em;
+    text-overflow: ellipsis;
+    text-transform: uppercase;
+    white-space: nowrap;
+}
+
+.mc-meta {
+    display: flex;
+    gap: 5.5cqw;
+}
+
+.mc-meta span {
+    display: block;
+    color: #b9b4ac;
+    font-size: clamp(9px, 2cqw, 11px);
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+}
+
+.mc-meta b {
+    display: block;
+    margin-top: 0.7cqw;
+    color: #f3efe6;
+    font: 500 clamp(11px, 2.9cqw, 15px) / 1.1 ui-monospace, 'Cascadia Mono', Consolas, monospace;
+    letter-spacing: 0.04em;
+}
+
+/* registrar seal (bottom right, same footprint on both faces of UV mode) */
+.mc-seal {
+    position: absolute;
+    right: 5.6cqw;
+    bottom: 4.6cqw;
+    z-index: 3;
+    width: 14.5cqw;
+    height: 14.5cqw;
+    filter: drop-shadow(0 0.7cqw 1cqw rgb(0 0 0 / 0.6));
+}
+
+.mc-seal::after {
+    content: '';
+    position: absolute;
+    inset: 6%;
+    border-radius: 50%;
+    background: conic-gradient(from 0deg, rgb(255 255 255 / 0), rgb(255 255 255 / 0.38), rgb(255 255 255 / 0) 30%, rgb(255 255 255 / 0.28) 60%, rgb(255 255 255 / 0) 85%);
+    mix-blend-mode: overlay;
+    animation: mc-seal-spin 9s linear infinite;
+    pointer-events: none;
+}
+
+@keyframes mc-seal-spin {
+    to {
+        transform: rotate(360deg);
+    }
+}
+
+/* -- back layout ----------------------------------------------------------- */
+
+.mc-back {
+    grid-template-rows: auto 1fr auto;
+    row-gap: 2cqw;
+    padding: 5cqw 0 4.4cqw;
+}
+
+.mc-stripe {
+    height: 10cqw;
+    background: #060606;
+    box-shadow: inset 0 1px 0 rgb(255 255 255 / 0.07);
+}
+
+.mc-mid {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) auto;
+    align-items: center;
+    gap: 5cqw;
+    padding: 0 6cqw;
+}
+
+.mc-label {
+    display: block;
+    color: #b9b4ac;
+    font-size: clamp(9px, 2cqw, 11px);
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+}
+
+.mc-sign {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 2cqw;
+    min-height: 8.6cqw;
+    margin-top: 1.2cqw;
+    padding: 0 2.6cqw;
+    border: 1px solid rgb(var(--mc-edge) / 0.35);
+    background: repeating-linear-gradient(115deg, rgb(243 239 230 / 0.07) 0 2px, transparent 2px 5px);
+}
+
+.mc-sign i {
+    overflow: hidden;
+    color: #f3efe6;
+    font: italic 400 clamp(12px, 3.2cqw, 16px) / 1 var(--font-serif);
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
+
+.mc-sign code {
+    flex: none;
+    color: var(--mc-accent);
+    font: 500 clamp(9.5px, 2.2cqw, 12px) / 1 ui-monospace, Consolas, monospace;
+    letter-spacing: 0.12em;
+}
+
+.mc-verify {
+    display: block;
+    margin-top: 1.6cqw;
+    overflow: hidden;
+    color: #b9b4ac;
+    font-size: clamp(9.5px, 2.15cqw, 12px);
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
+
+.mc-verify b {
+    color: var(--mc-accent);
+    font-weight: 500;
+}
+
+.mc-qr {
+    width: 21cqw;
+    padding: 1.1cqw;
+    background: #f3efe6;
+    line-height: 0;
+}
+
+.mc-qr svg {
+    display: block;
+    width: 100%;
+    height: auto;
+}
+
+.mc-scan {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.8cqw;
+    margin-top: 1.2cqw;
+    color: #b9b4ac;
+    font-size: clamp(9px, 1.9cqw, 11px);
+    letter-spacing: 0.16em;
+    text-transform: uppercase;
+    white-space: nowrap;
+}
+
+.mc-scan svg {
+    width: clamp(10px, 2.3cqw, 13px);
+    height: clamp(10px, 2.3cqw, 13px);
+}
+
+.mc-barcode {
+    display: flex;
+    align-items: center;
+    gap: 3cqw;
+    margin: 0 6cqw;
+    padding: 1.2cqw 2.6cqw;
+    background: #f3efe6;
+}
+
+.mc-barcode > div {
+    flex: 1;
+    min-width: 0;
+    height: 6.6cqw;
+    line-height: 0;
+}
+
+.mc-barcode svg {
+    display: block;
+    width: 100%;
+    height: 100%;
+}
+
+.mc-barcode code {
+    flex: none;
+    color: #0b0b0c;
+    font: 600 clamp(9.5px, 2.2cqw, 12px) / 1 ui-monospace, Consolas, monospace;
+    letter-spacing: 0.1em;
+}
+
+/* -- microprint + UV -------------------------------------------------------- */
+
+.mc-micro {
+    position: absolute;
+    inset-inline: 0;
+    z-index: 3;
+    overflow: hidden;
+    background: rgb(0 0 0 / 0.22);
+    padding-block: 2px;
+    pointer-events: none;
+}
+
+.mc-micro span {
+    display: block;
+    color: rgb(var(--mc-edge) / 0.55);
+    font: 4.5px/1 ui-monospace, Consolas, monospace;
+    white-space: nowrap;
+}
+
+.mc-uv-wash {
+    position: absolute;
+    inset: 0;
+    z-index: 6;
+    background: rgb(11 11 12 / 0.62);
+    opacity: var(--uv, 0);
+    transition: opacity 0.7s;
+    pointer-events: none;
+}
+
+.mc-uv {
+    position: absolute;
+    z-index: 7;
+    opacity: var(--uv, 0);
+    transition: opacity 0.7s 0.1s;
+    pointer-events: none;
+    color: var(--color-info);
+    text-shadow: 0 0 6px var(--color-info), 0 0 14px var(--color-info);
+    animation: uv-glow-pulse 2.6s ease-in-out infinite;
+}
+
+.mc-uv-field {
+    inset: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    overflow: hidden;
+}
+
+.mc-uv-field > div {
+    display: grid;
+    width: 170%;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 3cqw 5cqw;
+    transform: rotate(-26deg);
+}
+
+.mc-uv-field span {
+    font: 700 clamp(9px, 2cqw, 11px) / 1 var(--font-serif);
+    letter-spacing: 0.3em;
+    text-align: center;
+    text-transform: uppercase;
+    white-space: nowrap;
+}
+
+/* -- controls -------------------------------------------------------------- */
+
+.mc-controls {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    justify-content: center;
+    gap: 0.5rem 1.4rem;
+}
+
+.mc-controls label {
+    min-height: 44px;
+    cursor: pointer;
+    align-items: center;
+    gap: 0.45rem;
+    color: #b9b4ac;
+    font-size: 0.75rem;
+    font-weight: 600;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    transition: color 0.2s;
+}
+
+.mc-controls label:hover {
+    color: var(--color-gold-bright);
+}
+
+.mc-controls svg {
+    width: 14px;
+    height: 14px;
+}
+
+@media (prefers-reduced-motion: reduce) {
+    .mc-face::before,
+    .mc-face::after,
+    .mc-seal::after,
+    .mc-uv {
+        animation: none;
+    }
+}
+
+.mc-name-wrap {
+    display: -webkit-box;
+    -webkit-box-orient: vertical;
+    -webkit-line-clamp: 2;
+    font-size: clamp(15px, 4.3cqw, 22px);
+    white-space: normal;
+}

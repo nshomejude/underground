@@ -113,7 +113,7 @@ final class AccountSettingsControllerTest extends TestCase
             'password_confirmation' => 'new-strong-password',
         ]);
 
-        $response->assertRedirect(route('account.settings'));
+        $response->assertRedirect(route('account.security'));
         $response->assertSessionDoesntHaveErrors();
 
         Auth::logout();

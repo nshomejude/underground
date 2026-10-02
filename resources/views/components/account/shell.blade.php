@@ -5,16 +5,20 @@
     $user = auth()->user();
     $initials = collect(preg_split('/\s+/', trim((string) $user?->name)))->filter()->take(2)->map(fn ($p) => mb_strtoupper(mb_substr($p, 0, 1)))->implode('') ?: 'U';
 
+    // The full member menu, identical on desktop (sidebar) and mobile (drawer).
     $nav = [
         ['key' => 'overview', 'label' => 'Overview', 'icon' => 'home', 'href' => route('account.show')],
-        ['key' => 'card', 'label' => 'Card', 'full' => 'Membership Card', 'icon' => 'card', 'href' => route('account.show').'#card'],
+        ['key' => 'card', 'label' => 'Membership Card', 'icon' => 'credit-card', 'href' => route('account.show').'#card'],
+        ['key' => 'certificate', 'label' => 'Certificate', 'icon' => 'award', 'href' => route('account.certificate')],
+        ['key' => 'applications', 'label' => 'Applications', 'icon' => 'file-text', 'href' => route('account.applications')],
+        ['key' => 'inquiries', 'label' => 'Inquiries', 'icon' => 'message-square', 'href' => route('inquiries.track')],
+        ['key' => 'documents', 'label' => 'Documents', 'icon' => 'folder-open', 'href' => route('account.documents')],
+        ['key' => 'security', 'label' => 'Security', 'icon' => 'shield-check', 'href' => route('account.security')],
+        ['key' => 'settings', 'label' => 'Settings', 'icon' => 'settings', 'href' => route('account.settings')],
     ];
-    if (\Illuminate\Support\Facades\Route::has('account.certificate')) {
-        $nav[] = ['key' => 'certificate', 'label' => 'Certificate', 'icon' => 'cert', 'href' => route('account.certificate')];
-    }
-    $nav[] = ['key' => 'inquiries', 'label' => 'Inquiries', 'icon' => 'msg', 'href' => route('inquiries.track')];
-    $nav[] = ['key' => 'security', 'label' => 'Security', 'icon' => 'lock', 'href' => route('account.settings').'#security'];
-    $nav[] = ['key' => 'settings', 'label' => 'Settings', 'icon' => 'gear', 'href' => route('account.settings')];
+
+    // Quick links for the mobile bottom bar (the drawer holds everything).
+    $tabs = collect($nav)->whereIn('key', ['overview', 'card', 'certificate', 'inquiries'])->values();
 @endphp
 
 <!DOCTYPE html>
@@ -33,73 +37,89 @@
     <body class="ac-body">
         <a class="ac-skip" href="#main">Skip to main content</a>
 
-        <svg width="0" height="0" style="position:absolute" aria-hidden="true" focusable="false">
-            <defs>
-                <symbol id="ai-home" viewBox="0 0 24 24"><path d="M3 11l9-7 9 7v9H3z"/></symbol>
-                <symbol id="ai-card" viewBox="0 0 24 24"><rect x="2.5" y="5" width="19" height="14"/><path d="M2.5 10h19"/></symbol>
-                <symbol id="ai-cert" viewBox="0 0 24 24"><rect x="3" y="4" width="18" height="13"/><circle cx="12" cy="10.5" r="3"/><path d="M9 21l3-3 3 3"/></symbol>
-                <symbol id="ai-msg" viewBox="0 0 24 24"><path d="M3 5h18v12H9l-5 4v-4H3z"/></symbol>
-                <symbol id="ai-lock" viewBox="0 0 24 24"><rect x="5" y="11" width="14" height="10"/><path d="M8 11V7a4 4 0 018 0v4"/></symbol>
-                <symbol id="ai-gear" viewBox="0 0 24 24"><circle cx="12" cy="12" r="3"/><path d="M12 2v3M12 19v3M2 12h3M19 12h3M5 5l2 2M17 17l2 2M19 5l-2 2M7 17l-2 2"/></symbol>
-                <symbol id="ai-out" viewBox="0 0 24 24"><path d="M10 4H4v16h6M14 8l4 4-4 4M18 12H9"/></symbol>
-                <symbol id="ai-globe" viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><path d="M3 12h18M12 3c3 3 3 15 0 18M12 3c-3 3-3 15 0 18"/></symbol>
-                <symbol id="ai-dl" viewBox="0 0 24 24"><path d="M12 3v12M7 11l5 5 5-5M4 20h16"/></symbol>
-                <symbol id="ai-share" viewBox="0 0 24 24"><circle cx="6" cy="12" r="2.5"/><circle cx="18" cy="6" r="2.5"/><circle cx="18" cy="18" r="2.5"/><path d="M8 11l8-4M8 13l8 4"/></symbol>
-                <symbol id="ai-plus" viewBox="0 0 24 24"><path d="M12 5v14M5 12h14"/></symbol>
-                <symbol id="ai-chk" viewBox="0 0 24 24"><path d="M4 12l5 5L20 6"/></symbol>
-                <symbol id="ai-key" viewBox="0 0 24 24"><circle cx="8" cy="12" r="4"/><path d="M12 12h9M18 12v4"/></symbol>
-                <symbol id="ai-star" viewBox="0 0 24 24"><path d="M12 3l2.7 6 6.3.6-4.8 4.3 1.5 6.3L12 17l-5.7 3.2 1.5-6.3L3 9.6 9.3 9z"/></symbol>
-                <symbol id="ai-eye" viewBox="0 0 24 24"><path d="M2 12s4-7 10-7 10 7 10 7-4 7-10 7S2 12 2 12z"/><circle cx="12" cy="12" r="3"/></symbol>
-            </defs>
-        </svg>
-
         <div class="ac-shell">
-            <aside class="ac-side">
-                <a href="{{ route('account.show') }}" class="ac-brand" aria-label="Underground member area">
-                    <span class="ac-mono" aria-hidden="true">U</span>
-                    <span><b>Underground</b><small>Member Network</small></span>
-                </a>
+            <div class="ac-backdrop" data-ac-close hidden></div>
+
+            <aside class="ac-side" id="ac-side" aria-label="Member menu">
+                <div class="ac-side-head">
+                    <a href="{{ route('account.show') }}" class="ac-brand" aria-label="Underground member area">
+                        <span class="ac-mono" aria-hidden="true">U</span>
+                        <span><b>Underground</b><small>Member Network</small></span>
+                    </a>
+                    <button type="button" class="ac-iconbtn ac-close" data-ac-close aria-label="Close menu"><x-icon name="x" /></button>
+                </div>
 
                 <nav aria-label="Member area" class="ac-nav-wrap">
                     <ul class="ac-nav">
                         @foreach ($nav as $item)
-                            <li @class(["ac-hide-m" => $item["key"] === "security"])>
-                                <a href="{{ $item['href'] }}" @if ($active === $item['key']) aria-current="page" @endif @isset($item['full']) aria-label="{{ $item['full'] }}" @endisset>
-                                    <svg aria-hidden="true"><use href="#ai-{{ $item['icon'] }}"/></svg>
+                            <li>
+                                <a href="{{ $item['href'] }}" @if ($active === $item['key']) aria-current="page" @endif>
+                                    <x-icon :name="$item['icon']" />
                                     <span>{{ $item['label'] }}</span>
                                 </a>
                             </li>
                         @endforeach
+                        <li>
+                            <form method="POST" action="{{ route('logout') }}">
+                                @csrf
+                                <button type="submit" class="ac-signout"><x-icon name="log-out" /><span>Sign out</span></button>
+                            </form>
+                        </li>
                     </ul>
                 </nav>
 
                 <div class="ac-foot">
-                    <a href="{{ route('home') }}" class="ac-foot-link"><svg aria-hidden="true"><use href="#ai-globe"/></svg>Visit website</a>
-                    <form method="POST" action="{{ route('logout') }}">
-                        @csrf
-                        <button type="submit" class="ac-foot-link"><svg aria-hidden="true"><use href="#ai-out"/></svg>Sign out</button>
-                    </form>
+                    <a href="{{ route('home') }}" class="ac-foot-link"><x-icon name="globe" /><span>Visit website</span></a>
                 </div>
             </aside>
 
             <div class="ac-main">
                 <header class="ac-mbar">
-                    <span class="ac-mono ac-mono-sm" aria-hidden="true">U</span>
+                    <button type="button" class="ac-iconbtn" data-ac-open aria-controls="ac-side" aria-expanded="false" aria-label="Open menu"><x-icon name="menu" /></button>
                     <span class="ac-mbar-title">{{ $title }}</span>
                     <span class="ac-avatar" role="img" aria-label="{{ $user?->name }}">{{ $initials }}</span>
-                    <form method="POST" action="{{ route('logout') }}" class="ac-mbar-out">
-                        @csrf
-                        <button type="submit" aria-label="Sign out"><svg aria-hidden="true"><use href="#ai-out"/></svg></button>
-                    </form>
                 </header>
 
                 <main id="main" tabindex="-1" class="ac-content">
                     {{ $slot }}
                 </main>
             </div>
+
+            <nav class="ac-tabbar" aria-label="Quick links">
+                @foreach ($tabs as $item)
+                    <a href="{{ $item['href'] }}" @if ($active === $item['key']) aria-current="page" @endif>
+                        <x-icon :name="$item['icon']" />
+                        <span>{{ $item['key'] === 'card' ? 'Card' : $item['label'] }}</span>
+                    </a>
+                @endforeach
+                <button type="button" data-ac-open aria-controls="ac-side" aria-label="Open full menu">
+                    <x-icon name="menu" />
+                    <span>Menu</span>
+                </button>
+            </nav>
         </div>
 
         <div class="ac-toast" id="ac-toast" role="status" aria-live="polite"></div>
+
+        <script>
+            (function () {
+                var side = document.getElementById('ac-side');
+                var back = document.querySelector('.ac-backdrop');
+                var openers = document.querySelectorAll('[data-ac-open]');
+                function setOpen(on) {
+                    side.classList.toggle('is-open', on);
+                    back.hidden = !on;
+                    document.body.classList.toggle('ac-lock', on);
+                    openers.forEach(function (b) { b.setAttribute('aria-expanded', on ? 'true' : 'false'); });
+                    if (on) { var first = side.querySelector('a, button'); if (first) first.focus(); }
+                }
+                openers.forEach(function (b) { b.addEventListener('click', function () { setOpen(true); }); });
+                document.querySelectorAll('[data-ac-close]').forEach(function (b) { b.addEventListener('click', function () { setOpen(false); }); });
+                side.querySelectorAll('a').forEach(function (a) { a.addEventListener('click', function () { setOpen(false); }); });
+                document.addEventListener('keydown', function (e) { if (e.key === 'Escape') setOpen(false); });
+            })();
+        </script>
+
         {{ $scripts ?? '' }}
     </body>
 </html>
