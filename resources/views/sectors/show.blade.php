@@ -1,4 +1,4 @@
-<x-layout :title="$sector->name">
+<x-layout :title="$sector->name" :description="$sector->summary">
     <section class="border-b border-border bg-surface">
         <div class="mx-auto max-w-5xl px-4 py-14 sm:px-6 lg:px-8 lg:py-20">
             <a href="{{ route('sectors.index') }}" class="inline-flex items-center gap-2 text-xs font-semibold uppercase tracking-widest text-gold hover:text-gold-bright">

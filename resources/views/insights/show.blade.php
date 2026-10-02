@@ -1,4 +1,20 @@
-<x-layout :title="$insight->title">
+@php
+    $seoSchema = [[
+        '@type' => 'Article',
+        'headline' => $insight->title,
+        'description' => $insight->excerpt,
+        'url' => route('insights.show', $insight->slug->value),
+        'mainEntityOfPage' => route('insights.show', $insight->slug->value),
+        'datePublished' => $insight->publishedAt?->format(DATE_ATOM),
+        'dateModified' => $insight->publishedAt?->format(DATE_ATOM),
+        'articleSection' => $insight->category,
+        'inLanguage' => 'en',
+        'author' => ['@id' => url('/').'#organization'],
+        'publisher' => ['@id' => url('/').'#organization'],
+        'image' => asset(config('seo.og_image')),
+    ]];
+@endphp
+<x-layout :title="$insight->title" :description="$insight->excerpt" type="article" :schema="$seoSchema">
     <article class="mx-auto max-w-3xl px-4 py-16 sm:px-6 lg:px-8 lg:py-24">
         <a href="{{ route('insights.index') }}" class="inline-flex items-center gap-2 text-xs font-semibold uppercase tracking-widest text-gold hover:text-gold-bright">
             <x-icon name="chevron-right" class="h-3.5 w-3.5 rotate-180" />

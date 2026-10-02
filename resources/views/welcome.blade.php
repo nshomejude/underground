@@ -9,59 +9,6 @@
 @endphp
 
 <x-layout title="Home">
-    @php
-        $heroSlides = [
-            ['quote' => 'Power that must be announced was never fully owned.', 'theme' => 'Power'],
-            ['quote' => 'Calm is not the absence of force. It is force with nothing left to prove.', 'theme' => 'Calm'],
-            ['quote' => 'The strongest rooms are quiet. The decisions made inside them are not.', 'theme' => 'Influence'],
-            ['quote' => 'A network is not who you know. It is who stays certain of you when the room turns.', 'theme' => 'Connection'],
-            ['quote' => 'Every lasting door opens from the inside, held by someone who trusted you first.', 'theme' => 'Trust'],
-        ];
-    @endphp
-
-    {{-- Hero slides: original Underground maxims --}}
-    <section
-        data-hero-slides
-        class="relative overflow-hidden border-b border-border bg-surface"
-        aria-roledescription="carousel"
-        aria-label="Underground maxims"
-    >
-        <div class="mx-auto flex min-h-[15rem] max-w-4xl flex-col items-center justify-center px-6 py-14 text-center sm:min-h-[18rem] lg:py-20">
-            <div class="grid w-full">
-                @foreach ($heroSlides as $slide)
-                    <figure
-                        data-hero-slide
-                        class="col-start-1 row-start-1 flex flex-col items-center gap-5 transition-opacity duration-1000 {{ $loop->first ? 'opacity-100' : 'pointer-events-none opacity-0' }}"
-                        aria-hidden="{{ $loop->first ? 'false' : 'true' }}"
-                    >
-                        <span class="text-[10px] font-semibold uppercase tracking-[0.4em] text-gold">{{ $slide['theme'] }}</span>
-                        <blockquote class="font-serif text-2xl font-semibold leading-snug text-cream sm:text-3xl lg:text-4xl">
-                            &ldquo;{{ $slide['quote'] }}&rdquo;
-                        </blockquote>
-                        <figcaption class="flex items-center gap-3 text-[11px] font-semibold uppercase tracking-[0.25em] text-muted">
-                            <span class="h-px w-8 bg-gold"></span>
-                            Underground
-                            <span class="h-px w-8 bg-gold"></span>
-                        </figcaption>
-                    </figure>
-                @endforeach
-            </div>
-
-            <div class="mt-8 flex items-center gap-3" role="tablist" aria-label="Choose a maxim">
-                @foreach ($heroSlides as $slide)
-                    <button
-                        type="button"
-                        data-hero-dot
-                        role="tab"
-                        aria-label="Show maxim {{ $loop->iteration }}: {{ $slide['theme'] }}"
-                        aria-selected="{{ $loop->first ? 'true' : 'false' }}"
-                        class="h-1.5 w-8 bg-border transition-colors aria-selected:bg-gold"
-                    ></button>
-                @endforeach
-            </div>
-        </div>
-    </section>
-
     {{-- Hero --}}
     <section class="border-b border-border bg-ink">
         <div class="mx-auto grid max-w-7xl grid-cols-1 gap-12 px-4 py-16 sm:px-6 lg:grid-cols-2 lg:items-center lg:gap-16 lg:px-8 lg:py-24">

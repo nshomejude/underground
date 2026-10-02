@@ -1,4 +1,14 @@
-<x-layout :title="$capability->title">
+@php
+    $seoSchema = [[
+        '@type' => 'Service',
+        'name' => $capability->title,
+        'description' => $capability->summary,
+        'url' => route('capabilities.show', $capability->slug->value),
+        'provider' => ['@id' => url('/').'#organization'],
+        'areaServed' => config('seo.organization.area_served'),
+    ]];
+@endphp
+<x-layout :title="$capability->title" :description="$capability->summary" :schema="$seoSchema">
     {{-- Header --}}
     <section class="border-b border-border bg-surface">
         <div class="mx-auto max-w-5xl px-4 py-14 sm:px-6 lg:px-8 lg:py-20">

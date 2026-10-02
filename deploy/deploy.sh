@@ -25,7 +25,7 @@ tar -c app bootstrap/app.php bootstrap/providers.php config database/migrations 
     | "${ssh_cmd[@]}" 'tar -x -C ~/underground' 2>&1 | grep -v '^\*\*' || true
 
 echo "==> Uploading public assets"
-tar -c -C public build images favicon.ico robots.txt \
+tar -c -C public build images favicon.ico robots.txt llms.txt \
     | "${ssh_cmd[@]}" 'tar -x -C ~/public_html' 2>&1 | grep -v '^\*\*' || true
 
 echo "==> Migrating and rebuilding caches"

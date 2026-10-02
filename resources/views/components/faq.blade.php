@@ -22,3 +22,13 @@
         </div>
     </div>
 </section>
+
+<script type="application/ld+json">{!! json_encode([
+    '@context' => 'https://schema.org',
+    '@type' => 'FAQPage',
+    'mainEntity' => array_map(static fn (array $item): array => [
+        '@type' => 'Question',
+        'name' => $item['q'],
+        'acceptedAnswer' => ['@type' => 'Answer', 'text' => $item['a']],
+    ], $items),
+], JSON_UNESCAPED_SLASHES | JSON_UNESCAPED_UNICODE | JSON_HEX_TAG | JSON_HEX_AMP) !!}</script>

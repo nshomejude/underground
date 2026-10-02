@@ -1,4 +1,14 @@
-<x-layout :title="$engagementModel->name">
+@php
+    $seoSchema = [[
+        '@type' => 'Service',
+        'name' => $engagementModel->name,
+        'description' => $engagementModel->summary,
+        'url' => route('engagement-models.show', $engagementModel->slug->value),
+        'provider' => ['@id' => url('/').'#organization'],
+        'areaServed' => config('seo.organization.area_served'),
+    ]];
+@endphp
+<x-layout :title="$engagementModel->name" :description="$engagementModel->summary" :schema="$seoSchema">
     <section class="border-b border-border bg-surface">
         <div class="mx-auto max-w-5xl px-4 py-14 sm:px-6 lg:px-8 lg:py-20">
             <a href="{{ route('engagement-models.index') }}" class="inline-flex items-center gap-2 text-xs font-semibold uppercase tracking-widest text-gold hover:text-gold-bright">

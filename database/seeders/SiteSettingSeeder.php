@@ -26,7 +26,7 @@ final class SiteSettingSeeder extends Seeder
             'contact_phone' => '+1-571-508-9170',
             'social_links' => [],
             'footer_note' => null,
-            'meta_title' => 'Underground Network',
+            'meta_title' => 'Underground Network | Global Strategic Advisory & Influence Firm',
             'meta_description' => 'A global network delivering discreet, high-conviction execution across sectors and borders.',
             'og_image_url' => null,
             'twitter_handle' => null,
