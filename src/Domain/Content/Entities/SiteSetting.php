@@ -27,6 +27,8 @@ final readonly class SiteSetting
         public bool $maintenanceMode,
         public ?string $maintenanceMessage,
         public bool $publicRegistrationEnabled,
+        public bool $gearAnimationEnabled = true,
+        public bool $networkAnimationEnabled = true,
     ) {}
 
     public function toArray(): array
@@ -45,6 +47,8 @@ final readonly class SiteSetting
             'maintenance_mode' => $this->maintenanceMode,
             'maintenance_message' => $this->maintenanceMessage,
             'public_registration_enabled' => $this->publicRegistrationEnabled,
+            'gear_animation_enabled' => $this->gearAnimationEnabled,
+            'network_animation_enabled' => $this->networkAnimationEnabled,
         ];
     }
 }

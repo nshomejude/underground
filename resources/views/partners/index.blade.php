@@ -1,5 +1,8 @@
 <x-layout title="Partners">
-    <section class="mx-auto flex max-w-6xl flex-col gap-12 px-4 py-16 sm:px-6 lg:px-8 lg:py-24">
+    <div class="relative isolate overflow-hidden">
+        <x-network-grid />
+        <div class="hero-veil pointer-events-none absolute inset-0" aria-hidden="true"></div>
+    <section class="relative z-10 mx-auto flex max-w-6xl flex-col gap-12 px-4 py-16 sm:px-6 lg:px-8 lg:py-24">
         <x-section-heading tag="h1" eyebrow="Who We Work Alongside">
             Partners
         </x-section-heading>
@@ -24,6 +27,7 @@
             @endforeach
         </div>
     </section>
+    </div>
 
     <x-value-grid
         tone="surface"

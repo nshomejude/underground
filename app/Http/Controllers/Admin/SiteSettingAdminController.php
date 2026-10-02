@@ -54,6 +54,8 @@ final class SiteSettingAdminController extends Controller
             maintenanceMode: (bool) ($data['maintenance_mode'] ?? false),
             maintenanceMessage: $data['maintenance_message'] ?: null,
             publicRegistrationEnabled: (bool) ($data['public_registration_enabled'] ?? false),
+            gearAnimationEnabled: (bool) ($data['gear_animation_enabled'] ?? false),
+            networkAnimationEnabled: (bool) ($data['network_animation_enabled'] ?? false),
         ));
 
         return redirect()->route('admin.settings.edit')->with('status', 'Site configuration updated.');

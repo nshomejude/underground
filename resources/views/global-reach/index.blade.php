@@ -1,5 +1,8 @@
 <x-layout title="Global Reach">
-    <section class="mx-auto max-w-7xl px-4 py-16 sm:px-6 lg:px-8 lg:py-24">
+    <div class="relative isolate overflow-hidden">
+        <x-network-grid />
+        <div class="hero-veil pointer-events-none absolute inset-0" aria-hidden="true"></div>
+    <section class="relative z-10 mx-auto max-w-7xl px-4 py-16 sm:px-6 lg:px-8 lg:py-24">
         <div class="grid grid-cols-1 gap-12 lg:grid-cols-2 lg:gap-16">
             <div class="flex flex-col gap-6">
                 <x-section-heading tag="h1" eyebrow="Global Reach">{{ $narrative->reachHeading }}</x-section-heading>
@@ -11,7 +14,7 @@
                 <x-reach-map />
             </div>
 
-            <div class="flex flex-col gap-px border border-border bg-border">
+            <div class="flex flex-col gap-px self-start border border-border bg-border">
                 <div class="flex items-center justify-between gap-4 bg-ink px-6 py-4">
                     <p class="text-xs font-semibold uppercase tracking-[0.2em] text-gold">
                         {{ $narrative->engagementHeading }}
@@ -59,6 +62,7 @@
             </div>
         </div>
     </section>
+    </div>
 
     <x-value-grid
         tone="surface"

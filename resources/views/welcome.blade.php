@@ -10,8 +10,10 @@
 
 <x-layout title="Home">
     {{-- Hero --}}
-    <section class="border-b border-border bg-ink">
-        <div class="mx-auto grid max-w-7xl grid-cols-1 gap-12 px-4 py-16 sm:px-6 lg:grid-cols-2 lg:items-center lg:gap-16 lg:px-8 lg:py-24">
+    <section class="relative isolate overflow-hidden border-b border-border bg-ink">
+        <x-gear-background />
+        <div class="hero-veil pointer-events-none absolute inset-0" aria-hidden="true"></div>
+        <div class="relative z-10 mx-auto grid max-w-7xl grid-cols-1 gap-12 px-4 py-16 sm:px-6 lg:grid-cols-2 lg:items-center lg:gap-16 lg:px-8 lg:py-24">
             <div class="flex flex-col items-start gap-6">
                 <span class="inline-flex items-center gap-3 text-xs font-semibold uppercase tracking-[0.2em] text-gold">
                     <span class="h-px w-8 bg-gold"></span>
@@ -213,7 +215,7 @@
                     <x-reach-map />
                 </div>
 
-                <div class="flex flex-col gap-px border border-border bg-border">
+                <div class="flex flex-col gap-px self-start border border-border bg-border">
                     <div class="flex items-center justify-between gap-4 bg-ink px-6 py-4">
                         <p class="text-xs font-semibold uppercase tracking-[0.2em] text-gold">
                             {{ $narrative->engagementHeading }}

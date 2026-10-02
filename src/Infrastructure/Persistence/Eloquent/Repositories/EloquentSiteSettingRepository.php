@@ -71,6 +71,8 @@ final class EloquentSiteSettingRepository implements SiteSettingRepository
             'maintenance_mode' => $setting->maintenanceMode,
             'maintenance_message' => $setting->maintenanceMessage,
             'public_registration_enabled' => $setting->publicRegistrationEnabled,
+            'gear_animation_enabled' => $setting->gearAnimationEnabled,
+            'network_animation_enabled' => $setting->networkAnimationEnabled,
         ])->save();
     }
 
@@ -90,6 +92,8 @@ final class EloquentSiteSettingRepository implements SiteSettingRepository
             maintenanceMode: (bool) $record->maintenance_mode,
             maintenanceMessage: $record->maintenance_message,
             publicRegistrationEnabled: (bool) $record->public_registration_enabled,
+            gearAnimationEnabled: (bool) ($record->gear_animation_enabled ?? true),
+            networkAnimationEnabled: (bool) ($record->network_animation_enabled ?? true),
         );
     }
 }

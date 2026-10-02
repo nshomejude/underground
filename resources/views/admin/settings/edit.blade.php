@@ -69,6 +69,16 @@
             </div>
         </fieldset>
 
+        <fieldset class="flex flex-col gap-4 rounded-adm border border-hairline bg-surface px-5 py-6 shadow-adm-xs sm:px-8 sm:py-8">
+            <legend class="px-1 text-sm font-semibold text-cream">Visual Effects</legend>
+
+            <x-admin.checkbox-field name="gear_animation_enabled" label="Gear animation behind the home page hero (turn off if it is distracting or slow)" :checked="$setting->gearAnimationEnabled" />
+
+            <div class="border-t border-hairline pt-4">
+                <x-admin.checkbox-field name="network_animation_enabled" label="Network grid animation on the Global Reach and Partners pages" :checked="$setting->networkAnimationEnabled" />
+            </div>
+        </fieldset>
+
         <div class="flex items-center gap-4">
             <x-button variant="primary" type="submit">Save Configuration</x-button>
         </div>

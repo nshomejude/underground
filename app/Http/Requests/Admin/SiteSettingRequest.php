@@ -32,6 +32,8 @@ final class SiteSettingRequest extends FormRequest
             'maintenance_mode' => ['sometimes', 'boolean'],
             'maintenance_message' => ['nullable', 'string', 'max:500'],
             'public_registration_enabled' => ['sometimes', 'boolean'],
+            'gear_animation_enabled' => ['sometimes', 'boolean'],
+            'network_animation_enabled' => ['sometimes', 'boolean'],
         ];
     }
 }
