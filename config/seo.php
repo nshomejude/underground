@@ -25,7 +25,7 @@ return [
     'og_image' => 'images/og-default.png',
 
     'organization' => [
-        'legal_name' => 'Underground Network Inc.',
+        'legal_name' => 'Underground USA, LLC.',
         'email' => 'info@un-der.com',
         'telephone' => '+1-571-508-9170',
         'street' => '200 Massachusetts Ave NW',

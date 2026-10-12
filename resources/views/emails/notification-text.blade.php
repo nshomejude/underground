@@ -38,4 +38,4 @@ The {{ $appName }} team
 --
 Questions? Write to info@un-der.com
 200 Massachusetts Ave NW, Washington, DC 20001
-(c) {{ now()->year }} {{ $appName }} Inc. | Powered by opesware.com
+(c) {{ now()->year }} Underground USA, LLC. | Powered by opesware.com
