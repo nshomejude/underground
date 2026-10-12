@@ -5,21 +5,23 @@
         'Company' => [
             'About' => route('about'),
             'Team' => route('team'),
-            'Contact' => route('contact'),
             'Careers' => route('careers'),
+            'Partners' => route('partners'),
+            'Contact' => route('contact'),
         ],
-        'Underground Foundation' => [
-            // Placeholder destinations — the Foundation's own pages are a
-            // later lot; do not invent content for them here.
-            'Global Health' => '#',
-            'Global Education' => '#',
-            'NGO Affiliates' => '#',
+        'What We Do' => [
+            'Capabilities' => route('capabilities.index'),
+            'Expertise' => route('sectors.index'),
+            'Global Reach' => route('global-reach'),
+            'Case Studies' => route('team.case-studies'),
+            'Projects' => route('projects'),
         ],
-        'Underground University' => [
-            // Same treatment as the Foundation group above: real pages land
-            // in a later lot, these are placeholders only.
-            'School of Leadership' => '#',
-            'School of Business' => '#',
+        'Resources' => [
+            'Reports Hub' => route('reports-hub.index'),
+            'Flex Media Group' => route('flex-media-group'),
+            'Membership' => route('membership.index'),
+            'Events' => route('events'),
+            'Consultation Desk' => route('consultations.create'),
         ],
     ];
 

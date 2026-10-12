@@ -16,9 +16,7 @@ final class NavLinksTest extends TestCase
      * Pulls the <nav aria-label="Primary"> markup out of a response body so
      * assertions below only ever look at the primary desktop nav, not the
      * utility bar (language toggle intentionally uses href="#", see
-     * site-header.blade.php) or the footer (its Foundation/University
-     * groups intentionally use href="#" placeholders too, see
-     * site-footer.blade.php).
+     * site-header.blade.php).
      */
     private static function primaryNavHtml(string $body): string
     {
@@ -34,6 +32,17 @@ final class NavLinksTest extends TestCase
         return substr($body, $tagStart, $end - $tagStart);
     }
 
+    private static function footerHtml(string $body): string
+    {
+        $tagStart = strpos($body, '<footer');
+        self::assertNotFalse($tagStart, 'Expected a <footer> element in the response.');
+
+        $end = strpos($body, '</footer>', $tagStart);
+        self::assertNotFalse($end);
+
+        return substr($body, $tagStart, $end - $tagStart);
+    }
+
     public function test_homepage_primary_nav_has_no_dead_hash_links(): void
     {
         $this->seed();
@@ -44,6 +53,44 @@ final class NavLinksTest extends TestCase
         $nav = self::primaryNavHtml($response->getContent());
 
         self::assertStringNotContainsString('href="#"', $nav);
+    }
+
+    public function test_homepage_footer_has_no_dead_hash_links(): void
+    {
+        $this->seed();
+
+        $response = $this->get('/');
+        $response->assertOk();
+
+        $footer = self::footerHtml($response->getContent());
+
+        self::assertStringNotContainsString('href="#"', $footer);
+    }
+
+    public function test_homepage_footer_is_wired_to_the_current_information_architecture(): void
+    {
+        $this->seed();
+
+        $response = $this->get('/');
+        $response->assertOk();
+
+        $footer = self::footerHtml($response->getContent());
+
+        self::assertStringContainsString(route('about'), $footer);
+        self::assertStringContainsString(route('team'), $footer);
+        self::assertStringContainsString(route('careers'), $footer);
+        self::assertStringContainsString(route('partners'), $footer);
+        self::assertStringContainsString(route('contact'), $footer);
+        self::assertStringContainsString(route('capabilities.index'), $footer);
+        self::assertStringContainsString(route('sectors.index'), $footer);
+        self::assertStringContainsString(route('global-reach'), $footer);
+        self::assertStringContainsString(route('team.case-studies'), $footer);
+        self::assertStringContainsString(route('projects'), $footer);
+        self::assertStringContainsString(route('reports-hub.index'), $footer);
+        self::assertStringContainsString(route('flex-media-group'), $footer);
+        self::assertStringContainsString(route('membership.index'), $footer);
+        self::assertStringContainsString(route('events'), $footer);
+        self::assertStringContainsString(route('consultations.create'), $footer);
     }
 
     public function test_homepage_primary_nav_is_wired_to_the_current_information_architecture(): void
