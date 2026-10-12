@@ -12,6 +12,7 @@ use Infrastructure\Persistence\Eloquent\Models\EngagementModelRecord;
 use Infrastructure\Persistence\Eloquent\Models\EventRecord;
 use Infrastructure\Persistence\Eloquent\Models\InquiryRecord;
 use Infrastructure\Persistence\Eloquent\Models\InsightRecord;
+use Infrastructure\Persistence\Eloquent\Models\MediaItemRecord;
 use Infrastructure\Persistence\Eloquent\Models\MembershipApplicationRecord;
 use Infrastructure\Persistence\Eloquent\Models\MembershipTierRecord;
 use Infrastructure\Persistence\Eloquent\Models\MetricRecord;
@@ -104,6 +105,7 @@ final class AdminDashboardController extends Controller
                 ['label' => 'Portfolio', 'route' => 'admin.portfolio.index', 'count' => PortfolioEngagementRecord::query()->count()],
                 ['label' => 'Projects', 'route' => 'admin.projects.index', 'count' => ProjectRecord::query()->count()],
                 ['label' => 'Events', 'route' => 'admin.events.index', 'count' => EventRecord::query()->count()],
+                ['label' => 'Flex Media Group', 'route' => 'admin.media-items.index', 'count' => MediaItemRecord::query()->count()],
             ],
             'upcomingEvents' => $upcomingEvents,
             'recentApplications' => $recentApplications,

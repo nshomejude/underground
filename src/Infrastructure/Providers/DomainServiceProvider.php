@@ -7,6 +7,7 @@ namespace Infrastructure\Providers;
 use Domain\Content\Repositories\CapabilityRepository;
 use Domain\Content\Repositories\EngagementModelRepository;
 use Domain\Content\Repositories\EventRepository;
+use Domain\Content\Repositories\MediaItemRepository;
 use Domain\Content\Repositories\MetricRepository;
 use Domain\Content\Repositories\NarrativeRepository;
 use Domain\Content\Repositories\PartnerCategoryRepository;
@@ -26,6 +27,7 @@ use Infrastructure\Persistence\Eloquent\Repositories\EloquentEngagementModelRepo
 use Infrastructure\Persistence\Eloquent\Repositories\EloquentEventRepository;
 use Infrastructure\Persistence\Eloquent\Repositories\EloquentInquiryRepository;
 use Infrastructure\Persistence\Eloquent\Repositories\EloquentInsightRepository;
+use Infrastructure\Persistence\Eloquent\Repositories\EloquentMediaItemRepository;
 use Infrastructure\Persistence\Eloquent\Repositories\EloquentMembershipApplicationRepository;
 use Infrastructure\Persistence\Eloquent\Repositories\EloquentMembershipTierRepository;
 use Infrastructure\Persistence\Eloquent\Repositories\EloquentMetricRepository;
@@ -62,6 +64,7 @@ final class DomainServiceProvider extends ServiceProvider
         ProjectRepository::class => EloquentProjectRepository::class,
         EventRepository::class => EloquentEventRepository::class,
         SiteSettingRepository::class => EloquentSiteSettingRepository::class,
+        MediaItemRepository::class => EloquentMediaItemRepository::class,
     ];
 
     public function register(): void
