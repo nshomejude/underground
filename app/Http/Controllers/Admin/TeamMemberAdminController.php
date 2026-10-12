@@ -8,6 +8,8 @@ use App\Http\Controllers\Controller;
 use App\Http\Requests\Admin\TeamMemberRequest;
 use Domain\Content\Entities\TeamMember;
 use Domain\Content\Repositories\TeamMemberRepository;
+use Domain\Content\ValueObjects\EmploymentStatus;
+use Domain\Content\ValueObjects\TeamRoleCategory;
 use Domain\Shared\ValueObjects\Slug;
 use Illuminate\Contracts\View\View;
 use Illuminate\Http\RedirectResponse;
@@ -42,6 +44,9 @@ final class TeamMemberAdminController extends Controller
             background: $data['background'],
             icon: $data['icon'] ?? null,
             hasPortrait: (bool) ($data['has_portrait'] ?? false),
+            roleCategory: TeamRoleCategory::from($data['role_category']),
+            employmentStatus: EmploymentStatus::from($data['employment_status']),
+            languages: self::parseLanguages($data['languages'] ?? null),
             position: (int) $data['position'],
         ));
 
@@ -77,6 +82,9 @@ final class TeamMemberAdminController extends Controller
                 background: $data['background'],
                 icon: $data['icon'] ?? null,
                 hasPortrait: (bool) ($data['has_portrait'] ?? false),
+                roleCategory: TeamRoleCategory::from($data['role_category']),
+                employmentStatus: EmploymentStatus::from($data['employment_status']),
+                languages: self::parseLanguages($data['languages'] ?? null),
                 position: (int) $data['position'],
             ),
             originalSlug: $original->slug,
@@ -90,5 +98,21 @@ final class TeamMemberAdminController extends Controller
         $this->members->delete(Slug::fromString($team_member));
 
         return redirect()->route('admin.team.index')->with('status', 'Team member removed.');
+    }
+
+    /**
+     * The admin form carries languages as one comma-separated line (e.g.
+     * "English, French, Arabic") rather than a repeatable field set — see
+     * NarrativeAdminController::update() for the equivalent newline-split
+     * convention this mirrors for a single-line list.
+     *
+     * @return list<string>
+     */
+    private static function parseLanguages(?string $raw): array
+    {
+        return array_values(array_filter(
+            array_map('trim', explode(',', (string) $raw)),
+            static fn (string $language): bool => $language !== '',
+        ));
     }
 }

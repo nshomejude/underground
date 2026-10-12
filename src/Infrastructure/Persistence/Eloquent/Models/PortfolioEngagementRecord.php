@@ -17,7 +17,10 @@ final class PortfolioEngagementRecord extends Model
 
     protected $guarded = [];
 
-    protected $casts = ['position' => 'integer'];
+    protected $casts = [
+        'position' => 'integer',
+        'deliverables' => 'array',
+    ];
 
     protected static function newFactory(): PortfolioEngagementRecordFactory
     {

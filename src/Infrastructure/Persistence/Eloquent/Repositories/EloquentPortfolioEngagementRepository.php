@@ -38,6 +38,10 @@ final class EloquentPortfolioEngagementRepository implements PortfolioEngagement
                 'summary' => $engagement->summary,
                 'outcome' => $engagement->outcome,
                 'position' => $engagement->position,
+                'real_role' => $engagement->realRole,
+                'deliverables' => $engagement->deliverables,
+                'period' => $engagement->period,
+                'publication_agreement_note' => $engagement->publicationAgreementNote,
             ],
         );
     }
@@ -56,6 +60,10 @@ final class EloquentPortfolioEngagementRepository implements PortfolioEngagement
             summary: $record->summary,
             outcome: $record->outcome,
             position: $record->position,
+            realRole: $record->real_role,
+            deliverables: $record->deliverables ?? [],
+            period: $record->period,
+            publicationAgreementNote: $record->publication_agreement_note,
         );
     }
 }

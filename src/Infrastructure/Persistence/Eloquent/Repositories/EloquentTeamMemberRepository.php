@@ -6,6 +6,8 @@ namespace Infrastructure\Persistence\Eloquent\Repositories;
 
 use Domain\Content\Entities\TeamMember;
 use Domain\Content\Repositories\TeamMemberRepository;
+use Domain\Content\ValueObjects\EmploymentStatus;
+use Domain\Content\ValueObjects\TeamRoleCategory;
 use Domain\Shared\ValueObjects\Slug;
 use Infrastructure\Persistence\Eloquent\Models\TeamMemberRecord;
 
@@ -38,6 +40,9 @@ final class EloquentTeamMemberRepository implements TeamMemberRepository
                 'background' => $member->background,
                 'icon' => $member->icon,
                 'has_portrait' => $member->hasPortrait,
+                'role_category' => $member->roleCategory->value,
+                'employment_status' => $member->employmentStatus->value,
+                'languages' => $member->languages,
                 'position' => $member->position,
             ],
         );
@@ -57,6 +62,9 @@ final class EloquentTeamMemberRepository implements TeamMemberRepository
             background: $record->background,
             icon: $record->icon,
             hasPortrait: (bool) $record->has_portrait,
+            roleCategory: TeamRoleCategory::from($record->role_category),
+            employmentStatus: EmploymentStatus::from($record->employment_status),
+            languages: $record->languages ?? [],
             position: $record->position,
         );
     }

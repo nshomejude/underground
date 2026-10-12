@@ -7,6 +7,7 @@ namespace Infrastructure\Providers;
 use Domain\Content\Repositories\CapabilityRepository;
 use Domain\Content\Repositories\EngagementModelRepository;
 use Domain\Content\Repositories\EventRepository;
+use Domain\Content\Repositories\GalleryPhotoRepository;
 use Domain\Content\Repositories\MetricRepository;
 use Domain\Content\Repositories\NarrativeRepository;
 use Domain\Content\Repositories\OfficeRepository;
@@ -25,6 +26,7 @@ use Illuminate\Support\ServiceProvider;
 use Infrastructure\Persistence\Eloquent\Repositories\EloquentCapabilityRepository;
 use Infrastructure\Persistence\Eloquent\Repositories\EloquentEngagementModelRepository;
 use Infrastructure\Persistence\Eloquent\Repositories\EloquentEventRepository;
+use Infrastructure\Persistence\Eloquent\Repositories\EloquentGalleryPhotoRepository;
 use Infrastructure\Persistence\Eloquent\Repositories\EloquentInquiryRepository;
 use Infrastructure\Persistence\Eloquent\Repositories\EloquentInsightRepository;
 use Infrastructure\Persistence\Eloquent\Repositories\EloquentMembershipApplicationRepository;
@@ -65,6 +67,7 @@ final class DomainServiceProvider extends ServiceProvider
         ProjectRepository::class => EloquentProjectRepository::class,
         EventRepository::class => EloquentEventRepository::class,
         SiteSettingRepository::class => EloquentSiteSettingRepository::class,
+        GalleryPhotoRepository::class => EloquentGalleryPhotoRepository::class,
     ];
 
     public function register(): void

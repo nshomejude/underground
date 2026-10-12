@@ -18,6 +18,7 @@
             ['label' => 'Membership Tiers', 'route' => 'admin.membership-tiers.index', 'pattern' => 'admin.membership-tiers.*', 'icon' => 'flag'],
             ['label' => 'Team', 'route' => 'admin.team.index', 'pattern' => 'admin.team.*', 'icon' => 'users'],
             ['label' => 'Offices', 'route' => 'admin.offices.index', 'pattern' => 'admin.offices.*', 'icon' => 'map-pin'],
+            ['label' => 'Gallery', 'route' => 'admin.gallery.index', 'pattern' => 'admin.gallery.*', 'icon' => 'camera'],
             ['label' => 'Partners', 'route' => 'admin.partners.index', 'pattern' => 'admin.partners.*', 'icon' => 'building-2'],
             ['label' => 'Portfolio', 'route' => 'admin.portfolio.index', 'pattern' => 'admin.portfolio.*', 'icon' => 'check-circle'],
             ['label' => 'Projects', 'route' => 'admin.projects.index', 'pattern' => 'admin.projects.*', 'icon' => 'rotate-cw'],
