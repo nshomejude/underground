@@ -68,6 +68,60 @@ document.addEventListener('DOMContentLoaded', () => {
     });
 });
 
+// Desktop header nav dropdowns ([data-nav-dropdown]): hover reveals the
+// panel via CSS alone (group-hover:, no JS needed). This only adds click/tap
+// toggling for touch devices that have no hover state, kept mutually
+// exclusive — opening one dropdown closes the others — and closable via an
+// outside click or Escape.
+document.addEventListener('DOMContentLoaded', () => {
+    const dropdowns = document.querySelectorAll('[data-nav-dropdown]');
+
+    if (!dropdowns.length) {
+        return;
+    }
+
+    const closeAll = (except) => {
+        dropdowns.forEach((dropdown) => {
+            if (dropdown === except) {
+                return;
+            }
+
+            delete dropdown.dataset.navOpen;
+            dropdown.querySelector('[data-nav-dropdown-toggle]')?.setAttribute('aria-expanded', 'false');
+        });
+    };
+
+    dropdowns.forEach((dropdown) => {
+        const toggle = dropdown.querySelector('[data-nav-dropdown-toggle]');
+
+        if (!toggle) {
+            return;
+        }
+
+        toggle.addEventListener('click', (event) => {
+            event.stopPropagation();
+            const isOpen = dropdown.dataset.navOpen !== undefined;
+
+            closeAll(dropdown);
+
+            if (isOpen) {
+                delete dropdown.dataset.navOpen;
+                toggle.setAttribute('aria-expanded', 'false');
+            } else {
+                dropdown.dataset.navOpen = '';
+                toggle.setAttribute('aria-expanded', 'true');
+            }
+        });
+    });
+
+    document.addEventListener('click', () => closeAll());
+    document.addEventListener('keydown', (event) => {
+        if (event.key === 'Escape') {
+            closeAll();
+        }
+    });
+});
+
 // Admin light/dark theme toggle. The blocking script in x-admin.layout's
 // <head> already applies a saved 'light' preference before paint; this
 // only needs to handle the click and keep localStorage + the icon swap

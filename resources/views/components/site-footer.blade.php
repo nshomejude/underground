@@ -5,24 +5,27 @@
         'Company' => [
             'About' => route('about'),
             'Team' => route('team'),
-            'Careers' => route('careers'),
-            'Partners' => route('partners'),
             'Contact' => route('contact'),
+            'Careers' => route('careers'),
         ],
-        'What We Do' => [
-            'Capabilities' => route('capabilities.index'),
-            'Expertise' => route('sectors.index'),
-            'Global Reach' => route('global-reach'),
-            'Portfolio' => route('portfolio'),
-            'Projects' => route('projects'),
+        'Underground Foundation' => [
+            // Placeholder destinations — the Foundation's own pages are a
+            // later lot; do not invent content for them here.
+            'Global Health' => '#',
+            'Global Education' => '#',
+            'NGO Affiliates' => '#',
         ],
-        'Resources' => [
-            'Insights' => route('insights.index'),
-            'Events' => route('events'),
-            'Terms' => route('terms'),
-            'Privacy' => route('privacy'),
+        'Underground University' => [
+            // Same treatment as the Foundation group above: real pages land
+            // in a later lot, these are placeholders only.
+            'School of Leadership' => '#',
+            'School of Business' => '#',
         ],
     ];
+
+    // Membership Terms is a later-lot page; until membership.terms exists,
+    // point at the general Terms page rather than invent one.
+    $membershipTermsHref = \App\Support\OptionalRoute::url('membership.terms', [], route('terms'));
 @endphp
 
 <footer class="border-t border-border bg-ink pb-[calc(5rem+env(safe-area-inset-bottom))] lg:pb-0">
@@ -37,7 +40,7 @@
                 <ul class="flex flex-col gap-1.5 text-sm text-body">
                     <li><a href="mailto:info@un-der.com" class="transition-colors hover:text-gold">info@un-der.com</a></li>
                     <li><a href="tel:+15715089170" class="transition-colors hover:text-gold">+1-571-508-9170</a></li>
-                    <li class="text-muted">Washington, DC &middot; Douala &middot; Abidjan &middot; Lagos &middot; Paris</li>
+                    <li class="text-muted">200 Massachusetts Ave NW, Washington, DC 20001 &middot; Douala &middot; Abidjan &middot; Lagos &middot; Paris</li>
                 </ul>
             </div>
 
@@ -65,9 +68,16 @@
             </nav>
         @endif
 
+        <div class="mt-10 flex flex-wrap items-center justify-center gap-x-6 gap-y-2 border-t border-border pt-8 text-xs font-semibold uppercase tracking-widest sm:justify-start">
+            <a href="{{ route('privacy') }}" class="text-body transition-colors hover:text-gold">Privacy</a>
+            <a href="{{ route('terms') }}" class="text-body transition-colors hover:text-gold">Terms</a>
+            <a href="{{ $membershipTermsHref }}" class="text-body transition-colors hover:text-gold">Membership Terms</a>
+            <a href="mailto:info@un-der.com" class="text-body transition-colors hover:text-gold">Support</a>
+        </div>
+
         <div class="mt-12 flex flex-col items-center gap-2 border-t border-border pt-6 text-center sm:flex-row sm:justify-between sm:text-left">
             <p class="text-[11px] uppercase tracking-widest text-muted">
-                &copy; {{ now()->year }} {{ $siteSetting->siteName }} Inc. All rights reserved.
+                &copy; {{ now()->year }} Underground USA, LLC. All rights reserved.
             </p>
             <div class="flex flex-col items-center gap-1 sm:items-end">
                 @if ($siteSetting->footerNote)
