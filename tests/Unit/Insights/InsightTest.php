@@ -6,6 +6,7 @@ namespace Tests\Unit\Insights;
 
 use DateTimeImmutable;
 use Domain\Insights\Entities\Insight;
+use Domain\Insights\ValueObjects\AccessLevel;
 use Domain\Shared\ValueObjects\Slug;
 use Tests\TestCase;
 
@@ -132,5 +133,62 @@ final class InsightTest extends TestCase
         );
 
         $this->assertNull($insight->toArray()['published_at']);
+    }
+
+    public function test_reports_hub_metadata_defaults_when_not_supplied(): void
+    {
+        $insight = new Insight(
+            slug: Slug::fromString('sovereign-risk-outlook'),
+            title: 'Sovereign Risk Outlook',
+            category: 'Geopolitics',
+            excerpt: 'A short excerpt.',
+            body: 'A short body.',
+            publishedAt: null,
+        );
+
+        $this->assertSame('Underground Network Research', $insight->author);
+        $this->assertSame('Global', $insight->country);
+        $this->assertSame('Cross-Sector', $insight->sector);
+        $this->assertSame(AccessLevel::PublicAccess, $insight->accessLevel);
+        $this->assertFalse($insight->requiresMembership());
+    }
+
+    public function test_requires_membership_reflects_the_access_level(): void
+    {
+        $insight = new Insight(
+            slug: Slug::fromString('members-only-brief'),
+            title: 'Members Only Brief',
+            category: 'Strategic Notes',
+            excerpt: 'A short excerpt.',
+            body: 'A short body.',
+            publishedAt: null,
+            accessLevel: AccessLevel::MembersOnly,
+        );
+
+        $this->assertTrue($insight->requiresMembership());
+    }
+
+    public function test_to_array_exposes_the_reports_hub_metadata(): void
+    {
+        $insight = new Insight(
+            slug: Slug::fromString('sahel-strategic-outlook'),
+            title: 'Sahel Strategic Outlook',
+            category: 'Strategic Notes',
+            excerpt: 'A short excerpt.',
+            body: 'A short body.',
+            publishedAt: null,
+            author: 'Naledi Okonjo-Reyes',
+            country: 'Global',
+            sector: 'Government & Public Sector',
+            accessLevel: AccessLevel::MembersOnly,
+        );
+
+        $data = $insight->toArray();
+
+        $this->assertSame('Naledi Okonjo-Reyes', $data['author']);
+        $this->assertSame('Global', $data['country']);
+        $this->assertSame('Government & Public Sector', $data['sector']);
+        $this->assertSame('members', $data['access_level']);
+        $this->assertSame('Member Access', $data['access_level_label']);
     }
 }
