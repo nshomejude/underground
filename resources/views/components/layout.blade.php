@@ -33,5 +33,7 @@
 
         <x-site-footer />
         <x-mobile-tab-bar />
+        {{-- Mount point for the on-demand FR translator; empty and inert until a visitor picks FR. --}}
+        <div id="google_translate_element" class="hidden" aria-hidden="true" translate="no"></div>
     </body>
 </html>

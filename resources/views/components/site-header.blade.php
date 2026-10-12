@@ -70,11 +70,11 @@
          at common desktop widths, 1280–1440px included). --}}
     <div class="hidden border-b border-border/60 xl:block">
         <div class="mx-auto flex max-w-7xl items-center justify-end gap-4 px-4 py-2 sm:px-6 lg:px-8">
-            <nav aria-label="Language" class="flex shrink-0 items-center gap-1.5 text-xs font-semibold uppercase tracking-widest">
-                <a href="{{ url()->current() }}" class="text-gold" aria-current="true">EN</a>
+            <nav aria-label="Language" translate="no" data-lang-switch class="flex shrink-0 items-center gap-1.5 text-xs font-semibold uppercase tracking-widest">
+                {{-- EN is the authored language; FR machine-translates the page on click (see resources/js/app.js). --}}
+                <a href="{{ url()->current() }}" data-lang="en" class="text-gold" aria-current="true">EN</a>
                 <span class="text-muted" aria-hidden="true">/</span>
-                {{-- French content is a later lot; link kept inert until that workstream ships. --}}
-                <a href="#" class="text-muted transition-colors hover:text-gold">FR</a>
+                <a href="{{ url()->current() }}" data-lang="fr" hreflang="fr" class="text-muted transition-colors hover:text-gold">FR</a>
             </nav>
 
             @auth

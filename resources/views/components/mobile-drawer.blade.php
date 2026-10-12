@@ -119,11 +119,10 @@
                 @endif
             @endforeach
 
-            <div class="flex items-center gap-2 text-xs font-semibold uppercase tracking-widest">
-                <a href="{{ url()->current() }}" class="text-gold" aria-current="true">EN</a>
+            <div translate="no" data-lang-switch class="flex items-center gap-2 text-xs font-semibold uppercase tracking-widest">
+                <a href="{{ url()->current() }}" data-lang="en" class="text-gold" aria-current="true">EN</a>
                 <span class="text-muted" aria-hidden="true">/</span>
-                {{-- French content is a later lot; link kept inert until that workstream ships. --}}
-                <a href="#" class="text-muted transition-colors hover:text-gold">FR</a>
+                <a href="{{ url()->current() }}" data-lang="fr" hreflang="fr" class="text-muted transition-colors hover:text-gold">FR</a>
             </div>
 
             @auth

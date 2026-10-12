@@ -383,3 +383,28 @@
 @import './verification.css';
 @import './plans.css';
 @import './errors.css';
+
+/*
+ * On-demand FR translation (Google website translator, loaded only after a
+ * visitor chooses FR — see resources/js/app.js). Hide the toolbar/banner and
+ * hover balloons it injects, and stop it shifting the page down.
+ */
+html,
+body {
+    top: 0 !important;
+}
+
+.goog-te-banner-frame,
+.goog-te-banner-frame.skiptranslate,
+iframe.skiptranslate,
+#goog-gt-tt,
+.goog-te-balloon-frame,
+.goog-tooltip {
+    display: none !important;
+    visibility: hidden !important;
+}
+
+.goog-text-highlight {
+    background: none !important;
+    box-shadow: none !important;
+}

@@ -218,3 +218,100 @@ document.addEventListener('DOMContentLoaded', () => {
         import('./globe.js').then((m) => m.initGlobe(root)).catch(() => {});
     }
 });
+
+// Language switcher (public site). EN is the authored language; choosing FR
+// machine-translates the page with Google's website translator, which is only
+// downloaded after a visitor picks FR (nothing third-party loads otherwise).
+// The choice is stored in the standard `googtrans` cookie so it persists
+// across pages. Admin pages have no [data-lang-switch], so they never translate.
+document.addEventListener('DOMContentLoaded', () => {
+    const switches = document.querySelectorAll('[data-lang-switch]');
+
+    if (switches.length === 0) {
+        return;
+    }
+
+    const COOKIE = 'googtrans';
+    const host = window.location.hostname;
+    const parent = host.replace(/^www\./, '');
+    const isFrench = () => document.cookie.split('; ').some((c) => c === `${COOKIE}=/en/fr`);
+
+    const writeCookie = (value) => {
+        document.cookie = `${COOKIE}=${value}; path=/; max-age=31536000; samesite=lax`;
+        if (host.includes('.')) {
+            document.cookie = `${COOKIE}=${value}; path=/; max-age=31536000; samesite=lax; domain=.${parent}`;
+        }
+    };
+
+    const clearCookie = () => {
+        const expired = `${COOKIE}=; path=/; expires=Thu, 01 Jan 1970 00:00:00 GMT`;
+        document.cookie = expired;
+        document.cookie = `${expired}; domain=${host}`;
+        document.cookie = `${expired}; domain=.${parent}`;
+    };
+
+    const loadTranslator = () => {
+        if (window.googleTranslateElementInit) {
+            return;
+        }
+
+        window.googleTranslateElementInit = () => {
+            new window.google.translate.TranslateElement(
+                { pageLanguage: 'en', includedLanguages: 'en,fr', autoDisplay: false },
+                'google_translate_element',
+            );
+        };
+
+        const script = document.createElement('script');
+        script.src = 'https://translate.google.com/translate_a/element.js?cb=googleTranslateElementInit';
+        script.async = true;
+        document.head.appendChild(script);
+    };
+
+    const paint = () => {
+        const fr = isFrench();
+        document.documentElement.lang = fr ? 'fr' : 'en';
+
+        switches.forEach((group) => {
+            group.querySelectorAll('[data-lang]').forEach((link) => {
+                const active = (link.dataset.lang === 'fr') === fr;
+                link.classList.toggle('text-gold', active);
+                link.classList.toggle('text-muted', !active);
+
+                if (active) {
+                    link.setAttribute('aria-current', 'true');
+                } else {
+                    link.removeAttribute('aria-current');
+                }
+            });
+        });
+    };
+
+    switches.forEach((group) => {
+        group.querySelectorAll('[data-lang]').forEach((link) => {
+            link.addEventListener('click', (event) => {
+                event.preventDefault();
+
+                const wantsFrench = link.dataset.lang === 'fr';
+
+                if (wantsFrench === isFrench()) {
+                    return;
+                }
+
+                if (wantsFrench) {
+                    writeCookie('/en/fr');
+                } else {
+                    clearCookie();
+                }
+
+                window.location.reload();
+            });
+        });
+    });
+
+    if (isFrench()) {
+        loadTranslator();
+    }
+
+    paint();
+});
