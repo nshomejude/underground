@@ -35,6 +35,11 @@ final class CapabilityAdminControllerTest extends TestCase
             'icon' => 'landmark',
             'position' => 5,
             'is_featured' => '1',
+            'problem_statement' => 'The problem this new capability addresses.',
+            'audiences' => "Executives\nInvestors",
+            'method' => 'How Underground approaches this capability.',
+            'deliverables' => "A deliverable\nAnother deliverable",
+            'next_action' => 'Start a confidential inquiry',
         ]);
 
         $response->assertRedirect(route('admin.capabilities.index'));
@@ -43,7 +48,13 @@ final class CapabilityAdminControllerTest extends TestCase
             'title' => 'New Capability',
             'position' => 5,
             'is_featured' => true,
+            'problem_statement' => 'The problem this new capability addresses.',
+            'method' => 'How Underground approaches this capability.',
+            'next_action' => 'Start a confidential inquiry',
         ]);
+        $created = CapabilityRecord::query()->where('slug', 'new-capability')->first();
+        $this->assertSame(['Executives', 'Investors'], $created->audiences);
+        $this->assertSame(['A deliverable', 'Another deliverable'], $created->deliverables);
     }
 
     public function test_creating_a_capability_validates_required_fields(): void
@@ -87,6 +98,11 @@ final class CapabilityAdminControllerTest extends TestCase
             'summary' => $capability->summary,
             'icon' => $capability->icon,
             'position' => $capability->position,
+            'problem_statement' => $capability->problem_statement,
+            'audiences' => implode("\n", $capability->audiences),
+            'method' => $capability->method,
+            'deliverables' => implode("\n", $capability->deliverables),
+            'next_action' => $capability->next_action,
         ]);
 
         $response->assertRedirect(route('admin.capabilities.index'));

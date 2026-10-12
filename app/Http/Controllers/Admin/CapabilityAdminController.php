@@ -57,6 +57,13 @@ final class CapabilityAdminController extends Controller
             icon: $data['icon'],
             position: (int) $data['position'],
             isFeatured: $request->boolean('is_featured'),
+            problemStatement: $data['problem_statement'],
+            audiences: $this->linesToArray($data['audiences']),
+            method: $data['method'],
+            deliverables: $this->linesToArray($data['deliverables']),
+            confirmedLead: $this->blankToNull($data['confirmed_lead'] ?? null),
+            authorizedReference: $this->blankToNull($data['authorized_reference'] ?? null),
+            nextAction: $data['next_action'],
         ));
 
         return redirect()->route('admin.capabilities.index')->with('status', 'Capability created.');
@@ -86,6 +93,13 @@ final class CapabilityAdminController extends Controller
             icon: $data['icon'],
             position: (int) $data['position'],
             isFeatured: $request->boolean('is_featured'),
+            problemStatement: $data['problem_statement'],
+            audiences: $this->linesToArray($data['audiences']),
+            method: $data['method'],
+            deliverables: $this->linesToArray($data['deliverables']),
+            confirmedLead: $this->blankToNull($data['confirmed_lead'] ?? null),
+            authorizedReference: $this->blankToNull($data['authorized_reference'] ?? null),
+            nextAction: $data['next_action'],
         ));
 
         return redirect()->route('admin.capabilities.index')->with('status', 'Capability updated.');
@@ -114,8 +128,42 @@ final class CapabilityAdminController extends Controller
             'icon' => ['required', 'string', Rule::in(self::ICONS)],
             'position' => ['required', 'integer', 'min:0'],
             'is_featured' => ['sometimes', 'boolean'],
+            'problem_statement' => ['required', 'string', 'max:2000'],
+            'audiences' => ['required', 'string'],
+            'method' => ['required', 'string', 'max:2000'],
+            'deliverables' => ['required', 'string'],
+            'confirmed_lead' => ['nullable', 'string', 'max:255'],
+            'authorized_reference' => ['nullable', 'string', 'max:255'],
+            'next_action' => ['required', 'string', 'max:255'],
         ], [
             'slug.regex' => 'The slug may only contain lowercase letters, numbers, and hyphens.',
         ]);
+    }
+
+    /**
+     * Converts a textarea's newline-delimited lines into a clean list,
+     * dropping blank lines — the same convention NarrativeAdminController
+     * uses for its headline field.
+     *
+     * @return list<string>
+     */
+    private function linesToArray(string $text): array
+    {
+        return array_values(array_filter(
+            array_map('trim', explode("\n", str_replace("\r\n", "\n", $text))),
+            fn (string $line): bool => $line !== '',
+        ));
+    }
+
+    /**
+     * An empty form field arrives as '', not absent — treat it the same as
+     * "not confirmed" so the detail page omits the section rather than
+     * rendering an empty one.
+     */
+    private function blankToNull(?string $value): ?string
+    {
+        $trimmed = trim((string) $value);
+
+        return $trimmed === '' ? null : $trimmed;
     }
 }
