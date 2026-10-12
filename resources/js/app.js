@@ -297,6 +297,44 @@ document.addEventListener('DOMContentLoaded', () => {
         });
     };
 
+    // Fixed French for a few short UI labels the machine translator gets wrong
+    // ("Home" -> "Maison", "Apply" -> "Appliquer"). Only exact-match text inside
+    // header/nav/footer chrome is touched, never body copy.
+    const glossary = {
+        Home: 'Accueil',
+        Apply: 'Postuler',
+        'Request an Executive Briefing': 'Demander un briefing exécutif',
+    };
+
+    const applyGlossary = () => {
+        const walker = document.createTreeWalker(document.body, NodeFilter.SHOW_TEXT, {
+            acceptNode: (node) => {
+                const parent = node.parentElement;
+
+                if (!parent || !parent.closest('header, nav, footer')) {
+                    return NodeFilter.FILTER_REJECT;
+                }
+
+                return Object.prototype.hasOwnProperty.call(glossary, node.nodeValue.trim())
+                    ? NodeFilter.FILTER_ACCEPT
+                    : NodeFilter.FILTER_REJECT;
+            },
+        });
+
+        const nodes = [];
+        while (walker.nextNode()) {
+            nodes.push(walker.currentNode);
+        }
+
+        nodes.forEach((node) => {
+            const span = document.createElement('span');
+            span.className = 'notranslate';
+            span.setAttribute('translate', 'no');
+            span.textContent = glossary[node.nodeValue.trim()];
+            node.parentNode.replaceChild(span, node);
+        });
+    };
+
     // The <title> can't be wrapped in a span, so after the translator rewrites
     // it ("About — Underground Network" -> "À propos — Réseau souterrain") put
     // the original brand segment back, keeping the translated page name.
@@ -329,6 +367,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
         protectBrandName();
         protectTitleBrand();
+        applyGlossary();
 
         window.googleTranslateElementInit = () => {
             new window.google.translate.TranslateElement(
