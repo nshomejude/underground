@@ -37,6 +37,87 @@
         </div>
     </section>
 
+    {{-- The problem --}}
+    @if ($capability->problemStatement !== '')
+        <section class="border-b border-border bg-ink">
+            <div class="mx-auto grid max-w-5xl grid-cols-1 gap-10 px-4 py-14 sm:px-6 lg:grid-cols-3 lg:gap-16 lg:px-8 lg:py-20">
+                <x-section-heading eyebrow="The Problem" class="lg:col-span-1">Why This Matters</x-section-heading>
+                <p class="max-w-3xl text-base leading-relaxed text-body lg:col-span-2">{{ $capability->problemStatement }}</p>
+            </div>
+        </section>
+    @endif
+
+    {{-- Audiences --}}
+    @if ($capability->audiences !== [])
+        <section class="border-b border-border bg-surface">
+            <div class="mx-auto max-w-5xl px-4 py-14 sm:px-6 lg:px-8 lg:py-20">
+                <x-section-heading eyebrow="Who This Serves">Built for These Principals</x-section-heading>
+
+                <ul class="mt-10 grid grid-cols-1 gap-4 sm:grid-cols-2">
+                    @foreach ($capability->audiences as $audience)
+                        <li class="flex items-start gap-4 bg-surface-raised p-5">
+                            <x-icon name="user" class="mt-0.5 h-5 w-5 shrink-0 text-gold" />
+                            <span class="text-sm leading-relaxed text-cream">{{ $audience }}</span>
+                        </li>
+                    @endforeach
+                </ul>
+            </div>
+        </section>
+    @endif
+
+    {{-- Method --}}
+    @if ($capability->method !== '')
+        <section class="border-b border-border bg-ink">
+            <div class="mx-auto grid max-w-5xl grid-cols-1 gap-10 px-4 py-14 sm:px-6 lg:grid-cols-3 lg:gap-16 lg:px-8 lg:py-20">
+                <x-section-heading eyebrow="Our Method" class="lg:col-span-1">How We Work</x-section-heading>
+                <p class="max-w-3xl text-base leading-relaxed text-body lg:col-span-2">{{ $capability->method }}</p>
+            </div>
+        </section>
+    @endif
+
+    {{-- Deliverables --}}
+    @if ($capability->deliverables !== [])
+        <section class="border-b border-border bg-surface">
+            <div class="mx-auto max-w-5xl px-4 py-14 sm:px-6 lg:px-8 lg:py-20">
+                <x-section-heading eyebrow="Per Mission">What You Get</x-section-heading>
+                <ul class="mt-10 flex flex-col gap-4">
+                    @foreach ($capability->deliverables as $deliverable)
+                        <li class="flex items-start gap-4 border-b border-border pb-4">
+                            <x-icon name="check-circle" class="mt-0.5 h-5 w-5 shrink-0 text-gold" />
+                            <span class="text-base leading-relaxed text-cream">{{ $deliverable }}</span>
+                        </li>
+                    @endforeach
+                </ul>
+            </div>
+        </section>
+    @endif
+
+    {{-- Confirmed lead --}}
+    @if ($capability->confirmedLead !== null)
+        <section class="border-b border-border bg-ink">
+            <div class="mx-auto flex max-w-5xl flex-col gap-4 px-4 py-14 sm:px-6 lg:px-8 lg:py-20">
+                <h2 class="text-xs font-semibold uppercase tracking-[0.2em] text-gold">Practice Lead</h2>
+                <div class="flex items-center gap-4">
+                    <x-icon name="badge-check" class="h-6 w-6 shrink-0 text-gold" />
+                    <span class="font-serif text-xl font-semibold text-cream">{{ $capability->confirmedLead }}</span>
+                </div>
+            </div>
+        </section>
+    @endif
+
+    {{-- Authorized reference --}}
+    @if ($capability->authorizedReference !== null)
+        <section class="border-b border-border bg-surface">
+            <div class="mx-auto flex max-w-5xl flex-col gap-4 px-4 py-14 sm:px-6 lg:px-8 lg:py-20">
+                <h2 class="text-xs font-semibold uppercase tracking-[0.2em] text-gold">Authorized Reference</h2>
+                <div class="flex items-start gap-4">
+                    <x-icon name="file-text" class="mt-0.5 h-5 w-5 shrink-0 text-gold" />
+                    <span class="text-base leading-relaxed text-cream">{{ $capability->authorizedReference }}</span>
+                </div>
+            </div>
+        </section>
+    @endif
+
     {{-- Overview --}}
     @if (! empty($content['overview']))
         <section class="border-b border-border bg-ink">
@@ -172,7 +253,7 @@
             </div>
             <div class="flex flex-wrap gap-4">
                 <x-button variant="primary" href="{{ route('inquiries.create') }}">
-                    Start a Confidential Inquiry
+                    {{ $capability->nextAction !== '' ? $capability->nextAction : 'Start a Confidential Inquiry' }}
                     <x-icon name="lock" class="h-3.5 w-3.5" />
                 </x-button>
                 <x-button variant="secondary" href="{{ route('capabilities.index') }}">
