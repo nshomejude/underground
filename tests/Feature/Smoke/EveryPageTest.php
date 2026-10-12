@@ -71,8 +71,6 @@ final class EveryPageTest extends MessagingTestCase
                 }
                 $url = preg_replace_callback('#\{(\w+)\??\}#', fn ($m) => (string) ($values[$m[1]] ?? 1), $uri);
                 try {
-                    file_put_contents('C:/laragon/www/crawl.log', $url.'
-', FILE_APPEND);
                     $res = $this->get('/'.ltrim($url, '/'));
                     if (method_exists($res, 'status') && $res->status() >= 500) {
                         $bad[] = ($actor?->name ?? 'guest').' '.$url.' '.$res->status();

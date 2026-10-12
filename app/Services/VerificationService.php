@@ -11,6 +11,7 @@ use App\Models\VerificationEvent;
 use App\Notifications\VerificationDecisionNotification;
 use Illuminate\Contracts\Filesystem\Filesystem;
 use Illuminate\Http\UploadedFile;
+use Illuminate\Support\Collection;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Str;
 use Illuminate\Validation\ValidationException;
@@ -40,7 +41,7 @@ final class VerificationService
     /**
      * Public status summary for badges, the hub and other workstreams.
      *
-     * @return array{identity: string, company: string}  none|draft|submitted|in_review|approved|rejected|expired
+     * @return array{identity: string, company: string} none|draft|submitted|in_review|approved|rejected|expired
      */
     public function statusFor(User $user): array
     {
@@ -50,7 +51,7 @@ final class VerificationService
         ];
     }
 
-    /** @param  \Illuminate\Support\Collection<int, IdentityVerification|CompanyVerification>  $rows */
+    /** @param  Collection<int, IdentityVerification|CompanyVerification>  $rows */
     private function summarise($rows): string
     {
         if ($rows->contains(fn ($r) => $r->isApproved())) {

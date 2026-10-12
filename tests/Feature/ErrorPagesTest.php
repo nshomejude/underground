@@ -43,7 +43,7 @@ final class ErrorPagesTest extends TestCase
 
         $this->actingAs($user)->get(route('admin.applications.index'))
             ->assertForbidden()
-            ->assertSee("This room is private", false)
+            ->assertSee('This room is private', false)
             ->assertDontSee('admin.applications');
     }
 

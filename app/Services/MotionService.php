@@ -13,6 +13,7 @@ use App\Notifications\MotionOpenedNotification;
 use App\Notifications\MotionReminderNotification;
 use Carbon\CarbonInterface;
 use Illuminate\Database\QueryException;
+use Illuminate\Notifications\Notification;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Log;
 use Throwable;
@@ -504,7 +505,7 @@ final class MotionService
 
     /**
      * @param  list<User>  $recipients
-     * @param  callable(): \Illuminate\Notifications\Notification  $make
+     * @param  callable(): Notification  $make
      */
     private function fanOut(array $recipients, callable $make): int
     {
