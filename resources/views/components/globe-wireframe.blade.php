@@ -1,10 +1,12 @@
 @php
     /*
      * Decorative wireframe globe: an orthographic sphere of latitude/
-     * longitude lines, slowly turning, with a few glowing points marking
-     * the firm's real offices. Pure inline SVG + CSS rotation — no
-     * JavaScript, no canvas. A lightweight, ambient cousin of the
-     * interactive <x-globe-atlas /> used on the Global Reach page.
+     * longitude lines, turning steadily like the hero's other dials and
+     * gears, with a few glowing points marking the firm's real offices.
+     * Pure inline SVG + CSS rotation (the same gear-rot keyframe the
+     * gear background uses) — no JavaScript, no canvas. A lightweight,
+     * ambient cousin of the interactive <x-globe-atlas /> used on the
+     * Global Reach page.
      */
     $cx = 800;
     $cy = 430;
@@ -47,7 +49,7 @@
 
 <div {{ $attributes->merge(['class' => 'globe-wire pointer-events-none absolute inset-0 overflow-hidden']) }} aria-hidden="true">
     <svg class="h-full w-full text-gold" viewBox="0 0 1600 860" preserveAspectRatio="xMidYMid slice" fill="none" xmlns="http://www.w3.org/2000/svg">
-        <g class="globe-spin" style="transform-origin: {{ $cx }}px {{ $cy }}px; --d: 150s" stroke="currentColor">
+        <g class="globe-spin" style="transform-origin: {{ $cx }}px {{ $cy }}px; --d: 22s" stroke="currentColor">
             <circle cx="{{ $cx }}" cy="{{ $cy }}" r="{{ $r }}" stroke-width="1.6" opacity=".55" />
 
             @foreach ($meridians as $rx)
