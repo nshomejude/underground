@@ -166,9 +166,51 @@
     mask-image: linear-gradient(to bottom, transparent 0, #000 18%, #000 78%, transparent 100%);
 }
 
+.globe-spin {
+    animation: gear-rot var(--d, 150s) linear infinite;
+    will-change: transform;
+}
+
+.globe-wire,
+.capitol-vg {
+    -webkit-mask-image: linear-gradient(to bottom, transparent 0, #000 16%, #000 80%, transparent 100%);
+    mask-image: linear-gradient(to bottom, transparent 0, #000 16%, #000 80%, transparent 100%);
+}
+
+/*
+ * Hero slideshow: up to four full-bleed decorative layers (globe, Washington,
+ * network, gears) cross-fading in a fixed round-robin. Pure CSS — each
+ * layer holds the shared `hero-slide-cycle` keyframe but starts at a
+ * different point via a negative `animation-delay`, driven by `--slide-i`
+ * and `--slide-n` on each element. No JavaScript, no layout shift.
+ */
+.hero-slide {
+    opacity: 0;
+    animation: hero-slide-cycle calc(var(--slide-dur, 9s) * var(--slide-n, 4)) ease-in-out infinite;
+    animation-delay: calc(var(--slide-i, 0) * var(--slide-dur, 9s) * -1);
+}
+
+@keyframes hero-slide-cycle {
+    0%,
+    100% {
+        opacity: 0;
+    }
+    4% {
+        opacity: 1;
+    }
+    21% {
+        opacity: 1;
+    }
+    25% {
+        opacity: 0;
+    }
+}
+
 @media (prefers-reduced-motion: reduce) {
     .gear-spin,
-    .net-link {
+    .net-link,
+    .globe-spin,
+    .hero-slide {
         animation: none;
     }
 
@@ -176,12 +218,14 @@
     .net-pulse {
         display: none;
     }
-}
 
-/* Fade the base of the cut-out hero portrait into the section background. */
-.portrait-fade {
-    -webkit-mask-image: linear-gradient(to bottom, #000 0, #000 82%, transparent 100%);
-    mask-image: linear-gradient(to bottom, #000 0, #000 82%, transparent 100%);
+    .hero-slide {
+        opacity: 0;
+    }
+
+    .hero-slide:first-child {
+        opacity: 1;
+    }
 }
 
 /*
