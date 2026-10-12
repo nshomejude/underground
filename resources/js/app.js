@@ -250,10 +250,59 @@ document.addEventListener('DOMContentLoaded', () => {
         document.cookie = `${expired}; domain=.${parent}`;
     };
 
+    // The machine translator renders "Underground" as "souterrain". Wrap every
+    // occurrence of the firm's name in a notranslate span before it runs so the
+    // brand stays "Underground" in French.
+    const protectBrandName = () => {
+        const skip = new Set(['SCRIPT', 'STYLE', 'NOSCRIPT', 'TEXTAREA', 'INPUT', 'CODE', 'PRE']);
+        const pattern = /\bUnderground\b/gi;
+        const walker = document.createTreeWalker(document.body, NodeFilter.SHOW_TEXT, {
+            acceptNode: (node) => {
+                const parent = node.parentElement;
+
+                if (!parent || skip.has(parent.tagName) || parent.closest('.notranslate, [translate="no"]')) {
+                    return NodeFilter.FILTER_REJECT;
+                }
+
+                pattern.lastIndex = 0;
+
+                return pattern.test(node.nodeValue) ? NodeFilter.FILTER_ACCEPT : NodeFilter.FILTER_REJECT;
+            },
+        });
+
+        const nodes = [];
+        while (walker.nextNode()) {
+            nodes.push(walker.currentNode);
+        }
+
+        nodes.forEach((node) => {
+            const fragment = document.createDocumentFragment();
+            let last = 0;
+            const text = node.nodeValue;
+
+            text.replace(pattern, (match, offset) => {
+                fragment.appendChild(document.createTextNode(text.slice(last, offset)));
+                const span = document.createElement('span');
+                span.className = 'notranslate';
+                span.setAttribute('translate', 'no');
+                span.textContent = match;
+                fragment.appendChild(span);
+                last = offset + match.length;
+
+                return match;
+            });
+
+            fragment.appendChild(document.createTextNode(text.slice(last)));
+            node.parentNode.replaceChild(fragment, node);
+        });
+    };
+
     const loadTranslator = () => {
         if (window.googleTranslateElementInit) {
             return;
         }
+
+        protectBrandName();
 
         window.googleTranslateElementInit = () => {
             new window.google.translate.TranslateElement(
