@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Infrastructure\Providers;
 
+use Domain\Consultation\Repositories\ConsultationRequestRepository;
 use Domain\Content\Repositories\CapabilityRepository;
 use Domain\Content\Repositories\EngagementModelRepository;
 use Domain\Content\Repositories\EventRepository;
@@ -25,6 +26,7 @@ use Domain\Membership\Repositories\MembershipApplicationRepository;
 use Domain\Membership\Repositories\MembershipTierRepository;
 use Illuminate\Support\ServiceProvider;
 use Infrastructure\Persistence\Eloquent\Repositories\EloquentCapabilityRepository;
+use Infrastructure\Persistence\Eloquent\Repositories\EloquentConsultationRequestRepository;
 use Infrastructure\Persistence\Eloquent\Repositories\EloquentEngagementModelRepository;
 use Infrastructure\Persistence\Eloquent\Repositories\EloquentEventRepository;
 use Infrastructure\Persistence\Eloquent\Repositories\EloquentGalleryPhotoRepository;
@@ -57,6 +59,7 @@ final class DomainServiceProvider extends ServiceProvider
         MetricRepository::class => EloquentMetricRepository::class,
         InsightRepository::class => EloquentInsightRepository::class,
         InquiryRepository::class => EloquentInquiryRepository::class,
+        ConsultationRequestRepository::class => EloquentConsultationRequestRepository::class,
         EngagementModelRepository::class => EloquentEngagementModelRepository::class,
         PillarRepository::class => EloquentPillarRepository::class,
         NarrativeRepository::class => EloquentNarrativeRepository::class,
