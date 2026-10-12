@@ -6,6 +6,10 @@
     // see app/Support/OptionalRoute.php.
     $navItems = [
         [
+            'label' => 'Home',
+            'href' => route('home'),
+        ],
+        [
             'label' => 'About',
             'href' => route('about'),
         ],
@@ -109,7 +113,7 @@
 
     <div class="mx-auto flex max-w-7xl items-center justify-between gap-4 px-4 py-4 sm:px-6 lg:px-8">
         <a href="{{ url('/') }}" class="shrink-0">
-            <x-brand-mark />
+            <x-brand-mark :lockup="true" />
         </a>
 
         <nav class="hidden shrink-0 items-center gap-4 xl:flex" aria-label="Primary">

@@ -34,8 +34,7 @@
     <div class="mx-auto max-w-7xl px-4 py-14 sm:px-6 lg:px-8">
         <div class="grid grid-cols-2 gap-x-6 gap-y-10 lg:grid-cols-4 lg:gap-12">
             <div class="col-span-2 flex flex-col items-start gap-4 lg:col-span-1">
-                <x-seal :size="84" />
-                <x-brand-mark :icon="false" />
+                <x-brand-mark :lockup="true" class="!h-auto !w-full max-w-[15rem]" />
                 <p class="max-w-xs text-sm leading-relaxed text-body">
                     A global network delivering discreet, high-conviction execution across sectors and borders.
                 </p>
@@ -78,7 +77,8 @@
         </div>
 
         <div class="mt-12 flex flex-col items-center gap-2 border-t border-border pt-6 text-center sm:flex-row sm:justify-between sm:text-left">
-            <p class="text-[11px] uppercase tracking-widest text-muted">
+            <p class="flex items-center gap-3 text-[11px] uppercase tracking-widest text-muted">
+                <x-seal :size="24" alt="" />
                 &copy; {{ now()->year }} Underground USA, LLC. All rights reserved.
             </p>
             <div class="flex flex-col items-center gap-1 sm:items-end">

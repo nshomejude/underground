@@ -4,6 +4,11 @@
     // disclosure group here instead of the desktop hover/click dropdown.
     $navItems = [
         [
+            'label' => 'Home',
+            'href' => route('home'),
+            'icon' => 'home',
+        ],
+        [
             'label' => 'About',
             'href' => route('about'),
             'icon' => 'building-2',
@@ -74,7 +79,7 @@
 
     <div class="absolute inset-y-0 right-0 flex w-full max-w-xs flex-col gap-8 border-l border-border bg-surface px-6 py-6 overflow-y-auto">
         <div class="flex items-center justify-between">
-            <x-brand-mark :compact="true" />
+            <x-brand-mark :lockup="true" class="!h-8" />
 
             <button
                 type="button"
