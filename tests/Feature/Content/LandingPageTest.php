@@ -20,7 +20,7 @@ final class LandingPageTest extends TestCase
         $response->assertOk();
         $response->assertSee('Power Beneath');
         $response->assertSee('the Surface.');
-        $response->assertSee('Strategic Influence. Real Outcomes.');
+        $response->assertSee('Underground Network — Power Beneath the Surface');
         $response->assertSee('Government &amp; Political Affairs', false);
         $response->assertSee(route('inquiries.create'), false);
     }
