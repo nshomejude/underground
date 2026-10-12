@@ -6,8 +6,12 @@
         <x-admin.field name="title" label="Title" :value="$engagement->title" />
         <x-admin.field name="slug" label="Slug" :value="$engagement->slug->value" />
         <x-admin.field name="sector" label="Sector" :value="$engagement->sector" />
-        <x-admin.textarea-field name="summary" label="Summary" rows="4" :value="$engagement->summary" />
-        <x-admin.field name="outcome" label="Outcome" :value="$engagement->outcome" />
+        <x-admin.textarea-field name="summary" label="Summary / Context" rows="4" :value="$engagement->summary" />
+        <x-admin.field name="outcome" label="Outcome / Demonstrable Result" :value="$engagement->outcome" />
+        <x-admin.field name="real_role" label="Real Role" :value="$engagement->realRole" :required="false" placeholder="Retained strategic advisor to the ministry." />
+        <x-admin.textarea-field name="deliverables" label="Deliverables (one per line)" rows="3" :value="implode(PHP_EOL, $engagement->deliverables)" :required="false" />
+        <x-admin.field name="period" label="Period" :value="$engagement->period" :required="false" placeholder="18 months" />
+        <x-admin.textarea-field name="publication_agreement_note" label="Publication Agreement Note" rows="2" :value="$engagement->publicationAgreementNote" :required="false" />
         <x-admin.field name="position" label="Position" type="number" :value="$engagement->position" />
 
         <div class="flex items-center gap-4 pt-2">

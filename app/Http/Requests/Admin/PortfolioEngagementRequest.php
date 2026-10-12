@@ -32,6 +32,10 @@ final class PortfolioEngagementRequest extends FormRequest
             'title' => ['required', 'string', 'max:255'],
             'summary' => ['required', 'string'],
             'outcome' => ['required', 'string', 'max:255'],
+            'real_role' => ['nullable', 'string', 'max:255'],
+            'deliverables' => ['nullable', 'string'],
+            'period' => ['nullable', 'string', 'max:100'],
+            'publication_agreement_note' => ['nullable', 'string'],
             'position' => ['required', 'integer', 'min:0'],
         ];
     }

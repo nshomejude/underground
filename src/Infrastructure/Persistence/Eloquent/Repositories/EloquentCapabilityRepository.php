@@ -48,6 +48,13 @@ final class EloquentCapabilityRepository implements CapabilityRepository
                 'icon' => $capability->icon,
                 'position' => $capability->position,
                 'is_featured' => $capability->isFeatured,
+                'problem_statement' => $capability->problemStatement,
+                'audiences' => $capability->audiences,
+                'method' => $capability->method,
+                'deliverables' => $capability->deliverables,
+                'confirmed_lead' => $capability->confirmedLead,
+                'authorized_reference' => $capability->authorizedReference,
+                'next_action' => $capability->nextAction,
             ],
         );
     }
@@ -66,6 +73,13 @@ final class EloquentCapabilityRepository implements CapabilityRepository
             icon: $record->icon,
             position: $record->position,
             isFeatured: $record->is_featured,
+            problemStatement: $record->problem_statement ?? '',
+            audiences: $record->audiences ?? [],
+            method: $record->method ?? '',
+            deliverables: $record->deliverables ?? [],
+            confirmedLead: $record->confirmed_lead,
+            authorizedReference: $record->authorized_reference,
+            nextAction: $record->next_action ?? '',
         );
     }
 }

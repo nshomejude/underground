@@ -68,7 +68,7 @@
 
                 <footer class="ltr-foot">
                     <x-seal :size="52" variant="ink" />
-                    <span>Underground Network Inc. &middot; 200 Massachusetts Ave NW, Washington, DC 20001<br>info@un-der.com &middot; +1-571-508-9170 &middot; un-der.com</span>
+                    <span>Underground USA, LLC. &middot; 200 Massachusetts Ave NW, Washington, DC 20001<br>info@un-der.com &middot; +1-571-508-9170 &middot; un-der.com</span>
                 </footer>
             </div>
         </article>

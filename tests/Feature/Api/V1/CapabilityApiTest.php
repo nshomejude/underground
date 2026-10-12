@@ -24,27 +24,35 @@ final class CapabilityApiTest extends TestCase
         $response = $this->getJson('/api/v1/capabilities');
 
         $response->assertOk()
-            ->assertJsonCount(8, 'data')
-            ->assertJsonPath('data.0.slug', 'government-political-affairs')
-            ->assertJsonPath('data.1.slug', 'international-relations-diplomacy')
-            ->assertJsonPath('data.2.slug', 'strategic-intelligence-analysis')
+            ->assertJsonCount(7, 'data')
+            ->assertJsonPath('data.0.slug', 'government-affairs-institutional-relations')
+            ->assertJsonPath('data.1.slug', 'economic-submarine-diplomacy')
+            ->assertJsonPath('data.2.slug', 'strategic-intelligence-research')
             ->assertJsonStructure([
                 'data' => [
-                    ['slug', 'title', 'title_lines', 'summary', 'icon', 'position', 'featured'],
+                    [
+                        'slug', 'title', 'title_lines', 'summary', 'icon', 'position', 'featured',
+                        'problem_statement', 'audiences', 'method', 'deliverables',
+                        'confirmed_lead', 'authorized_reference', 'next_action',
+                    ],
                 ],
             ]);
     }
 
     public function test_show_returns_a_capability_by_slug(): void
     {
-        $response = $this->getJson('/api/v1/capabilities/government-political-affairs');
+        $response = $this->getJson('/api/v1/capabilities/government-affairs-institutional-relations');
 
         $response->assertOk()
-            ->assertJsonPath('data.slug', 'government-political-affairs')
-            ->assertJsonPath('data.title', 'Government & Political Affairs')
+            ->assertJsonPath('data.slug', 'government-affairs-institutional-relations')
+            ->assertJsonPath('data.title', 'Government Affairs & Institutional Relations')
             ->assertJsonPath('data.featured', true)
             ->assertJsonStructure([
-                'data' => ['slug', 'title', 'title_lines', 'summary', 'icon', 'position', 'featured'],
+                'data' => [
+                    'slug', 'title', 'title_lines', 'summary', 'icon', 'position', 'featured',
+                    'problem_statement', 'audiences', 'method', 'deliverables',
+                    'confirmed_lead', 'authorized_reference', 'next_action',
+                ],
             ]);
     }
 

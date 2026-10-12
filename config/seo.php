@@ -25,7 +25,7 @@ return [
     'og_image' => 'images/og-default.png',
 
     'organization' => [
-        'legal_name' => 'Underground Network Inc.',
+        'legal_name' => 'Underground USA, LLC.',
         'email' => 'info@un-der.com',
         'telephone' => '+1-571-508-9170',
         'street' => '200 Massachusetts Ave NW',
@@ -63,9 +63,11 @@ return [
         'sectors.index' => 'The six sectors Underground serves: government, energy, infrastructure, defense and security, technology, and finance and investments.',
         'engagement-models.index' => 'Four ways to engage Underground: advisory retainers, project engagements, government affairs support and crisis management.',
         'global-reach' => 'Underground’s global reach: headquarters in Washington, D.C. with offices in Douala, Abidjan, Lagos and Paris serving North America, Africa and Europe.',
+        'government-advisory' => 'How Underground Network prepares a government engagement: the initial diagnostic, the cooperation roadmap, meeting preparation, relevant partners and follow-up reporting.',
         'membership.index' => 'Underground membership tiers for sovereign partners, principals and corporate affiliates, reviewed personally by a partner before any tier is granted.',
         'membership.cards' => 'A preview of the Underground membership cards extended to approved members.',
         'inquiries.create' => 'Submit a confidential inquiry to Underground. A partner reviews every inquiry personally and nothing you share leaves the firm.',
+        'flex-media-group' => 'Flex Media Group: Underground’s livestream briefings, podcast, and Underground Magazine on strategic advisory, economic diplomacy and Africa.',
     ],
 
     'noindex' => [
@@ -92,8 +94,10 @@ return [
         'sectors' => 'Sectors',
         'engagement-models' => 'Engagement Models',
         'global-reach' => 'Global Reach',
+        'government-advisory' => 'Government Advisory',
         'membership' => 'Membership',
         'confidential-inquiry' => 'Confidential Inquiry',
+        'flex-media-group' => 'Flex Media Group',
     ],
 
 ];

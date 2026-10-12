@@ -7,14 +7,17 @@ namespace App\Http\Controllers\Admin;
 use App\Http\Controllers\Controller;
 use App\Models\User;
 use Illuminate\Contracts\View\View;
+use Illuminate\Support\Facades\Route;
 use Infrastructure\Persistence\Eloquent\Models\CapabilityRecord;
 use Infrastructure\Persistence\Eloquent\Models\EngagementModelRecord;
 use Infrastructure\Persistence\Eloquent\Models\EventRecord;
 use Infrastructure\Persistence\Eloquent\Models\InquiryRecord;
 use Infrastructure\Persistence\Eloquent\Models\InsightRecord;
+use Infrastructure\Persistence\Eloquent\Models\MediaItemRecord;
 use Infrastructure\Persistence\Eloquent\Models\MembershipApplicationRecord;
 use Infrastructure\Persistence\Eloquent\Models\MembershipTierRecord;
 use Infrastructure\Persistence\Eloquent\Models\MetricRecord;
+use Infrastructure\Persistence\Eloquent\Models\OfficeRecord;
 use Infrastructure\Persistence\Eloquent\Models\PartnerCategoryRecord;
 use Infrastructure\Persistence\Eloquent\Models\PillarRecord;
 use Infrastructure\Persistence\Eloquent\Models\PortfolioEngagementRecord;
@@ -100,10 +103,20 @@ final class AdminDashboardController extends Controller
                 ['label' => 'Pillars', 'route' => 'admin.pillars.index', 'count' => PillarRecord::query()->count()],
                 ['label' => 'Membership Tiers', 'route' => 'admin.membership-tiers.index', 'count' => MembershipTierRecord::query()->count()],
                 ['label' => 'Team', 'route' => 'admin.team.index', 'count' => TeamMemberRecord::query()->count()],
+                // 'admin.offices.index' lives in routes/lot1-global-reach.php,
+                // which is not yet required from routes/web.php — guard the
+                // link so this dashboard still renders in the meantime (see
+                // x-admin.sidebar-nav, which guards the same way).
+                array_filter([
+                    'label' => 'Offices',
+                    'route' => Route::has('admin.offices.index') ? 'admin.offices.index' : null,
+                    'count' => OfficeRecord::query()->count(),
+                ], static fn ($value): bool => $value !== null),
                 ['label' => 'Partners', 'route' => 'admin.partners.index', 'count' => PartnerCategoryRecord::query()->count()],
                 ['label' => 'Portfolio', 'route' => 'admin.portfolio.index', 'count' => PortfolioEngagementRecord::query()->count()],
                 ['label' => 'Projects', 'route' => 'admin.projects.index', 'count' => ProjectRecord::query()->count()],
                 ['label' => 'Events', 'route' => 'admin.events.index', 'count' => EventRecord::query()->count()],
+                ['label' => 'Flex Media Group', 'route' => 'admin.media-items.index', 'count' => MediaItemRecord::query()->count()],
             ],
             'upcomingEvents' => $upcomingEvents,
             'recentApplications' => $recentApplications,

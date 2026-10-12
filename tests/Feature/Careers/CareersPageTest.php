@@ -15,7 +15,7 @@ final class CareersPageTest extends TestCase
         $response->assertOk();
         $response->assertSee('Work That Never Makes the Headlines.');
         $response->assertSee('Government &amp; Political Affairs', false);
-        $response->assertSee('careers@underground.network');
+        $response->assertSee('careers@un-der.com');
         $response->assertSee(route('inquiries.create'), false);
     }
 }

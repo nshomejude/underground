@@ -13,6 +13,7 @@
                     <th class="px-4 py-3 font-semibold">Position</th>
                     <th class="px-4 py-3 font-semibold">Name</th>
                     <th class="px-4 py-3 font-semibold">Title</th>
+                    <th class="px-4 py-3 font-semibold">Category</th>
                     <th class="px-4 py-3 font-semibold">Portrait / Icon</th>
                     <th class="px-4 py-3 font-semibold text-right">Actions</th>
                 </tr>
@@ -23,6 +24,10 @@
                         <td class="px-4 py-3 text-muted">{{ $member->position }}</td>
                         <td class="px-4 py-3 text-cream">{{ $member->name }}</td>
                         <td class="px-4 py-3 text-body">{{ $member->title }}</td>
+                        <td class="px-4 py-3 text-body">
+                            {{ $member->roleCategory->label() }}
+                            <span class="text-muted">&middot; {{ $member->employmentStatus->label() }}</span>
+                        </td>
                         <td class="px-4 py-3">
                             @if ($member->hasPortrait)
                                 <span class="text-body">Founder portrait</span>
@@ -50,7 +55,7 @@
                     </tr>
                 @empty
                     <tr>
-                        <td colspan="5" class="px-4 py-6 text-center text-muted">No team members yet.</td>
+                        <td colspan="6" class="px-4 py-6 text-center text-muted">No team members yet.</td>
                     </tr>
                 @endforelse
             </tbody>

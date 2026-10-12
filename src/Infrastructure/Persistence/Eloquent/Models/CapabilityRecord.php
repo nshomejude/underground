@@ -24,6 +24,8 @@ final class CapabilityRecord extends Model
     protected $casts = [
         'position' => 'integer',
         'is_featured' => 'boolean',
+        'audiences' => 'array',
+        'deliverables' => 'array',
     ];
 
     protected static function newFactory(): CapabilityRecordFactory

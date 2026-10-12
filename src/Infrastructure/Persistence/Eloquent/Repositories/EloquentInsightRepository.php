@@ -6,6 +6,7 @@ namespace Infrastructure\Persistence\Eloquent\Repositories;
 
 use Domain\Insights\Entities\Insight;
 use Domain\Insights\Repositories\InsightRepository;
+use Domain\Insights\ValueObjects\AccessLevel;
 use Domain\Shared\ValueObjects\Slug;
 use Infrastructure\Persistence\Eloquent\Models\InsightRecord;
 
@@ -49,6 +50,10 @@ final class EloquentInsightRepository implements InsightRepository
                 'excerpt' => $insight->excerpt,
                 'body' => $insight->body,
                 'published_at' => $insight->publishedAt,
+                'author' => $insight->author,
+                'country' => $insight->country,
+                'sector' => $insight->sector,
+                'access_level' => $insight->accessLevel->value,
             ],
         );
     }
@@ -67,6 +72,10 @@ final class EloquentInsightRepository implements InsightRepository
             excerpt: $record->excerpt,
             body: $record->body,
             publishedAt: $record->published_at,
+            author: $record->author,
+            country: $record->country,
+            sector: $record->sector,
+            accessLevel: AccessLevel::from($record->access_level),
         );
     }
 }

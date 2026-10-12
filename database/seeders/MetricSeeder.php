@@ -8,7 +8,12 @@ use Illuminate\Database\Seeder;
 use Infrastructure\Persistence\Eloquent\Models\MetricRecord;
 
 /**
- * Seeds the five proof points in the credibility bar, from the content brief.
+ * Seeds the five proof points in the credibility bar. Deliberately
+ * qualitative rather than specific numeric claims (e.g. "250+", "$20B+")
+ * -- the client brief instructs that unverifiable performance figures
+ * presented as settled fact be verified or removed, and no real backing
+ * data exists for precise counts here, so these read as honest
+ * positioning language instead of fabricated precision.
  */
 final class MetricSeeder extends Seeder
 {
@@ -17,29 +22,29 @@ final class MetricSeeder extends Seeder
         $metrics = [
             [
                 'slug' => 'government-relationships',
-                'value' => '250+',
-                'label' => 'Government Relationships Worldwide',
+                'value' => 'Global',
+                'label' => 'Government Relationships Network',
                 'icon' => 'globe',
                 'position' => 1,
             ],
             [
                 'slug' => 'successful-engagements',
-                'value' => '150+',
-                'label' => 'Successful Engagements Delivered',
+                'value' => 'Proven',
+                'label' => 'Track Record of Engagements',
                 'icon' => 'handshake',
                 'position' => 2,
             ],
             [
                 'slug' => 'countries-of-operation',
-                'value' => '75+',
-                'label' => 'Countries & Territories of Operation',
+                'value' => 'Worldwide',
+                'label' => 'Countries & Territories Served',
                 'icon' => 'flag',
                 'position' => 3,
             ],
             [
                 'slug' => 'capital-supported',
-                'value' => '$20B+',
-                'label' => 'In Projects & Investments Supported',
+                'value' => 'Strategic',
+                'label' => 'Capital & Investment Support',
                 'icon' => 'landmark',
                 'position' => 4,
             ],

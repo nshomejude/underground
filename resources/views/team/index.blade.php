@@ -9,34 +9,32 @@
             joined the firm. Every mandate is led by one of them, by name.
         </p>
 
+        @if (Route::has('team.senior-leadership') || Route::has('team.gallery') || Route::has('team.case-studies'))
+            <div class="flex flex-wrap gap-3">
+                @if (Route::has('team.senior-leadership'))
+                    <a href="{{ route('team.senior-leadership') }}" class="inline-flex items-center gap-2 border border-border px-4 py-2 text-xs font-semibold uppercase tracking-widest text-body transition-colors hover:border-gold hover:text-gold">
+                        <x-icon name="shield-check" class="h-3.5 w-3.5" />
+                        Senior Leadership
+                    </a>
+                @endif
+                @if (Route::has('team.gallery'))
+                    <a href="{{ route('team.gallery') }}" class="inline-flex items-center gap-2 border border-border px-4 py-2 text-xs font-semibold uppercase tracking-widest text-body transition-colors hover:border-gold hover:text-gold">
+                        <x-icon name="camera" class="h-3.5 w-3.5" />
+                        Gallery
+                    </a>
+                @endif
+                @if (Route::has('team.case-studies'))
+                    <a href="{{ route('team.case-studies') }}" class="inline-flex items-center gap-2 border border-border px-4 py-2 text-xs font-semibold uppercase tracking-widest text-body transition-colors hover:border-gold hover:text-gold">
+                        <x-icon name="file-text" class="h-3.5 w-3.5" />
+                        Case Studies
+                    </a>
+                @endif
+            </div>
+        @endif
+
         <div class="grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-3">
             @foreach ($leaders as $leader)
-                <div class="flex flex-col items-start gap-5 border border-border bg-surface p-8">
-                    @if (!empty($leader['portrait']))
-                        <div class="h-20 w-20 overflow-hidden rounded-full border border-gold">
-                            <img
-                                src="{{ $founderPortraitSrc }}"
-                                alt="Portrait of {{ $leader['name'] }}"
-                                class="h-full w-full object-cover"
-                                loading="lazy"
-                            >
-                        </div>
-                    @else
-                        <span class="flex h-20 w-20 items-center justify-center rounded-full border border-gold bg-surface">
-                            <x-icon name="{{ $leader['icon'] }}" class="h-8 w-8 text-gold" />
-                        </span>
-                    @endif
-
-                    <div class="flex flex-col gap-2">
-                        <h3 class="font-serif text-xl font-semibold leading-snug text-cream">
-                            {{ $leader['name'] }}
-                        </h3>
-                        <p class="text-xs font-semibold uppercase tracking-widest text-gold">
-                            {{ $leader['title'] }}
-                        </p>
-                        <p class="text-sm leading-relaxed text-body">{{ $leader['background'] }}</p>
-                    </div>
-                </div>
+                <x-team.leader-card :leader="$leader" :founder-portrait-src="$founderPortraitSrc" />
             @endforeach
         </div>
     </section>

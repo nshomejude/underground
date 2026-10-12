@@ -66,7 +66,7 @@ final class CareersController extends Controller
                     'body' => 'People who are called in once a mandate has already gone public, and whose job is to make sure it does not stay that way.',
                 ],
             ],
-            'careersEmail' => 'careers@underground.network',
+            'careersEmail' => 'careers@un-der.com',
         ]);
     }
 }

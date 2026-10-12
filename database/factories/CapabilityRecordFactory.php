@@ -26,6 +26,16 @@ final class CapabilityRecordFactory extends Factory
             'icon' => fake()->randomElement(['landmark', 'globe', 'radar', 'coins', 'handshake', 'megaphone', 'ship-wheel', 'library']),
             'position' => fake()->unique()->numberBetween(1, 100),
             'is_featured' => fake()->boolean(30),
+            'problem_statement' => fake()->sentence(14),
+            'audiences' => fake()->randomElements(
+                ['Executives and principals', 'Investors and sponsors', 'Governments and agencies', 'Boards and institutions'],
+                2,
+            ),
+            'method' => fake()->sentence(16),
+            'deliverables' => [fake()->sentence(6), fake()->sentence(6), fake()->sentence(6)],
+            'confirmed_lead' => null,
+            'authorized_reference' => null,
+            'next_action' => 'Start a confidential inquiry',
         ];
     }
 

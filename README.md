@@ -1,8 +1,8 @@
-# Underground Network Inc.
+# Underground USA, LLC.
 
 > Power beneath the surface.
 
-The platform behind Underground Network Inc. — a global strategic advisory and
+The platform behind Underground USA, LLC. — a global strategic advisory and
 influence firm. Built as an **API-first, domain-driven** Laravel application on
 MySQL: the JSON API is the product, and the marketing site is one of its clients.
 
@@ -218,4 +218,4 @@ guessing at, plus real secrets no repo can supply:
 
 ---
 
-© 2026 Underground Network Inc. All rights reserved.
+© 2026 Underground USA, LLC. All rights reserved.

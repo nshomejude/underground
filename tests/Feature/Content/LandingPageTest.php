@@ -20,8 +20,8 @@ final class LandingPageTest extends TestCase
         $response->assertOk();
         $response->assertSee('Power Beneath');
         $response->assertSee('the Surface.');
-        $response->assertSee('Strategic Influence. Real Outcomes.');
-        $response->assertSee('Government &amp; Political Affairs', false);
+        $response->assertSee('Underground Network — Power Beneath the Surface');
+        $response->assertSee('Government Affairs &amp; Institutional Relations', false);
         $response->assertSee(route('inquiries.create'), false);
     }
 
@@ -32,7 +32,7 @@ final class LandingPageTest extends TestCase
         $response = $this->get('/');
 
         $response->assertOk();
-        $response->assertSee('250+');
+        $response->assertSee('Global');
         $response->assertSee('Strategic Advisory Retainers');
     }
 }

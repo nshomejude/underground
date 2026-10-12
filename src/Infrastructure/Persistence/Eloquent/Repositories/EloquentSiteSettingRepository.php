@@ -31,7 +31,7 @@ final class EloquentSiteSettingRepository implements SiteSettingRepository
             return new SiteSetting(
                 siteName: config('app.name', 'Underground Network'),
                 siteTagline: 'Power Beneath The Surface',
-                contactEmail: 'office@underground-network.example',
+                contactEmail: 'office@un-der.com',
                 contactPhone: null,
                 socialLinks: [],
                 footerNote: null,

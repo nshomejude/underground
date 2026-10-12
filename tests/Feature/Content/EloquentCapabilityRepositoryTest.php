@@ -26,6 +26,13 @@ final class EloquentCapabilityRepositoryTest extends TestCase
             icon: 'landmark',
             position: 9,
             isFeatured: false,
+            problemStatement: 'A problem statement.',
+            audiences: ['An audience'],
+            method: 'A method.',
+            deliverables: ['A deliverable'],
+            confirmedLead: null,
+            authorizedReference: null,
+            nextAction: 'Start a confidential inquiry',
         ));
 
         $this->assertDatabaseHas('capabilities', ['slug' => 'freshly-created', 'title' => 'Freshly Created']);
@@ -44,6 +51,13 @@ final class EloquentCapabilityRepositoryTest extends TestCase
             icon: 'landmark',
             position: 3,
             isFeatured: true,
+            problemStatement: 'A problem statement.',
+            audiences: ['An audience'],
+            method: 'A method.',
+            deliverables: ['A deliverable'],
+            confirmedLead: null,
+            authorizedReference: null,
+            nextAction: 'Start a confidential inquiry',
         ));
 
         $this->assertDatabaseCount('capabilities', 1);

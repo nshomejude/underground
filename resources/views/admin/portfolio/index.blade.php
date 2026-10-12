@@ -13,6 +13,7 @@
                     <th class="px-4 py-3 font-semibold">Position</th>
                     <th class="px-4 py-3 font-semibold">Sector</th>
                     <th class="px-4 py-3 font-semibold">Title</th>
+                    <th class="px-4 py-3 font-semibold">Period</th>
                     <th class="px-4 py-3 font-semibold text-right">Actions</th>
                 </tr>
             </thead>
@@ -22,6 +23,7 @@
                         <td class="px-4 py-3 text-muted">{{ $engagement->position }}</td>
                         <td class="px-4 py-3 text-body">{{ $engagement->sector }}</td>
                         <td class="px-4 py-3 text-cream">{{ $engagement->title }}</td>
+                        <td class="px-4 py-3 text-muted">{{ $engagement->period ?? 'Not disclosed' }}</td>
                         <td class="px-4 py-3">
                             <div class="flex items-center justify-end gap-4">
                                 <a href="{{ route('admin.portfolio.edit', $engagement->slug->value) }}" class="text-xs font-semibold uppercase tracking-wider text-gold hover:text-gold-bright">
@@ -39,7 +41,7 @@
                     </tr>
                 @empty
                     <tr>
-                        <td colspan="4" class="px-4 py-6 text-center text-muted">No engagements yet.</td>
+                        <td colspan="5" class="px-4 py-6 text-center text-muted">No engagements yet.</td>
                     </tr>
                 @endforelse
             </tbody>

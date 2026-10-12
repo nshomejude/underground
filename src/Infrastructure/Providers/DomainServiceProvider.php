@@ -4,11 +4,15 @@ declare(strict_types=1);
 
 namespace Infrastructure\Providers;
 
+use Domain\Consultation\Repositories\ConsultationRequestRepository;
 use Domain\Content\Repositories\CapabilityRepository;
 use Domain\Content\Repositories\EngagementModelRepository;
 use Domain\Content\Repositories\EventRepository;
+use Domain\Content\Repositories\GalleryPhotoRepository;
+use Domain\Content\Repositories\MediaItemRepository;
 use Domain\Content\Repositories\MetricRepository;
 use Domain\Content\Repositories\NarrativeRepository;
+use Domain\Content\Repositories\OfficeRepository;
 use Domain\Content\Repositories\PartnerCategoryRepository;
 use Domain\Content\Repositories\PillarRepository;
 use Domain\Content\Repositories\PortfolioEngagementRepository;
@@ -22,14 +26,18 @@ use Domain\Membership\Repositories\MembershipApplicationRepository;
 use Domain\Membership\Repositories\MembershipTierRepository;
 use Illuminate\Support\ServiceProvider;
 use Infrastructure\Persistence\Eloquent\Repositories\EloquentCapabilityRepository;
+use Infrastructure\Persistence\Eloquent\Repositories\EloquentConsultationRequestRepository;
 use Infrastructure\Persistence\Eloquent\Repositories\EloquentEngagementModelRepository;
 use Infrastructure\Persistence\Eloquent\Repositories\EloquentEventRepository;
+use Infrastructure\Persistence\Eloquent\Repositories\EloquentGalleryPhotoRepository;
 use Infrastructure\Persistence\Eloquent\Repositories\EloquentInquiryRepository;
 use Infrastructure\Persistence\Eloquent\Repositories\EloquentInsightRepository;
+use Infrastructure\Persistence\Eloquent\Repositories\EloquentMediaItemRepository;
 use Infrastructure\Persistence\Eloquent\Repositories\EloquentMembershipApplicationRepository;
 use Infrastructure\Persistence\Eloquent\Repositories\EloquentMembershipTierRepository;
 use Infrastructure\Persistence\Eloquent\Repositories\EloquentMetricRepository;
 use Infrastructure\Persistence\Eloquent\Repositories\EloquentNarrativeRepository;
+use Infrastructure\Persistence\Eloquent\Repositories\EloquentOfficeRepository;
 use Infrastructure\Persistence\Eloquent\Repositories\EloquentPartnerCategoryRepository;
 use Infrastructure\Persistence\Eloquent\Repositories\EloquentPillarRepository;
 use Infrastructure\Persistence\Eloquent\Repositories\EloquentPortfolioEngagementRepository;
@@ -51,17 +59,21 @@ final class DomainServiceProvider extends ServiceProvider
         MetricRepository::class => EloquentMetricRepository::class,
         InsightRepository::class => EloquentInsightRepository::class,
         InquiryRepository::class => EloquentInquiryRepository::class,
+        ConsultationRequestRepository::class => EloquentConsultationRequestRepository::class,
         EngagementModelRepository::class => EloquentEngagementModelRepository::class,
         PillarRepository::class => EloquentPillarRepository::class,
         NarrativeRepository::class => EloquentNarrativeRepository::class,
         MembershipTierRepository::class => EloquentMembershipTierRepository::class,
         MembershipApplicationRepository::class => EloquentMembershipApplicationRepository::class,
         TeamMemberRepository::class => EloquentTeamMemberRepository::class,
+        OfficeRepository::class => EloquentOfficeRepository::class,
         PartnerCategoryRepository::class => EloquentPartnerCategoryRepository::class,
         PortfolioEngagementRepository::class => EloquentPortfolioEngagementRepository::class,
         ProjectRepository::class => EloquentProjectRepository::class,
         EventRepository::class => EloquentEventRepository::class,
         SiteSettingRepository::class => EloquentSiteSettingRepository::class,
+        GalleryPhotoRepository::class => EloquentGalleryPhotoRepository::class,
+        MediaItemRepository::class => EloquentMediaItemRepository::class,
     ];
 
     public function register(): void

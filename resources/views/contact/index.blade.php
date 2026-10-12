@@ -75,23 +75,24 @@
                         <div class="flex items-center gap-3">
                             <x-icon name="map-pin" class="h-4 w-4 shrink-0 text-gold" />
                             <h3 class="font-serif text-lg font-semibold text-cream">
-                                {{ $office['city'] }}, {{ $office['region'] }}
+                                {{ $office->name }}, {{ $office->region }}
                             </h3>
                         </div>
-                        @if ($office['address'])
-                            <p class="text-sm leading-relaxed text-body">{!! nl2br(e($office['address'])) !!}</p>
+                        @if ($office->address)
+                            <p class="text-sm leading-relaxed text-body">{!! nl2br(e($office->address)) !!}</p>
                         @endif
-                        @if ($office['phone'])
+                        @if ($office->phone)
                             <p class="text-sm text-body">
-                                <a href="tel:{{ preg_replace('/[^+\d]/', '', $office['phone']) }}" class="hover:text-gold">{{ $office['phone'] }}</a>
+                                <a href="tel:{{ preg_replace('/[^+\d]/', '', $office->phone) }}" class="hover:text-gold">{{ $office->phone }}</a>
                             </p>
                         @endif
-                        @if ($office['email'])
+                        @if ($office->email)
                             <p class="text-sm text-body">
-                                <a href="mailto:{{ $office['email'] }}" class="hover:text-gold">{{ $office['email'] }}</a>
+                                <a href="mailto:{{ $office->email }}" class="hover:text-gold">{{ $office->email }}</a>
                             </p>
                         @endif
-                        <p class="text-xs uppercase tracking-wide text-muted">{{ $office['note'] }}</p>
+                        <p class="text-xs uppercase tracking-wide text-gold">{{ $office->status->label() }}</p>
+                        <p class="text-xs uppercase tracking-wide text-muted">{{ $office->relationshipType->label() }}</p>
                     </div>
                 @endforeach
             </div>

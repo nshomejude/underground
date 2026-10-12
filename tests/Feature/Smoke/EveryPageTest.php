@@ -66,7 +66,7 @@ final class EveryPageTest extends MessagingTestCase
                     continue;
                 }
                 $uri = $route->uri();
-                if (preg_match('#^(admin/(applications|inquiries)/{|_|storage|up$|sanctum|api/|build)#', $uri)) {
+                if (preg_match('#^(admin/(applications|inquiries|consultations)/{|_|storage|up$|sanctum|api/|build)#', $uri)) {
                     continue;
                 }
                 $url = preg_replace_callback('#\{(\w+)\??\}#', fn ($m) => (string) ($values[$m[1]] ?? 1), $uri);

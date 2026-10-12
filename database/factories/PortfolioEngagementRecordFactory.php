@@ -25,6 +25,10 @@ final class PortfolioEngagementRecordFactory extends Factory
             'title' => $title,
             'summary' => fake()->sentence(20),
             'outcome' => fake()->sentence(8),
+            'real_role' => 'Retained advisor.',
+            'deliverables' => [fake()->sentence(4), fake()->sentence(4)],
+            'period' => null,
+            'publication_agreement_note' => 'No publication agreement on file.',
             'position' => fake()->unique()->numberBetween(1, 100),
         ];
     }

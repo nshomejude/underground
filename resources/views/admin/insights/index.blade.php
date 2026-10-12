@@ -12,6 +12,7 @@
                     <tr>
                         <th class="px-4 py-3">Title</th>
                         <th class="px-4 py-3">Category</th>
+                        <th class="px-4 py-3">Access</th>
                         <th class="px-4 py-3">Status</th>
                         <th class="px-4 py-3">Published</th>
                         <th class="px-4 py-3 text-right">Actions</th>
@@ -25,6 +26,13 @@
                                 <div class="text-xs text-muted">{{ $insight->slug->value }}</div>
                             </td>
                             <td class="px-4 py-3 text-body">{{ $insight->category }}</td>
+                            <td class="px-4 py-3">
+                                @if ($insight->requiresMembership())
+                                    <x-status-badge label="Member Access" tone="info" />
+                                @else
+                                    <x-status-badge label="Public" tone="neutral" />
+                                @endif
+                            </td>
                             <td class="px-4 py-3">
                                 @if ($insight->isPublished())
                                     <x-status-badge label="Published" tone="success" />
@@ -52,7 +60,7 @@
                         </tr>
                     @empty
                         <tr>
-                            <td colspan="5" class="px-4 py-8 text-center text-sm text-muted">
+                            <td colspan="6" class="px-4 py-8 text-center text-sm text-muted">
                                 No insights yet.
                             </td>
                         </tr>
