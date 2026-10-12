@@ -30,6 +30,38 @@
     @error('category')<p class="{{ $errorClass }}">{{ $message }}</p>@enderror
 </div>
 
+<div class="grid grid-cols-1 gap-4 sm:grid-cols-2">
+    <div class="flex flex-col gap-2">
+        <label for="author" class="{{ $labelClass }}">Author</label>
+        <input type="text" id="author" name="author" value="{{ old('author', $insight->author ?? '') }}" placeholder="e.g. Naledi Okonjo-Reyes" class="{{ $inputClass }}">
+        @error('author')<p class="{{ $errorClass }}">{{ $message }}</p>@enderror
+    </div>
+
+    <div class="flex flex-col gap-2">
+        <label for="access_level" class="{{ $labelClass }}">Access Level</label>
+        <select id="access_level" name="access_level" class="{{ $inputClass }}">
+            @foreach (\Domain\Insights\ValueObjects\AccessLevel::cases() as $level)
+                <option value="{{ $level->value }}" @selected(old('access_level', $insight->accessLevel->value ?? 'public') === $level->value)>
+                    {{ $level->label() }}
+                </option>
+            @endforeach
+        </select>
+        @error('access_level')<p class="{{ $errorClass }}">{{ $message }}</p>@enderror
+    </div>
+
+    <div class="flex flex-col gap-2">
+        <label for="country" class="{{ $labelClass }}">Country</label>
+        <input type="text" id="country" name="country" value="{{ old('country', $insight->country ?? 'Global') }}" placeholder="e.g. Global" class="{{ $inputClass }}">
+        @error('country')<p class="{{ $errorClass }}">{{ $message }}</p>@enderror
+    </div>
+
+    <div class="flex flex-col gap-2">
+        <label for="sector" class="{{ $labelClass }}">Sector</label>
+        <input type="text" id="sector" name="sector" value="{{ old('sector', $insight->sector ?? '') }}" placeholder="e.g. Government & Public Sector" class="{{ $inputClass }}">
+        @error('sector')<p class="{{ $errorClass }}">{{ $message }}</p>@enderror
+    </div>
+</div>
+
 <div class="flex flex-col gap-2">
     <label for="excerpt" class="{{ $labelClass }}">Excerpt</label>
     <textarea id="excerpt" name="excerpt" rows="3" class="{{ $inputClass }}">{{ old('excerpt', $insight->excerpt ?? '') }}</textarea>

@@ -8,6 +8,7 @@ use App\Http\Controllers\Controller;
 use DateTimeImmutable;
 use Domain\Insights\Entities\Insight;
 use Domain\Insights\Repositories\InsightRepository;
+use Domain\Insights\ValueObjects\AccessLevel;
 use Domain\Shared\ValueObjects\Slug;
 use Illuminate\Contracts\View\View;
 use Illuminate\Http\RedirectResponse;
@@ -48,6 +49,10 @@ final class InsightAdminController extends Controller
             excerpt: $data['excerpt'],
             body: $data['body'],
             publishedAt: $this->parsePublishedAt($data['published_at'] ?? null),
+            author: $data['author'],
+            country: $data['country'],
+            sector: $data['sector'],
+            accessLevel: AccessLevel::from($data['access_level']),
         ));
 
         return redirect()->route('admin.insights.index')->with('status', 'Insight created.');
@@ -77,6 +82,10 @@ final class InsightAdminController extends Controller
             excerpt: $data['excerpt'],
             body: $data['body'],
             publishedAt: $this->parsePublishedAt($data['published_at'] ?? null),
+            author: $data['author'],
+            country: $data['country'],
+            sector: $data['sector'],
+            accessLevel: AccessLevel::from($data['access_level']),
         ));
 
         return redirect()->route('admin.insights.index')->with('status', 'Insight updated.');
@@ -105,6 +114,10 @@ final class InsightAdminController extends Controller
             'excerpt' => ['required', 'string', 'max:2000'],
             'body' => ['required', 'string'],
             'published_at' => ['nullable', 'date'],
+            'author' => ['required', 'string', 'max:255'],
+            'country' => ['required', 'string', 'max:255'],
+            'sector' => ['required', 'string', 'max:255'],
+            'access_level' => ['required', Rule::in(array_map(fn (AccessLevel $level) => $level->value, AccessLevel::cases()))],
         ], [
             'slug.regex' => 'The slug may only contain lowercase letters, numbers, and hyphens.',
         ]);

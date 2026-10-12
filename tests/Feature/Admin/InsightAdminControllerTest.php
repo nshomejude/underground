@@ -35,6 +35,10 @@ final class InsightAdminControllerTest extends TestCase
             'excerpt' => 'A brief look at emerging dynamics.',
             'body' => 'The full body of the insight goes here.',
             'published_at' => '',
+            'author' => 'Marcus Thane',
+            'country' => 'Global',
+            'sector' => 'Government & Public Sector',
+            'access_level' => 'members',
         ]);
 
         $response->assertRedirect(route('admin.insights.index'));
@@ -42,6 +46,10 @@ final class InsightAdminControllerTest extends TestCase
             'slug' => 'new-strategic-brief',
             'title' => 'New Strategic Brief',
             'published_at' => null,
+            'author' => 'Marcus Thane',
+            'country' => 'Global',
+            'sector' => 'Government & Public Sector',
+            'access_level' => 'members',
         ]);
     }
 
@@ -72,6 +80,10 @@ final class InsightAdminControllerTest extends TestCase
             'excerpt' => $insight->excerpt,
             'body' => $insight->body,
             'published_at' => '',
+            'author' => $insight->author,
+            'country' => $insight->country,
+            'sector' => $insight->sector,
+            'access_level' => $insight->access_level,
         ]);
 
         $response->assertRedirect(route('admin.insights.index'));

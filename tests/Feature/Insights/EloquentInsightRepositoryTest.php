@@ -6,6 +6,7 @@ namespace Tests\Feature\Insights;
 
 use DateTimeImmutable;
 use Domain\Insights\Entities\Insight;
+use Domain\Insights\ValueObjects\AccessLevel;
 use Domain\Shared\ValueObjects\Slug;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Infrastructure\Persistence\Eloquent\Models\InsightRecord;
@@ -131,5 +132,40 @@ final class EloquentInsightRepositoryTest extends TestCase
 
         $this->assertNotNull($insight);
         $this->assertSame('Discretion as Strategy', $insight->title);
+    }
+
+    public function test_reports_hub_metadata_round_trips_through_save_and_find(): void
+    {
+        $repository = new EloquentInsightRepository;
+
+        $repository->save(new Insight(
+            slug: Slug::fromString('reports-hub-metadata'),
+            title: 'Reports Hub Metadata',
+            category: 'Strategic Notes',
+            excerpt: 'An excerpt.',
+            body: 'A body.',
+            publishedAt: new DateTimeImmutable('2026-01-01'),
+            author: 'Naledi Okonjo-Reyes',
+            country: 'Global',
+            sector: 'Government & Public Sector',
+            accessLevel: AccessLevel::MembersOnly,
+        ));
+
+        $this->assertDatabaseHas('insights', [
+            'slug' => 'reports-hub-metadata',
+            'author' => 'Naledi Okonjo-Reyes',
+            'country' => 'Global',
+            'sector' => 'Government & Public Sector',
+            'access_level' => 'members',
+        ]);
+
+        $insight = $repository->findBySlug(Slug::fromString('reports-hub-metadata'));
+
+        $this->assertNotNull($insight);
+        $this->assertSame('Naledi Okonjo-Reyes', $insight->author);
+        $this->assertSame('Global', $insight->country);
+        $this->assertSame('Government & Public Sector', $insight->sector);
+        $this->assertSame(AccessLevel::MembersOnly, $insight->accessLevel);
+        $this->assertTrue($insight->requiresMembership());
     }
 }
