@@ -1,6 +1,6 @@
 <x-layout title="Senior Leadership">
     <section class="mx-auto flex max-w-6xl flex-col gap-10 px-4 py-16 sm:px-6 lg:px-8 lg:py-24">
-        <x-section-heading tag="h1" eyebrow="Governance &amp; Leadership">
+        <x-section-heading tag="h1" eyebrow="Governance & Leadership">
             Senior Leadership
         </x-section-heading>
 

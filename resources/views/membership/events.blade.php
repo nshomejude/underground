@@ -1,6 +1,6 @@
 <x-layout title="Business Events" description="How Underground membership tiers relate to Business Events: free events for every tier, discounts on paid events, and the Sovereign Partner guest policy.">
     <section class="mx-auto flex max-w-6xl flex-col gap-10 px-4 py-16 sm:px-6 lg:px-8 lg:py-24">
-        <x-section-heading tag="h1" eyebrow="Membership &amp; the Event Calendar">
+        <x-section-heading tag="h1" eyebrow="Membership & the Event Calendar">
             Business Events
         </x-section-heading>
 

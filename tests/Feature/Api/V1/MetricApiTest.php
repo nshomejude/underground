@@ -26,8 +26,8 @@ final class MetricApiTest extends TestCase
         $response->assertOk()
             ->assertJsonCount(5, 'data')
             ->assertJsonPath('data.0.slug', 'government-relationships')
-            ->assertJsonPath('data.0.value', '250+')
-            ->assertJsonPath('data.3.value', '$20B+')
+            ->assertJsonPath('data.0.value', 'Global')
+            ->assertJsonPath('data.3.value', 'Strategic')
             ->assertJsonPath('data.4.slug', 'discretion')
             ->assertJsonStructure([
                 'data' => [

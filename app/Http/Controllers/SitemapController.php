@@ -29,8 +29,8 @@ final class SitemapController extends Controller
 
         foreach ([
             ['home', 1.0], ['about', 0.8], ['capabilities.index', 0.9], ['sectors.index', 0.9],
-            ['engagement-models.index', 0.8], ['global-reach', 0.8], ['insights.index', 0.8],
-            ['team', 0.7], ['partners', 0.6], ['collaboration', 0.6], ['portfolio', 0.7],
+            ['engagement-models.index', 0.8], ['global-reach', 0.8], ['reports-hub.index', 0.8],
+            ['team', 0.7], ['partners', 0.6], ['collaboration', 0.6], ['team.case-studies', 0.7],
             ['projects', 0.6], ['events', 0.6], ['careers', 0.5], ['membership.index', 0.6],
             ['inquiries.create', 0.7], ['contact', 0.8], ['terms', 0.3], ['privacy', 0.3],
         ] as [$name, $priority]) {
@@ -51,7 +51,7 @@ final class SitemapController extends Controller
 
         foreach (($this->insights)() as $item) {
             $urls[] = [
-                'loc' => route('insights.show', $item->slug->value),
+                'loc' => route('reports-hub.show', $item->slug->value),
                 'priority' => 0.7,
                 'lastmod' => $item->publishedAt?->format('Y-m-d'),
             ];

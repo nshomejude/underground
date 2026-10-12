@@ -32,7 +32,7 @@ final class LandingPageTest extends TestCase
         $response = $this->get('/');
 
         $response->assertOk();
-        $response->assertSee('250+');
+        $response->assertSee('Global');
         $response->assertSee('Strategic Advisory Retainers');
     }
 }

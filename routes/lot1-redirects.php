@@ -33,14 +33,8 @@ use Illuminate\Support\Facades\Route;
 Route::get('/portfolio', static fn () => redirect()->route('team.case-studies', [], 301))
     ->name('redirects.portfolio');
 
-// Insights -> Reports Hub. The slug carries over unchanged (confirmed with
-// the Reports Hub workstream's brief), so one parameterized redirect covers
-// every article — including ones added after this file was written —
-// without sending them all to a single landing page. Known slugs at the
-// time of writing: discretion-as-strategy, infrastructure-as-influence,
-// government-affairs-multipolar-world, geopolitical-realignment-capital-flows.
-Route::permanentRedirect('/insights', '/reports-hub')
-    ->name('redirects.insights.index');
-
-Route::get('/insights/{slug}', static fn (string $slug) => redirect("/reports-hub/{$slug}", 301))
-    ->name('redirects.insights.show');
+// Insights -> Reports Hub redirects are defined in routes/lot1-reports-hub.php
+// instead (that module's own file), which also owns the live /reports-hub
+// routes and was verified end-to-end as one unit — two separate route
+// registrations for the same /insights URI would fight over Laravel's route
+// name table, so this module intentionally does not duplicate them.

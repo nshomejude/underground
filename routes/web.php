@@ -42,13 +42,11 @@ use App\Http\Controllers\EventController;
 use App\Http\Controllers\GlobalReachController;
 use App\Http\Controllers\InquiryController;
 use App\Http\Controllers\InquiryTrackController;
-use App\Http\Controllers\InsightController;
 use App\Http\Controllers\LandingPageController;
 use App\Http\Controllers\LegalController;
 use App\Http\Controllers\MembershipController;
 use App\Http\Controllers\MembershipTrackController;
 use App\Http\Controllers\PartnerController;
-use App\Http\Controllers\PortfolioController;
 use App\Http\Controllers\ProjectController;
 use App\Http\Controllers\SectorController;
 use App\Http\Controllers\SitemapController;
@@ -70,16 +68,12 @@ Route::get('/team', [TeamController::class, 'index'])->name('team');
 Route::get('/contact', [ContactController::class, 'index'])->name('contact');
 Route::get('/partners', [PartnerController::class, 'index'])->name('partners');
 Route::get('/collaboration', [CollaborationController::class, 'index'])->name('collaboration');
-Route::get('/portfolio', [PortfolioController::class, 'index'])->name('portfolio');
 Route::get('/projects', [ProjectController::class, 'index'])->name('projects');
 Route::get('/events', [EventController::class, 'index'])->name('events');
 Route::get('/careers', [CareersController::class, 'index'])->name('careers');
 
 Route::get('/terms', [LegalController::class, 'terms'])->name('terms');
 Route::get('/privacy', [LegalController::class, 'privacy'])->name('privacy');
-
-Route::get('/insights', [InsightController::class, 'index'])->name('insights.index');
-Route::get('/insights/{slug}', [InsightController::class, 'show'])->name('insights.show');
 
 Route::get('/capabilities', [CapabilityController::class, 'index'])->name('capabilities.index');
 Route::get('/global-reach', GlobalReachController::class)->name('global-reach');
@@ -244,3 +238,17 @@ require __DIR__.'/messaging.php';
 require __DIR__.'/voting.php';
 require __DIR__.'/verification.php';
 require __DIR__.'/plans.php';
+
+// Lot 1 workstreams (each file owns its own routes; see the client brief's
+// IA restructure). lot1-reports-hub and lot1-redirects both register
+// redirects for superseded URLs — the old /portfolio, /insights and
+// /insights/{slug} routes above have already been removed, so there is no
+// registration-order dependency between these files and the routes above.
+require __DIR__.'/lot1-redirects.php';
+require __DIR__.'/lot1-gov-advisory.php';
+require __DIR__.'/lot1-global-reach.php';
+require __DIR__.'/lot1-reports-hub.php';
+require __DIR__.'/lot1-team.php';
+require __DIR__.'/lot1-flex-media.php';
+require __DIR__.'/lot1-membership-pages.php';
+require __DIR__.'/lot1-consultations.php';

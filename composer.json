@@ -2,7 +2,7 @@
     "$schema": "https://getcomposer.org/schema.json",
     "name": "underground/network",
     "type": "project",
-    "description": "Underground Network Inc. - API-first, domain-driven strategic advisory platform.",
+    "description": "Underground USA, LLC. - API-first, domain-driven strategic advisory platform.",
     "keywords": [
         "laravel",
         "ddd",

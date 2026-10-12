@@ -287,8 +287,8 @@
                 <div class="flex flex-wrap items-end justify-between gap-4">
                     <x-section-heading eyebrow="Perspective">Latest Thinking</x-section-heading>
 
-                    <a href="{{ route('insights.index') }}" class="inline-flex items-center gap-2 text-xs font-semibold uppercase tracking-widest text-gold hover:text-gold-bright">
-                        View All Insights
+                    <a href="{{ route('reports-hub.index') }}" class="inline-flex items-center gap-2 text-xs font-semibold uppercase tracking-widest text-gold hover:text-gold-bright">
+                        View All Reports
                         <x-icon name="chevron-right" class="h-3.5 w-3.5" />
                     </a>
                 </div>
@@ -296,7 +296,7 @@
                 <div class="mt-10 grid grid-cols-1 gap-6 md:grid-cols-3">
                     @foreach ($insights as $insight)
                         <a
-                            href="{{ route('insights.show', $insight->slug->value) }}"
+                            href="{{ route('reports-hub.show', $insight->slug->value) }}"
                             class="group flex flex-col gap-3 border border-border bg-surface p-6 transition-colors hover:border-gold"
                         >
                             <span class="text-xs font-semibold uppercase tracking-widest text-gold">{{ $insight->category }}</span>

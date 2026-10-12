@@ -67,16 +67,21 @@ final class MarketingPagesTest extends TestCase
             ->assertSee('Secure Channels');
     }
 
-    public function test_portfolio_page_renders_sector_tagged_engagements(): void
+    public function test_case_studies_page_renders_sector_tagged_engagements(): void
     {
         PortfolioEngagementRecord::factory()->create(['sector' => 'Government & Public Sector', 'position' => 1]);
         PortfolioEngagementRecord::factory()->create(['sector' => 'Defense & Security', 'position' => 2]);
 
-        $this->get(route('portfolio'))
+        $this->get(route('team.case-studies'))
             ->assertOk()
             ->assertSee('Selected Engagements')
             ->assertSee('Government &amp; Public Sector', false)
             ->assertSee('Defense &amp; Security', false);
+    }
+
+    public function test_old_portfolio_url_redirects_to_case_studies(): void
+    {
+        $this->get('/portfolio')->assertRedirect(route('team.case-studies'));
     }
 
     public function test_projects_page_renders(): void
