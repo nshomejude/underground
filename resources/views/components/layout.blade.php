@@ -12,6 +12,10 @@
 
         <x-seo-head :title="$title" :description="$description" :type="$type" :image="$image" :schema="$schema" :site-setting="$siteSetting" />
 
+        <link rel="icon" href="{{ asset('favicon.ico') }}" sizes="any">
+        <link rel="icon" type="image/png" href="{{ asset('images/app-icon-192.png') }}">
+        <link rel="apple-touch-icon" href="{{ asset('images/apple-touch-icon.png') }}">
+
         {{-- Guard against a missing production build (e.g. before `npm run build`
              has been run, or in the test environment) so the shell still renders
              rather than throwing a Vite manifest exception. --}}

@@ -13,6 +13,10 @@
 
         <title>{{ $title ? $title . ' — Admin — ' . config('app.name', 'Underground Network') : 'Admin — ' . config('app.name', 'Underground Network') }}</title>
 
+        <link rel="icon" href="{{ asset('favicon.ico') }}" sizes="any">
+        <link rel="icon" type="image/png" href="{{ asset('images/app-icon-192.png') }}">
+        <link rel="apple-touch-icon" href="{{ asset('images/apple-touch-icon.png') }}">
+
         {{-- Blocking, pre-paint: apply a previously-saved theme choice
              before first render so switching themes never flashes the
              other one. Admin-only — the public site has no such script
