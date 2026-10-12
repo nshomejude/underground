@@ -83,7 +83,7 @@
             </div>
 
             <div class="border-t border-hairline pt-4">
-                <x-admin.checkbox-field name="blocks_animation_enabled" label="&quot;Power is built, block by block&quot; building-blocks animation on the home page" :checked="$setting->blocksAnimationEnabled" />
+                <x-admin.checkbox-field name="blocks_animation_enabled" label="“Power is built, block by block” building-blocks animation on the home page" :checked="$setting->blocksAnimationEnabled" />
             </div>
         </fieldset>
 

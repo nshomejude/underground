@@ -70,6 +70,6 @@
 </fieldset>
 
 <x-admin.field name="cta_label" label="Button label on the public page (optional)" :value="$plan->cta_label" :required="false" />
-<x-admin.checkbox-field name="is_featured" label="Featured (&ldquo;Most chosen&rdquo;)" :checked="$plan->is_featured" />
+<x-admin.checkbox-field name="is_featured" label="Featured (“Most chosen”)" :checked="$plan->is_featured" />
 <x-admin.checkbox-field name="is_active" label="Active (shown to the public)" :checked="$plan->is_active ?? true" />
 <x-admin.field name="position" label="Position" type="number" min="0" :value="$plan->position ?? 0" />
