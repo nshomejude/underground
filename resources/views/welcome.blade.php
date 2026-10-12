@@ -11,7 +11,10 @@
 <x-layout title="Home">
     {{-- Hero --}}
     <section class="relative isolate overflow-hidden border-b border-border bg-ink">
-        <x-gear-background />
+        <x-globe-wireframe class="hero-slide" style="--slide-i: 0" />
+        <x-capitol-vignette class="hero-slide" style="--slide-i: 1" />
+        <x-network-grid class="hero-slide" style="--slide-i: 2" />
+        <x-gear-background class="hero-slide" style="--slide-i: 3" />
         <div class="hero-veil pointer-events-none absolute inset-0" aria-hidden="true"></div>
         <div class="relative z-10 mx-auto grid max-w-7xl grid-cols-1 gap-12 px-4 py-16 sm:px-6 lg:grid-cols-2 lg:items-center lg:gap-16 lg:px-8 lg:py-24">
             <div class="flex flex-col items-start gap-6">
