@@ -297,12 +297,38 @@ document.addEventListener('DOMContentLoaded', () => {
         });
     };
 
+    // The <title> can't be wrapped in a span, so after the translator rewrites
+    // it ("About — Underground Network" -> "À propos — Réseau souterrain") put
+    // the original brand segment back, keeping the translated page name.
+    const protectTitleBrand = () => {
+        const titleEl = document.querySelector('title');
+        const separator = /(\s[—|-]\s)/;
+        const original = document.title.split(separator);
+        const brandIndex = original.findIndex((part) => /Underground/i.test(part));
+
+        if (!titleEl || brandIndex === -1) {
+            return;
+        }
+
+        new MutationObserver(() => {
+            const current = document.title.split(separator);
+
+            if (current.length !== original.length || current[brandIndex] === original[brandIndex]) {
+                return;
+            }
+
+            current[brandIndex] = original[brandIndex];
+            document.title = current.join('');
+        }).observe(titleEl, { childList: true, characterData: true, subtree: true });
+    };
+
     const loadTranslator = () => {
         if (window.googleTranslateElementInit) {
             return;
         }
 
         protectBrandName();
+        protectTitleBrand();
 
         window.googleTranslateElementInit = () => {
             new window.google.translate.TranslateElement(
