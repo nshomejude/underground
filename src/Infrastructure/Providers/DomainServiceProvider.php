@@ -9,6 +9,7 @@ use Domain\Content\Repositories\EngagementModelRepository;
 use Domain\Content\Repositories\EventRepository;
 use Domain\Content\Repositories\MetricRepository;
 use Domain\Content\Repositories\NarrativeRepository;
+use Domain\Content\Repositories\OfficeRepository;
 use Domain\Content\Repositories\PartnerCategoryRepository;
 use Domain\Content\Repositories\PillarRepository;
 use Domain\Content\Repositories\PortfolioEngagementRepository;
@@ -30,6 +31,7 @@ use Infrastructure\Persistence\Eloquent\Repositories\EloquentMembershipApplicati
 use Infrastructure\Persistence\Eloquent\Repositories\EloquentMembershipTierRepository;
 use Infrastructure\Persistence\Eloquent\Repositories\EloquentMetricRepository;
 use Infrastructure\Persistence\Eloquent\Repositories\EloquentNarrativeRepository;
+use Infrastructure\Persistence\Eloquent\Repositories\EloquentOfficeRepository;
 use Infrastructure\Persistence\Eloquent\Repositories\EloquentPartnerCategoryRepository;
 use Infrastructure\Persistence\Eloquent\Repositories\EloquentPillarRepository;
 use Infrastructure\Persistence\Eloquent\Repositories\EloquentPortfolioEngagementRepository;
@@ -57,6 +59,7 @@ final class DomainServiceProvider extends ServiceProvider
         MembershipTierRepository::class => EloquentMembershipTierRepository::class,
         MembershipApplicationRepository::class => EloquentMembershipApplicationRepository::class,
         TeamMemberRepository::class => EloquentTeamMemberRepository::class,
+        OfficeRepository::class => EloquentOfficeRepository::class,
         PartnerCategoryRepository::class => EloquentPartnerCategoryRepository::class,
         PortfolioEngagementRepository::class => EloquentPortfolioEngagementRepository::class,
         ProjectRepository::class => EloquentProjectRepository::class,
