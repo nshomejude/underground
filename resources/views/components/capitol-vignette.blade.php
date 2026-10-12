@@ -1,11 +1,12 @@
 @php
     /*
      * Decorative Washington, D.C. vignette: a stylised dome, colonnade and
-     * obelisk on the Mall axis, with a sunburst radiating from the dome and
-     * a scatter of five-point stars — the same engraved gold line-art
-     * vocabulary as the gear and network backgrounds, so "the seat of
-     * power" reads as one more mechanism in the same machine. Pure inline
-     * SVG + CSS — no JavaScript.
+     * obelisk on the Mall axis, with a slowly rotating sunburst radiating
+     * from the dome and a scatter of five-point stars — the same engraved
+     * gold line-art vocabulary, and the same gear-rot rotation, as the
+     * gear and network backgrounds, so "the seat of power" reads as one
+     * more mechanism turning in the same machine. Pure inline SVG + CSS
+     * — no JavaScript.
      */
     $groundY = 680;
 
@@ -65,8 +66,9 @@
             @endforeach
         </g>
 
-        {{-- Sunburst behind the dome --}}
-        <g stroke="currentColor" stroke-width="1" opacity=".22">
+        {{-- Sunburst behind the dome: a slow beacon sweep, the same
+             gear-rot rotation the gear background's own gears turn on. --}}
+        <g class="gear-spin" style="transform-origin: {{ $domeX }}px {{ $domeY }}px; --d: 45s" stroke="currentColor" stroke-width="1" opacity=".22">
             @foreach ($rays as [$x1, $y1, $x2, $y2])
                 <line x1="{{ $x1 }}" y1="{{ $y1 }}" x2="{{ $x2 }}" y2="{{ $y2 }}" />
             @endforeach
