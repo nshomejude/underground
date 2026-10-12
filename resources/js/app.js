@@ -280,17 +280,33 @@ document.addEventListener('DOMContentLoaded', () => {
             let last = 0;
             const text = node.nodeValue;
 
-            text.replace(pattern, (match, offset) => {
-                fragment.appendChild(document.createTextNode(text.slice(last, offset)));
+            // Keep one adjacent whitespace character inside the span: the
+            // translator trims segment edges, which otherwise glues the brand
+            // to the neighbouring word ("UndergroundNous sommes ...").
+            pattern.lastIndex = 0;
+            let match;
+
+            while ((match = pattern.exec(text)) !== null) {
+                let start = match.index;
+                let end = match.index + match[0].length;
+
+                if (start > last && /\s/.test(text[start - 1])) {
+                    start -= 1;
+                }
+
+                if (end < text.length && /\s/.test(text[end])) {
+                    end += 1;
+                }
+
+                fragment.appendChild(document.createTextNode(text.slice(last, start)));
                 const span = document.createElement('span');
                 span.className = 'notranslate';
                 span.setAttribute('translate', 'no');
-                span.textContent = match;
+                span.textContent = text.slice(start, end);
                 fragment.appendChild(span);
-                last = offset + match.length;
-
-                return match;
-            });
+                last = end;
+                pattern.lastIndex = end;
+            }
 
             fragment.appendChild(document.createTextNode(text.slice(last)));
             node.parentNode.replaceChild(fragment, node);
