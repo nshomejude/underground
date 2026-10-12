@@ -84,7 +84,7 @@
         <div class="flex flex-col gap-4">
             <x-section-heading>Governing Law</x-section-heading>
             <p class="text-sm leading-relaxed text-body">
-                These Terms are governed by the laws of [Governing Jurisdiction], without regard to its
+                These Terms are governed by the laws of the State of Delaware, without regard to its
                 conflict-of-laws principles. Any dispute arising under these Terms shall be subject to
                 the exclusive jurisdiction of the courts of that jurisdiction, unless a signed
                 engagement agreement specifies otherwise.
@@ -105,7 +105,7 @@
             <x-section-heading>Contact</x-section-heading>
             <p class="text-sm leading-relaxed text-body">
                 Questions about these Terms can be directed to
-                <a href="mailto:legal@underground-network.example" class="text-gold hover:text-gold-bright">legal@underground-network.example</a>.
+                <a href="mailto:legal@un-der.com" class="text-gold hover:text-gold-bright">legal@un-der.com</a>.
             </p>
         </div>
     </section>

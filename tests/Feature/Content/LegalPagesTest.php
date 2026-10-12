@@ -23,6 +23,6 @@ final class LegalPagesTest extends TestCase
             ->assertOk()
             ->assertSee('Privacy Policy')
             ->assertSee('Retention')
-            ->assertSee('privacy@underground-network.example');
+            ->assertSee('privacy@un-der.com');
     }
 }

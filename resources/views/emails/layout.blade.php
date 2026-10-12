@@ -119,7 +119,7 @@
                                 200 Massachusetts Ave NW, Washington, DC 20001
                             </div>
                             <div style="padding-top:14px;font-family:Helvetica,Arial,sans-serif;font-size:12px;line-height:18px;letter-spacing:2px;text-transform:uppercase;color:#8E897F;text-align:center;">
-                                &copy; {{ now()->year }} {{ $appName }} Inc. &middot; Powered by <a href="https://opesware.com" style="color:#B5AFA3;text-decoration:none;">opesware.com</a>
+                                &copy; {{ now()->year }} Underground USA, LLC. &middot; Powered by <a href="https://opesware.com" style="color:#B5AFA3;text-decoration:none;">opesware.com</a>
                             </div>
                         </td>
                     </tr>

@@ -79,7 +79,7 @@
             <x-section-heading>Contact</x-section-heading>
             <p class="text-sm leading-relaxed text-body">
                 Data requests and privacy questions can be directed to
-                <a href="mailto:privacy@underground-network.example" class="text-gold hover:text-gold-bright">privacy@underground-network.example</a>.
+                <a href="mailto:privacy@un-der.com" class="text-gold hover:text-gold-bright">privacy@un-der.com</a>.
             </p>
         </div>
     </section>
