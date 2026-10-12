@@ -9,15 +9,20 @@
      */
     $enabled = app(\Domain\Content\Repositories\SiteSettingRepository::class)->current()->globeAtlasEnabled;
 
-    $points = collect($offices)->map(fn ($o) => [
-        'id' => $o['id'],
-        'name' => $o['city'],
-        'tag' => $o['note'],
-        'hq' => $o['id'] === 'dc',
-        'c' => [$o['lng'], $o['lat']],
-        'txt' => $o['blurb'],
-        'lp' => ['abj' => 'bl', 'los' => 'tc', 'dla' => 'br'][$o['id']] ?? 'r',
-    ])->values();
+    // Only locations with a real point to plot — regional/continental
+    // coverage entries (Office::hasCoordinates() === false) are never
+    // given an invented position on the map; they live on /locations.
+    $points = collect($offices)
+        ->filter(fn ($o) => $o->hasCoordinates())
+        ->map(fn ($o) => [
+            'id' => $o->slug->value,
+            'name' => $o->name,
+            'tag' => $o->status->label(),
+            'hq' => $o->isHeadquarters,
+            'c' => [$o->lng, $o->lat],
+            'txt' => $o->blurb,
+            'lp' => ['abj' => 'bl', 'los' => 'tc', 'dla' => 'br'][$o->slug->value] ?? 'r',
+        ])->values();
 
     $links = [['dc', 'par'], ['par', 'abj'], ['abj', 'los'], ['los', 'dla'], ['dc', 'los']];
 @endphp

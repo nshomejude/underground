@@ -45,14 +45,50 @@
         </div>
 
         <div class="mt-16 border-t border-border pt-12">
-            <h2 class="text-xs font-semibold uppercase tracking-[0.2em] text-gold">Our Offices</h2>
-            <div class="mt-6 grid grid-cols-1 tile-grid sm:grid-cols-2 lg:grid-cols-5">
+            <div class="flex flex-col gap-4 sm:flex-row sm:items-end sm:justify-between">
+                <div class="max-w-2xl">
+                    <h2 class="text-xs font-semibold uppercase tracking-[0.2em] text-gold">Our Alliance Network</h2>
+                    <p class="mt-3 text-sm leading-relaxed text-body">
+                        Underground develops a network of alliances to facilitate access to local expertise in
+                        institutional relations, public affairs, and strategic support. Services are coordinated
+                        according to country, client needs, and confirmed partner capacity — never promised
+                        before a partner's capacity is confirmed.
+                    </p>
+                </div>
+                {{--
+                    Route::has() guards: routes/lot1-global-reach.php is not
+                    yet required from routes/web.php (see that file's own
+                    header comment), so these links degrade to nothing
+                    rather than fatal until it is wired in.
+                --}}
+                <div class="flex flex-wrap gap-4 sm:shrink-0">
+                    @if (Route::has('global-alliance'))
+                        <x-button variant="secondary" href="{{ route('global-alliance') }}">
+                            How the Alliance Works
+                            <x-icon name="chevron-right" class="h-3.5 w-3.5" />
+                        </x-button>
+                    @endif
+                    @if (Route::has('locations'))
+                        <x-button variant="secondary" href="{{ route('locations') }}">
+                            Full Directory
+                            <x-icon name="chevron-right" class="h-3.5 w-3.5" />
+                        </x-button>
+                    @endif
+                </div>
+            </div>
+
+            <div class="mt-6 grid grid-cols-1 tile-grid sm:grid-cols-2 lg:grid-cols-4">
                 @foreach ($offices as $office)
                     <div class="flex flex-col gap-2 bg-surface p-6">
                         <x-icon name="map-pin" class="h-4 w-4 text-gold" />
-                        <h3 class="font-serif text-lg font-semibold text-cream">{{ $office['city'] }}</h3>
-                        <p class="text-xs uppercase tracking-wide text-muted">{{ $office['region'] }}</p>
-                        <p class="text-xs uppercase tracking-wide text-gold">{{ $office['note'] }}</p>
+                        <h3 class="font-serif text-lg font-semibold text-cream">
+                            {{ $office->name }}
+                            @if ($office->isHeadquarters)
+                                <span class="ml-1 text-[10px] font-semibold uppercase tracking-wider text-gold">HQ</span>
+                            @endif
+                        </h3>
+                        <p class="text-xs uppercase tracking-wide text-muted">{{ $office->region }}</p>
+                        <p class="text-xs uppercase tracking-wide text-gold">{{ $office->status->label() }}</p>
                     </div>
                 @endforeach
             </div>
@@ -73,12 +109,14 @@
         eyebrow="Where We Operate"
         heading="Regions We Cover"
         :items="[
-            ['icon' => 'flag', 'title' => 'North America', 'text' => 'Our headquarters in Washington, D.C. anchors relationships with policy, finance and institutional audiences across the United States and Canada.'],
-            ['icon' => 'globe', 'title' => 'Central Africa', 'text' => 'Our Douala office supports clients across Cameroon and the wider CEMAC region on government, infrastructure and resources.'],
-            ['icon' => 'globe', 'title' => 'West Africa', 'text' => 'Offices in Abidjan and Lagos cover Côte d’Ivoire, Nigeria and the broader ECOWAS community.'],
-            ['icon' => 'landmark', 'title' => 'Europe', 'text' => 'Our Paris office connects European institutions, investors and corporates with partners across Africa and beyond.'],
+            ['icon' => 'flag', 'title' => 'North America', 'text' => 'Washington, D.C. is our directly operated headquarters, serving policy, finance and institutional audiences across the United States. Coverage in Canada is proposed and not yet confirmed.'],
+            ['icon' => 'handshake', 'title' => 'Central & West Africa', 'text' => 'Independent partners in Douala, Abidjan and Lagos extend coverage across Cameroon, Côte d’Ivoire, Nigeria and the wider CEMAC/ECOWAS communities.'],
+            ['icon' => 'globe', 'title' => 'Southern & East Africa', 'text' => 'Regional partner coverage reaching South Africa, Lesotho, Eswatini, Kenya and the wider East African community, subject to confirmed partner capacity.'],
+            ['icon' => 'building-2', 'title' => 'Gulf & Middle East', 'text' => 'Coordinated partner coverage across Bahrain, Kuwait, Oman, Qatar and the UAE.'],
+            ['icon' => 'landmark', 'title' => 'Europe', 'text' => 'An independent partner in Paris covers France today. A broader European presence across the United Kingdom, Switzerland and Germany is proposed, not yet confirmed.'],
+            ['icon' => 'map-pin', 'title' => 'Asia-Pacific', 'text' => 'Coverage under consideration. The scope and partner for this region have not yet been confirmed.'],
         ]"
-        :columns="4"
+        :columns="3"
     />
 
     <x-value-grid
