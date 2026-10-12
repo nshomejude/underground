@@ -43,19 +43,14 @@
             </div>
 
             <div class="flex flex-col gap-6">
-                {{-- Transparent cut-out portrait: no frame, soft glow behind, faded into the section at the base --}}
-                <div class="relative mx-auto flex w-full max-w-[22rem] justify-center sm:max-w-sm lg:max-w-md">
-                    <div class="pointer-events-none absolute inset-x-6 bottom-0 top-10 rounded-full bg-gold/15 blur-3xl" aria-hidden="true"></div>
-                    <img
-                        src="{{ $founderPortraitSrc }}"
-                        alt="Portrait of the Underground founder"
-                        class="portrait-fade relative z-10 h-auto max-h-[28rem] w-auto max-w-full object-contain object-bottom drop-shadow-[0_24px_40px_rgba(0,0,0,0.55)] sm:max-h-[34rem] lg:max-h-[40rem]"
-                        width="1000"
-                        height="1402"
-                        loading="eager"
-                        fetchpriority="high"
-                        decoding="async"
-                    >
+                {{-- The firm's mark, not a face: an institution, not a personality. --}}
+                <div class="relative mx-auto flex w-full max-w-[20rem] items-center justify-center py-8 sm:max-w-sm lg:max-w-md lg:py-12">
+                    <div class="pointer-events-none absolute inset-0 rounded-full bg-gold/20 blur-3xl" aria-hidden="true"></div>
+                    <x-seal
+                        :size="280"
+                        alt="The Underground Network seal"
+                        class="relative z-10 drop-shadow-[0_24px_48px_rgba(0,0,0,0.6)] motion-safe:animate-[uv-glow-pulse_5s_ease-in-out_infinite]"
+                    />
                 </div>
 
                 <div class="flex flex-col gap-2 border-t-2 border-gold px-1 pt-4">
