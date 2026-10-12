@@ -42,6 +42,10 @@ final class PortfolioEngagementAdminController extends Controller
             summary: $data['summary'],
             outcome: $data['outcome'],
             position: (int) $data['position'],
+            realRole: ($data['real_role'] ?? null) ?: null,
+            deliverables: self::parseDeliverables($data['deliverables'] ?? null),
+            period: ($data['period'] ?? null) ?: null,
+            publicationAgreementNote: ($data['publication_agreement_note'] ?? null) ?: null,
         ));
 
         return redirect()->route('admin.portfolio.index')->with('status', 'Engagement created.');
@@ -76,6 +80,10 @@ final class PortfolioEngagementAdminController extends Controller
                 summary: $data['summary'],
                 outcome: $data['outcome'],
                 position: (int) $data['position'],
+                realRole: ($data['real_role'] ?? null) ?: null,
+                deliverables: self::parseDeliverables($data['deliverables'] ?? null),
+                period: ($data['period'] ?? null) ?: null,
+                publicationAgreementNote: ($data['publication_agreement_note'] ?? null) ?: null,
             ),
             originalSlug: $original->slug,
         );
@@ -88,5 +96,19 @@ final class PortfolioEngagementAdminController extends Controller
         $this->engagements->delete(Slug::fromString($portfolio_engagement));
 
         return redirect()->route('admin.portfolio.index')->with('status', 'Engagement removed.');
+    }
+
+    /**
+     * The admin form carries deliverables as one per line, mirroring
+     * NarrativeAdminController::update()'s headline_text convention.
+     *
+     * @return list<string>
+     */
+    private static function parseDeliverables(?string $raw): array
+    {
+        return array_values(array_filter(
+            array_map('trim', explode("\n", str_replace("\r\n", "\n", (string) $raw))),
+            static fn (string $line): bool => $line !== '',
+        ));
     }
 }

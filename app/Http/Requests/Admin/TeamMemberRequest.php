@@ -5,6 +5,8 @@ declare(strict_types=1);
 namespace App\Http\Requests\Admin;
 
 use App\Support\IconLibrary;
+use Domain\Content\ValueObjects\EmploymentStatus;
+use Domain\Content\ValueObjects\TeamRoleCategory;
 use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Validation\Rule;
 
@@ -37,6 +39,15 @@ final class TeamMemberRequest extends FormRequest
                 Rule::requiredIf(! $this->boolean('has_portrait')),
                 'nullable', 'string', Rule::in(IconLibrary::NAMES),
             ],
+            'role_category' => ['required', 'string', Rule::in(array_map(
+                static fn (TeamRoleCategory $case): string => $case->value,
+                TeamRoleCategory::cases(),
+            ))],
+            'employment_status' => ['required', 'string', Rule::in(array_map(
+                static fn (EmploymentStatus $case): string => $case->value,
+                EmploymentStatus::cases(),
+            ))],
+            'languages' => ['nullable', 'string', 'max:255'],
             'position' => ['required', 'integer', 'min:0'],
         ];
     }

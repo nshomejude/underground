@@ -20,6 +20,7 @@ final class TeamMemberRecord extends Model
     protected $casts = [
         'position' => 'integer',
         'has_portrait' => 'boolean',
+        'languages' => 'array',
     ];
 
     protected static function newFactory(): TeamMemberRecordFactory

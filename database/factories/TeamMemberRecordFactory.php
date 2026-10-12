@@ -26,6 +26,9 @@ final class TeamMemberRecordFactory extends Factory
             'background' => fake()->sentence(12),
             'icon' => 'target',
             'has_portrait' => false,
+            'role_category' => 'expertise',
+            'employment_status' => 'employee',
+            'languages' => ['English'],
             'position' => fake()->unique()->numberBetween(1, 100),
         ];
     }
