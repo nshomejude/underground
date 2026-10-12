@@ -29,6 +29,34 @@
                 @endforeach
             </div>
         @endif
+
+        @if (\Illuminate\Support\Facades\Route::has('government-advisory'))
+            <a
+                href="{{ route('government-advisory') }}"
+                class="group mt-12 flex flex-col gap-4 border border-gold bg-surface p-7 transition-colors hover:bg-surface-raised sm:flex-row sm:items-center sm:justify-between lg:p-8"
+            >
+                <div class="flex items-start gap-4">
+                    <span class="flex h-12 w-12 shrink-0 items-center justify-center border border-gold text-gold">
+                        <x-icon name="landmark" class="h-6 w-6" />
+                    </span>
+                    <div class="flex flex-col gap-1">
+                        <span class="text-xs font-semibold uppercase tracking-[0.2em] text-gold">Featured</span>
+                        <h2 class="font-serif text-lg font-semibold leading-snug text-cream group-hover:text-gold">
+                            Government &amp; Head-of-State Advisory
+                        </h2>
+                        <p class="max-w-2xl text-sm leading-relaxed text-body">
+                            A dedicated page for heads of state, ministers and cabinet offices: the initial
+                            diagnostic, the cooperation roadmap, and how we prepare an engagement from first
+                            contact through follow-up reporting.
+                        </p>
+                    </div>
+                </div>
+                <span class="inline-flex shrink-0 items-center gap-2 text-xs font-semibold uppercase tracking-widest text-gold">
+                    Explore
+                    <x-icon name="arrow-right" class="h-3.5 w-3.5 transition-transform duration-200 group-hover:translate-x-1" />
+                </span>
+            </a>
+        @endif
     </section>
 
     <x-value-grid

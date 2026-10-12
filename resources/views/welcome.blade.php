@@ -35,11 +35,14 @@
 
                 <div class="flex flex-wrap items-center gap-4 pt-2">
                     <x-button variant="primary" href="{{ route('capabilities.index') }}">
-                        Our Capabilities
+                        Discover Our Expertise
                         <x-icon name="chevron-right" class="h-3.5 w-3.5" />
                     </x-button>
-                    <x-button variant="secondary" href="{{ $aboutHref }}">
-                        Who We Are
+                    <x-button
+                        variant="secondary"
+                        href="{{ \Illuminate\Support\Facades\Route::has('consultations.create') ? route('consultations.create') : route('inquiries.create') }}"
+                    >
+                        Submit a Request
                         <x-icon name="chevron-right" class="h-3.5 w-3.5" />
                     </x-button>
                 </div>
@@ -163,7 +166,7 @@
     <section id="sectors" class="scroll-mt-20 border-b border-border bg-ink">
         <div class="mx-auto max-w-7xl px-4 py-16 sm:px-6 lg:px-8 lg:py-24">
             <div class="flex flex-col gap-6 sm:flex-row sm:items-end sm:justify-between">
-                <x-section-heading eyebrow="Where We Operate" class="max-w-2xl">
+                <x-section-heading eyebrow="Who We Serve" class="max-w-2xl">
                     {{ $narrative->sectorsHeading }}
                 </x-section-heading>
 
@@ -202,6 +205,34 @@
                     </a>
                 @endforeach
             </div>
+
+            @if (\Illuminate\Support\Facades\Route::has('government-advisory'))
+                <a
+                    href="{{ route('government-advisory') }}"
+                    class="group mt-10 flex flex-col gap-4 border border-gold bg-surface p-7 transition-colors hover:bg-surface-raised sm:flex-row sm:items-center sm:justify-between lg:p-8"
+                >
+                    <div class="flex items-start gap-4">
+                        <span class="flex h-12 w-12 shrink-0 items-center justify-center border border-gold text-gold">
+                            <x-icon name="landmark" class="h-6 w-6" />
+                        </span>
+                        <div class="flex flex-col gap-1">
+                            <span class="text-xs font-semibold uppercase tracking-[0.2em] text-gold">Featured</span>
+                            <h3 class="font-serif text-lg font-semibold leading-snug text-cream group-hover:text-gold">
+                                Government &amp; Head-of-State Advisory
+                            </h3>
+                            <p class="max-w-2xl text-sm leading-relaxed text-body">
+                                A dedicated page for sovereign partners: the initial diagnostic, the cooperation
+                                roadmap, and how we prepare an engagement from first contact through follow-up
+                                reporting.
+                            </p>
+                        </div>
+                    </div>
+                    <span class="inline-flex shrink-0 items-center gap-2 text-xs font-semibold uppercase tracking-widest text-gold">
+                        Explore
+                        <x-icon name="arrow-right" class="h-3.5 w-3.5 transition-transform duration-200 group-hover:translate-x-1" />
+                    </span>
+                </a>
+            @endif
         </div>
     </section>
 
