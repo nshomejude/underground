@@ -67,6 +67,7 @@ return [
         'membership.index' => 'Underground membership tiers for sovereign partners, principals and corporate affiliates, reviewed personally by a partner before any tier is granted.',
         'membership.cards' => 'A preview of the Underground membership cards extended to approved members.',
         'inquiries.create' => 'Submit a confidential inquiry to Underground. A partner reviews every inquiry personally and nothing you share leaves the firm.',
+        'flex-media-group' => 'Flex Media Group: Underground’s livestream briefings, podcast, and Underground Magazine on strategic advisory, economic diplomacy and Africa.',
     ],
 
     'noindex' => [
@@ -96,6 +97,7 @@ return [
         'government-advisory' => 'Government Advisory',
         'membership' => 'Membership',
         'confidential-inquiry' => 'Confidential Inquiry',
+        'flex-media-group' => 'Flex Media Group',
     ],
 
 ];

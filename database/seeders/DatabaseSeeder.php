@@ -38,6 +38,7 @@ class DatabaseSeeder extends Seeder
         $this->call(PortfolioEngagementSeeder::class);
         $this->call(ProjectSeeder::class);
         $this->call(EventSeeder::class);
+        $this->call(MediaItemSeeder::class);
 
         // Insights context: published thought-leadership pieces.
         $this->call(InsightSeeder::class);

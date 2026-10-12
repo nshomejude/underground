@@ -23,6 +23,7 @@
             ['label' => 'Portfolio', 'route' => 'admin.portfolio.index', 'pattern' => 'admin.portfolio.*', 'icon' => 'check-circle'],
             ['label' => 'Projects', 'route' => 'admin.projects.index', 'pattern' => 'admin.projects.*', 'icon' => 'rotate-cw'],
             ['label' => 'Events', 'route' => 'admin.events.index', 'pattern' => 'admin.events.*', 'icon' => 'clock'],
+            ['label' => 'Flex Media Group', 'route' => 'admin.media-items.index', 'pattern' => 'admin.media-items.*', 'icon' => 'megaphone'],
         ],
         'Network' => [
             ['label' => 'Verifications', 'route' => 'admin.verifications.index', 'pattern' => 'admin.verifications.*', 'icon' => 'fingerprint'],

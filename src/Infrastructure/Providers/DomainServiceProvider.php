@@ -8,6 +8,7 @@ use Domain\Content\Repositories\CapabilityRepository;
 use Domain\Content\Repositories\EngagementModelRepository;
 use Domain\Content\Repositories\EventRepository;
 use Domain\Content\Repositories\GalleryPhotoRepository;
+use Domain\Content\Repositories\MediaItemRepository;
 use Domain\Content\Repositories\MetricRepository;
 use Domain\Content\Repositories\NarrativeRepository;
 use Domain\Content\Repositories\OfficeRepository;
@@ -29,6 +30,7 @@ use Infrastructure\Persistence\Eloquent\Repositories\EloquentEventRepository;
 use Infrastructure\Persistence\Eloquent\Repositories\EloquentGalleryPhotoRepository;
 use Infrastructure\Persistence\Eloquent\Repositories\EloquentInquiryRepository;
 use Infrastructure\Persistence\Eloquent\Repositories\EloquentInsightRepository;
+use Infrastructure\Persistence\Eloquent\Repositories\EloquentMediaItemRepository;
 use Infrastructure\Persistence\Eloquent\Repositories\EloquentMembershipApplicationRepository;
 use Infrastructure\Persistence\Eloquent\Repositories\EloquentMembershipTierRepository;
 use Infrastructure\Persistence\Eloquent\Repositories\EloquentMetricRepository;
@@ -68,6 +70,7 @@ final class DomainServiceProvider extends ServiceProvider
         EventRepository::class => EloquentEventRepository::class,
         SiteSettingRepository::class => EloquentSiteSettingRepository::class,
         GalleryPhotoRepository::class => EloquentGalleryPhotoRepository::class,
+        MediaItemRepository::class => EloquentMediaItemRepository::class,
     ];
 
     public function register(): void
